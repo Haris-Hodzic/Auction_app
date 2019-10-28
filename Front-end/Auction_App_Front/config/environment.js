@@ -22,7 +22,20 @@ module.exports = function(environment) {
       // when it is created
     }
   };
-
+ENV['ember-simple-auth-token'] = {
+  tokenDataPropertyName: 'tokenData', // Key in session to store token data
+  identificationField: 'email',
+  refreshAccessTokens: true, // Enables access token refreshing
+  tokenExpirationInvalidateSession: true,
+  authorizationHeaderName: 'Authorization', // Header name added to each API request
+  authorizationPrefix: 'Bearer ', // Prefix added to each API request
+  refreshAccessTokens: true,
+  serverTokenEndpoint: 'http://localhost:8080/authentication/login', // Enables session invalidation on token expiration
+  serverTokenRefreshEndpoint: 'http://localhost:8080/authentication/login', // Server endpoint to send refresh request
+  refreshTokenPropertyName: 'refresh_token', // Key in server response that contains the refresh token
+  tokenExpireName: 'exp', // Field containing token expiration
+  refreshLeeway: 0 // Amount of time to send refresh request before token expiration
+};
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -30,6 +43,21 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
+ /*
+// config/environment.js
+ENV['ember-simple-auth-token'] = {
+   authorizationHeaderName: 'Authorization', // Header name added to each API request
+  authorizationPrefix: 'Bearer ', // Prefix added to each API request
+  serverTokenEndpoint: 'http://localhost:8080/authentication/login', // Server endpoint to send authenticate request
+  tokenPropertyName: 'token', // Key in server response that contains the access token
+  headers: {}, // Headers to add to the
+  refreshAccessTokens: true,
+  refreshLeeway: 300 // refresh 5 minutes (300 seconds) before expiration
+};
+ENV['simple-auth'] = {
+    authorizer: 'simple-auth-authorizer:token'
+  };*/
+
 
   if (environment === 'test') {
     // Testem prefers this...

@@ -1,0 +1,5 @@
+<PageBar @title={{model}}>
+</PageBar>
+{{#if session.isAuthenticated}}
+<input type="button" {{action 'listUser'}} value="LIST"/>
+{{/if}}

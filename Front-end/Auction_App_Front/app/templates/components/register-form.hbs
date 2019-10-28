@@ -1,0 +1,20 @@
+<form class="loginForm" {{action 'register' on='submit'}}>
+	<div id="loginTitle">
+		<p id="titleText">REGISTER</p>
+	</div>
+
+	<<label for="" class="label">First Name</label>
+    {{input value=firstName class="input"}}
+
+	<label for="" class="label">Last Name</label>
+	{{input value=lastName class="input"}}
+
+	<label for="" class="label">Enter Email</label>
+	{{input value=email class="input"}}
+
+	<label for="" class="label">Password</label>
+	{{input value=password class="input"}}
+
+	<button class="registerButton" type="submit">REGISTER</button>
+	<p id="haveAcc">Already have an account? {{#link-to 'login'}}<span id="liginLink">Login</span>{{/link-to}}</p>
+</form>
