@@ -41,4 +41,5 @@ export default DS.Model.extend(Validations, {
   lastName: attr('string'),
   email: attr('string'),
   password: attr('string')
+
 });
