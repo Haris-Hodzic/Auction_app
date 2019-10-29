@@ -22,13 +22,12 @@
   </div>
 </header>
 <nav>
-
   <div class="navLogo">
     <img src="/assets/images/logo.PNG" alt="">
     {{#link-to "home"}}<p>AUCTION</p>{{/link-to}}
   </div>
   <div class="nav-search">
-    <input type="text" placeholder="Try enter: Shoes">
+    <Input @type="text" @placeholder="Try enter: Shoes" @value={{this.search}} @enter={{action "searchProducts"}}/>
   </div>
   <div class="nav-links">
     <ul>
