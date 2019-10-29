@@ -1,7 +1,8 @@
 import Route from '@ember/routing/route';
+import User from '../models/user';
 
 export default Route.extend({
-		 model() {
-    return "LOGIN";
-  }
+	model() {
+		return "LOGIN";
+	}
 });

@@ -3,31 +3,34 @@
 
 
 <div class="loginBox">
-<form class="loginForm" {{action 'authenticate' on='submit'}}>
-	<div id="loginTitle">
-		<p id="titleText">LOGIN</p>
-	</div>
+	<form class="loginForm" {{action 'authenticate' on='submit'}}>
+		<div id="loginTitle">
+			<p id="titleText">LOGIN</p>
+		</div>
 
-	{{#if errorMessage}}
-    <p>
-      <strong>Error:</strong>
-      <code>{{errorMessage}}</code>
-    </p>
-  {{/if}}
-	
-	<label for="" class="label">Enter Email</label>
-    {{input value=email class="input"}}
+		{{#if errorMessage}}
+			<p>
+				<strong>Error:</strong>
+				<code>{{errorMessage}}</code>
+			</p>
+		{{/if}}
 
-	<label class="label">Password</label>
-	{{input type="password" value=password class="input"}}
+		<label for="" class="label">Enter Email</label>
+		{{input value=email class="input" type="email" }}
 
-	<Input @type="checkbox" @id="checkBox"/>
-	<label for="remember" class="labelCB">Remember me</label>
 
-	<button class="loginButton" type="submit">LOGIN</button>
 
-	<button class="loginBFB">LOGIN WITH FACEBOOK</button>
-	<button class="loginBGM">LOGIN WITH GMAIL</button>
-	<p id="fpass">Forgot Password?</p>
-</form>
+		<label class="label">Password</label>
+		{{input type="password" value=password class="input"}}
+
+
+		<Input @type="checkbox" @id="checkBox"/>
+		<label for="remember" class="labelCB">Remember me</label>
+
+		<button class="loginButton" type="submit">LOGIN</button>
+
+		<button class="loginBFB">LOGIN WITH FACEBOOK</button>
+		<button class="loginBGM">LOGIN WITH GMAIL</button>
+		<p id="fpass">Forgot Password?</p>
+	</form>
 </div> 
