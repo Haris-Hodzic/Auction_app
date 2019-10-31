@@ -1,8 +1,7 @@
 import Route from '@ember/routing/route';
-import User from '../models/user';
+import DS from 'ember-data';
 
 export default Route.extend({
-<<<<<<< HEAD
   model() {
     return this.store.createRecord('luser');
   }
