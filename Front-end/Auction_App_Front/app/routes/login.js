@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import User from '../models/user';
+import DS from 'ember-data';
 
 export default Route.extend({
   model() {

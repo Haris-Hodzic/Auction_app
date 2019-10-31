@@ -15,9 +15,9 @@ const UsernameAvailable = BaseValidator.extend({
 });
 
 UsernameAvailable.reopenClass({
- getDependentsFor() {
-  return [];
-}
+  getDependentsFor() {
+    return [];
+  }
 });
 
 export default UsernameAvailable;
