@@ -207,13 +207,11 @@ nav{
 	}
 	.nav-logo, .nav-search, .nav-links{
 		margin-bottom: 90px;
-
 	}
 	footer{
 		height: 500px;
 		position: absolute;
-	}
-
+	}	
 }
 
 .standard{
@@ -238,7 +236,7 @@ nav{
 	margin-top: 39px;
 	margin-bottom: 199px;
 	width: 48.8%;
-	height: 706px;
+	height: 726px;
 	background: #FFFFFF;
 	border: 1px solid #D8D8D8;
 }
@@ -271,7 +269,8 @@ nav{
 	border: 1px solid #D8D8D8;
 	width:85.4%;
 	height: 54px;
-	margin-left: 51px;
+	margin-left: 7.3%;
+	padding-left: 15px;
 }
 #checkBox{
 	margin-left: 51px;
@@ -288,7 +287,7 @@ nav{
 	background: #8367D8;
 	border: 3px solid #8367D8;
 	box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
-	margin-left: 51px;
+	margin-left: 7.3%;
 	margin-top: 34px;
 	margin-bottom: 33px;
 	width: 85.8%;
@@ -304,8 +303,7 @@ nav{
 	border: 3px solid #415994;
 	width: 39.8%;
 	height: 54px;
-	margin-left: 51px;
-	margin-right: 40px;
+	margin-left: 7.3%;
 	font-family: Lato-Bold;
 	font-size: 16px;
 	color: #FFFFFF;
@@ -317,6 +315,7 @@ nav{
 	border: 3px solid #CD5542;
 	width: 39.8%;
 	height: 54px;
+	margin-left: 5.5%;
 	font-family: Lato-Bold;
 	font-size: 16px;
 	color: #FFFFFF;
@@ -380,4 +379,10 @@ nav{
 	color: #8367D8;
 	letter-spacing: 0.63px;
 
+}
+
+.error{
+	margin-left: 51px;
+	margin-top: 5px;	
+	color: #8367D8;
 }

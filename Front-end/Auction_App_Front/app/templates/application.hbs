@@ -1,70 +1,68 @@
-
 <header>
-	<div class="header-left">
-		<ul class="footer-social list-inline">
-			<li><a href=""><i class="fa fa-facebook" style="color:grey;"></i></a></li>
-			<li><a href=""><i class="fa fa-instagram" style="color:grey;"></i></a></li>
-			<li><a href=""><i class="fa fa-twitter" style="color:grey;"></i></a></li>
-			<li><a href=""><i class="fa fa-google-plus" style="color:grey;"></i></a></li>
-		</ul>
-	</div>
+		<div class="header-left">
+				<ul class="footer-social list-inline">
+						<li><a href=""><i class="fa fa-facebook" style="color:grey;"></i></a></li>
+						<li><a href=""><i class="fa fa-instagram" style="color:grey;"></i></a></li>
+						<li><a href=""><i class="fa fa-twitter" style="color:grey;"></i></a></li>
+						<li><a href=""><i class="fa fa-google-plus" style="color:grey;"></i></a></li>
+				</ul>
+		</div>	
 
-	<div class="header-right">
-		{{#if session.isAuthenticated}}
-		<ul>
-			<li>{{#link-to 'login'}}<span {{action "logout"}}>Logout</span>{{/link-to}}</li>
-		</ul>
-		{{else}}
-		<ul>
-			<li><a href="">{{#link-to 'login'}}Login{{/link-to}}</a></li>
-			<p>   or   </p>
-			<li><a href="">{{#link-to 'register'}}Create an Account{{/link-to}}</a></li>
-		</ul>
-		{{/if}}
-	</div>
+		<div class="header-right">
+				{{#if session.isAuthenticated}}
+						<ul>
+								<li>{{#link-to 'login'}}<span {{action "logout"}}>Logout</span>{{/link-to}}</li>
+						</ul>
+				{{else}}
+						<ul>
+								<li><a href="">{{#link-to 'login'}}Login{{/link-to}}</a></li>
+								<p>   or   </p>
+								<li><a href="">{{#link-to 'register'}}Create an Account{{/link-to}}</a></li>
+						</ul>
+				{{/if}}
+		</div>
 </header>
 <nav>
-	<div class="nav-logo">
-		<img src="/assets/images/logo.PNG">
-		<p>AUCTION</p>
-	</div>
-	<div class="nav-search">
-		<input type="text" placeholder="Try enter: Shoes">
-	</div>
-	<div class="nav-links">
-		<ul>
-			<li><a href="">{{#link-to 'home'}}HOME{{/link-to}}</a></li>
-			<li><a href="">SHOP</a></li>
-			<li><a href="">MY ACCOUNT</a></li>
-		</ul>
-	</div>
+		<div class="nav-logo">
+				<img src="/assets/images/logo.PNG" alt="">
+				<p>AUCTION</p>
+		</div>
+		<div class="nav-search">
+				<input type="text" placeholder="Try enter: Shoes">
+		</div>
+		<div class="nav-links">
+				<ul>
+						<li><a href="">{{#link-to 'home'}}HOME{{/link-to}}</a></li>
+						<li><a href="">SHOP</a></li>
+						<li><a href="">MY ACCOUNT</a></li>
+				</ul>
+		</div>
 </nav>
-
 <div>
-	{{outlet}}
+		{{outlet}}
 </div>
 <footer>
-	<div class="footer-left">
-		<h3 class="footerH">AUCTION</h3>
-		<p class="footerP">About Us</p>
-		<p class="footerP">Tearms and Conditions</p>
-		<p class="footerP">Privacy and Policy</p>
-	</div>
-	<div class="footer-center">
-		<h3 class="footerH">GET IN TOUCH</h3>
-		<p class="footerP">Call Us at    +123 797-567-2535</p>
-		<p class="footerP">support@auction.com</p>
-		<ul class="footer-social list-inline">
-			<li><a href=""><i class="fa fa-facebook" style="color:grey;"></i></a></li>
-			<li><a href=""><i class="fa fa-instagram" style="color:grey;"></i></a></li>
-			<li><a href=""><i class="fa fa-twitter" style="color:grey;"></i></a></li>
-			<li><a href=""><i class="fa fa-google-plus" style="color:grey;"></i></a></li>
-		</ul>
-	</div>
-	<div class="footer-right">
-		<h3 class="footerH">NEWSLETTER</h3>
-		<p class="footerP">Enter your email address and get notified <br> about new products. We hate spam!</p>
-		<input type="email" placeholder="Your Email address">
-		<button class="goButton">GO &gt;</button>
-	</div>
+		<div class="footer-left">
+				<h3 class="footerH">AUCTION</h3>
+				<p class="footerP">About Us</p>
+				<p class="footerP">Tearms and Conditions</p>
+				<p class="footerP">Privacy and Policy</p>
+		</div>
+		<div class="footer-center">
+				<h3 class="footerH">GET IN TOUCH</h3>
+				<p class="footerP">Call Us at    +123 797-567-2535</p>
+				<p class="footerP">support@auction.com</p>
+				<ul class="footer-social list-inline">
+						<li><a href=""><i class="fa fa-facebook" style="color:grey;"></i></a></li>
+						<li><a href=""><i class="fa fa-instagram" style="color:grey;"></i></a></li>
+						<li><a href=""><i class="fa fa-twitter" style="color:grey;"></i></a></li>
+						<li><a href=""><i class="fa fa-google-plus" style="color:grey;"></i></a></li>
+				</ul>
+		</div>
+		<div class="footer-right">
+				<h3 class="footerH">NEWSLETTER</h3>
+				<p class="footerP">Enter your email address and get notified <br> about new products. We hate spam!</p>
+				<input type="email" placeholder="Your Email address">
+				<button class="goButton">GO &gt;</button>
+		</div>
 </footer>

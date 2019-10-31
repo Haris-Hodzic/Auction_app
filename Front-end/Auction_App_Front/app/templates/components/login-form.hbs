@@ -1,0 +1,38 @@
+<div class="loginBox">
+  <form class="loginForm" {{action "authenticate" on="submit"}}>
+    <div id="loginTitle">
+      <p id="titleText">LOGIN</p>
+    </div>
+    <label for="" class="label">Enter Email</label>
+    {{input value=email class="input" type="email" focus-out=(action (mut showEmailError) true)}}
+    {{#if errors}}
+      {{#if showEmailError}}
+        <div class="error">
+          E-mail address <strong>{{luser.email}}</strong> is invalid.
+        </div>
+      {{/if}}
+    {{/if}}
+    <label class="label">Password</label>
+    {{input type="password" value=password class="input" focus-out=(action (mut showPasswordError) true)}}
+    {{#if errors}}
+      {{#if showPasswordError}}
+        <div class="error">
+          {{v-get luser "password" "message"}}
+        </div>
+      {{/if}}
+    {{/if}}
+    {{#if errorMessage}}
+      <div class="error">
+        Invalid email or password.
+      </div>
+    {{/if}}
+    <Input @type="checkbox" @id="checkBox"/>
+    <label for="remember" class="labelCB">Remember me</label>
+
+    <button class="loginButton" type="submit">LOGIN</button>
+
+    <button class="loginBFB">LOGIN WITH FACEBOOK</button>
+    <button class="loginBGM">LOGIN WITH GMAIL</button>
+    <p id="fpass">Forgot Password?</p>
+  </form>
+</div> 
