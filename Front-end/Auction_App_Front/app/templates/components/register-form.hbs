@@ -1,0 +1,43 @@
+<form class="loginForm" {{action "register" on="submit"}}>
+  <div id="loginTitle">
+    <p id="titleText">REGISTER</p>
+  </div>
+  <label for="" class="label">First Name</label>
+  {{input value=firstName type="text" class="input" focus-out=(action (mut showFirstNameError) true)}}
+  {{#if errors}}
+    {{#if showFirstNameError}}
+      <div class="error">
+        {{v-get user "firstName" "message"}}
+      </div>
+    {{/if}}
+  {{/if}}
+  <label for="" class="label">Last Name</label>
+  {{input value=lastName type="text" class="input" focus-out=(action (mut showLastNameError) true)}}
+  {{#if errors}}
+    {{#if showLastNameError}}
+      <div class="error">
+        {{v-get user "lastName" "message"}}
+      </div>
+    {{/if}}
+  {{/if}}
+  <label for="" class="label">Enter Email</label>
+  {{input value=email type="email" class="input" focus-out=(action (mut showEmailError) true)}}
+  {{#if errors}}
+    {{#if showEmailError}}
+      <div class="error">
+        {{v-get user "email" "message"}}
+      </div>
+    {{/if}}
+  {{/if}}
+  <label for="" class="label">Password</label>
+  {{input type="password" value=password class="input" focus-out=(action (mut showPasswordError) true)}}
+  {{#if errors}}
+    {{#if showPasswordError}}
+      <div class="error">
+        {{v-get user "password" "message"}}
+      </div>
+    {{/if}}
+  {{/if}}
+  <button class="registerButton" type="submit">REGISTER</button>
+  <p id="haveAcc">Already have an account? {{#link-to "login"}}<span id="liginLink">Login</span>{{/link-to}}</p>
+</form>
