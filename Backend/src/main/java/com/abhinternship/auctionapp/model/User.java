@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.model;
-
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -15,21 +16,31 @@ public class User {
     @NotBlank
     private String email;
     private String gender;
-    private Date date_of_bith;
-    private String phone_no;
+    private Date dateOfBirth;
+    private String phoneNumber;
     @NotBlank
     private String password;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, @NotBlank String email, String gender, Date date_of_bith, String phone_no, @NotBlank String password) {
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "wishlist_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Wishlist wishlist;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "address_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Address address;
+
+    public User(String firstName, String lastName, @NotBlank String email, String gender, Date dateOfBirth, String phoneNumber, @NotBlank String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.gender = gender;
-        this.date_of_bith = date_of_bith;
-        this.phone_no = phone_no;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
         this.password = password;
     }
 
@@ -73,20 +84,20 @@ public class User {
         this.gender = gender;
     }
 
-    public Date getDate_of_bith() {
-        return date_of_bith;
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDate_of_bith(Date date_of_bith) {
-        this.date_of_bith = date_of_bith;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public String getPhone_no() {
-        return phone_no;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_no(String phone_no) {
-        this.phone_no = phone_no;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {
@@ -95,5 +106,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Wishlist getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(Wishlist wishlist) {
+        this.wishlist = wishlist;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

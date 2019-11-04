@@ -1,10 +1,9 @@
 package com.abhinternship.auctionapp.controller;
-import java.util.Objects;
 
 import com.abhinternship.auctionapp.config.JwtTokenUtil;
 import com.abhinternship.auctionapp.model.JwtRequest;
 import com.abhinternship.auctionapp.model.JwtResponse;
-import com.abhinternship.auctionapp.service.JwtUserDetailsService;
+import com.abhinternship.auctionapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,10 +25,10 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
-    private JwtUserDetailsService userDetailsService;
+    private UserService userDetailsService;
+
     @RequestMapping(value = "/authentication/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-        System.out.println(authenticationRequest.getEmail());
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getEmail());

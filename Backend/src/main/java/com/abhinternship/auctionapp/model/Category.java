@@ -12,7 +12,6 @@ public class Category {
     private Long id;
     private  String name;
 
-
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -20,7 +19,6 @@ public class Category {
             },
             mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
-
 
     public Category() {
     }

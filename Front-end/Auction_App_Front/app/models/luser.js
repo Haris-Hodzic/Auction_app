@@ -9,7 +9,6 @@ const Validations = buildValidations({
   password: [
   validator('presence', true)
   ]
-
 });
 
 export default DS.Model.extend(Validations, {

@@ -16,22 +16,17 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
     private String name;
     private String description;
-    @NotBlank
-    private double start_price;
-    @NotBlank
-    private Date start_date;
-    @NotBlank
-    private Date end_date;
-    @NotBlank
+    private double startPrice;
+    private Date startDate;
+    private Date endDate;
     private boolean shipping;
     private String phone;
-    private String highest_bid;
+    private double highestBid;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
@@ -49,15 +44,15 @@ public class Product {
     public Product() {
     }
 
-    public Product(@NotBlank String name, String description, @NotBlank double start_price, @NotBlank Date start_date, @NotBlank Date end_date, @NotBlank boolean shipping, String phone, String highest_bid) {
+    public Product(@NotBlank String name, String description, @NotBlank double startPrice, @NotBlank Date startDate, @NotBlank Date endDate, @NotBlank boolean shipping, String phone, Double highestBid) {
         this.name = name;
         this.description = description;
-        this.start_price = start_price;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.startPrice = startPrice;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.shipping = shipping;
         this.phone = phone;
-        this.highest_bid = highest_bid;
+        this.highestBid = highestBid;
     }
 
     public Long getId() {
@@ -84,28 +79,52 @@ public class Product {
         this.description = description;
     }
 
-    public double getStart_price() {
-        return start_price;
+    public double getStartPrice() {
+        return startPrice;
     }
 
-    public void setStart_price(double start_price) {
-        this.start_price = start_price;
+    public void setStartPrice(double startPrice) {
+        this.startPrice = startPrice;
     }
 
-    public Date getStart_date() {
-        return start_date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getEnd_date() {
-        return end_date;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Double getHighestBid() {
+        return highestBid;
+    }
+
+    public void setHighestBid(Double highestBid) {
+        this.highestBid = highestBid;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     public boolean isShipping() {
@@ -124,11 +143,4 @@ public class Product {
         this.phone = phone;
     }
 
-    public String getHighest_bid() {
-        return highest_bid;
-    }
-
-    public void setHighest_bid(String highest_bid) {
-        this.highest_bid = highest_bid;
-    }
 }
