@@ -6,8 +6,9 @@ export default Controller.extend({
   session: service('session'),
   actions: {
     logout() {
+      this.get('session').set('data.email', '');
       this.get('session').invalidate();
-      getOwner(this).lookup('router:main').transitionTo('login');       
-    }   
+      getOwner(this).lookup('router:main').transitionTo('login');
+    }
   }
 });

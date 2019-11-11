@@ -22,9 +22,14 @@ module.exports = function(environment) {
       // when it is created
     }
   };
+  ENV['ember-simple-auth'] = {
+    authenticationRoute: 'login',
+    routeAfterAuthentication: 'dashboard',
+    authorizer: 'authorizer:token',
+    crossOriginWhitelist: ['*']
+  };
 ENV['ember-simple-auth-token'] = {
   tokenDataPropertyName: 'tokenData', // Key in session to store token data
-  identificationField: 'email',
   refreshAccessTokens: true, // Enables access token refreshing
   tokenExpirationInvalidateSession: true,
   authorizationHeaderName: 'Authorization', // Header name added to each API request

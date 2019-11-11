@@ -21,7 +21,8 @@ export default Component.extend({
         if (validations.get('isValid')) {
           this.get('session').authenticate('authenticator:token', {email, password})
           .then(() => {
-            this.get('router').transitionTo('home');     
+            this.get('session').set('data.email', email);
+            this.get('router').transitionTo('home');
           }).catch(()=>{
             this.set('errorMessage', true);
           });             
@@ -29,6 +30,6 @@ export default Component.extend({
           this.set('errors', true);
         }
       });
-    }   
+    }
   }
 });

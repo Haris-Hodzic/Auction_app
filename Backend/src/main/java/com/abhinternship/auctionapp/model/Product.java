@@ -1,6 +1,7 @@
 package com.abhinternship.auctionapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,12 +25,14 @@ public class Product {
     private Date endDate;
     private boolean shipping;
     private String phone;
-    private double highestBid;
+    private Double highestBid;
+    @ElementCollection
+    private Set<String> photo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JsonIgnoreProperties({"password", "id", "firstName", "lastName", "gender", "dateOfBirth", "phoneNumber", "wishlist"})
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -44,7 +48,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(@NotBlank String name, String description, @NotBlank double startPrice, @NotBlank Date startDate, @NotBlank Date endDate, @NotBlank boolean shipping, String phone, Double highestBid) {
+    public Product(@NotBlank String name, String description, @NotBlank double startPrice, @NotBlank Date startDate, @NotBlank Date endDate, @NotBlank boolean shipping, String phone, Double highestBid, User user) {
         this.name = name;
         this.description = description;
         this.startPrice = startPrice;
@@ -53,6 +57,7 @@ public class Product {
         this.shipping = shipping;
         this.phone = phone;
         this.highestBid = highestBid;
+        this.user = user;
     }
 
     public Long getId() {
@@ -143,4 +148,11 @@ public class Product {
         this.phone = phone;
     }
 
+    public Set<String> getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Set<String> photo) {
+        this.photo = photo;
+    }
 }

@@ -1,0 +1,7 @@
+{{#link-to "product.show" product.id class="linkToClass"}}
+  <div class={{className}}>
+    <img src={{get this.product.photo "0"}} alt="">
+  </div>
+  <p class="productName">{{this.product.name}}</p>
+  <p class="productPrice">Start From ${{this.product.startPrice}}</p>
+{{/link-to}}

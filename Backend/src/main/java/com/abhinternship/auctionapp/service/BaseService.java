@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface BaseService<T> {
-    T getById(Integer requestId);
+    T getById(Long requestId);
 
     T create(LinkedHashMap request);
 
