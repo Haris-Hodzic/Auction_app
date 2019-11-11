@@ -1,0 +1,8 @@
+<div class="relatedProduct">
+  <p class="relatedProductTitle">Related Products</p>
+  <div class="relatedCollectionBody">
+    {{#each products as |product|}}
+      <div><Product  @className="relatedCollection" @product={{product}}></Product></div>
+    {{/each}}
+  </div>
+</div>

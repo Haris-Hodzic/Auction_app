@@ -1,0 +1,8 @@
+<div class="row bottomPartBody">
+  {{#each arrivals as |product|}}
+    <div class="col">
+      <Product  @className="bottomPart" @product={{product}}></Product>
+    </div>
+  {{/each}}
+</div>
+<button class="loadMoreBtn" {{action "loadMore"}}>Load More</button>

@@ -26,8 +26,8 @@ abstract public class BaseController<T> {
 
     @RequestMapping(value = "/{requestId}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<?> get(@PathVariable Integer requestId) {
-        return ResponseEntity.ok(baseService().getById(requestId));
+    public T get(@PathVariable Long requestId) {
+        return baseService().getById(requestId);
     }
 
     @RequestMapping(value = "/{requestId}", method = RequestMethod.PUT)

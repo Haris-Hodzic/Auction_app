@@ -21,7 +21,7 @@ public class UserService implements BaseService<User>, UserDetailsService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public User getById(Integer requestId) {
+    public User getById(Long requestId) {
         return null;
     }
 

@@ -1,0 +1,37 @@
+<div class="singleProductBody">
+  <div class="spTopPart">
+    <div class="spImages">
+      <div class="bigImageDiv">
+        <div class="bigImage"><img src={{get this.product.photo currentPhoto}} alt=""></div>
+      </div>
+      <div class="row smallImageDiv">
+        <div class="smallImage"><img src={{get this.product.photo "0"}} alt="" role="button" {{action "setPhoto" "0"}}></div>
+        <div class="smallImage"><img src={{get this.product.photo "1"}} alt="" role="button" {{action "setPhoto" "1"}}></div>
+        <div class="smallImage"><img src={{get this.product.photo "2"}} alt="" role="button" {{action "setPhoto" "2"}}></div>
+        <div class="smallImage"><img src={{get this.product.photo "3"}} alt="" role="button" {{action "setPhoto" "3"}}></div>
+      </div>
+    </div>
+    <div class="spRightSide">
+      <p class="spName">{{this.product.name}}</p>
+      <p class="spStartPrice">Star from - ${{this.product.startPrice}}</p>
+      <div class="bidDiv">
+        {{input value=bid class="bidInput" type="number"}}
+        <button class="bidBtn">PLACE BID</button>
+      </div>
+      <p class="bidLabel">Enter ${{this.product.highestBid}} or more</p>
+      <div class="bidInfo">
+        <p>Highest bid:  <span class="hpInfo">${{this.product.highestBid}}</span></p>
+        <p>No bids: 2</p>
+        <p>Time left: {{this.timeLeft}}</p>
+      </div>
+      <button class="watchListBtn" {{action "setWatchList"}}>Watchlist <i class="fa fa-heart {{watchList}}"></i></button>
+      <p class="bidDetails">Details</p>
+      <p class="bidDetailsText">{{this.product.description}}</p>
+    </div>
+  </div>
+</div>
+{{#if this.owner}}
+  <BidsList @product={{this.product}}></BidsList>
+{{else}}
+  <RelatedProducts @products={{products}}></RelatedProducts>
+{{/if}}
