@@ -30,7 +30,7 @@ export default Component.extend({
           var _this=this;
           later((function() {
            _this.get('session').authenticate('authenticator:token', {email, password});
-           _this.get('router').transitionTo('shop');
+           _this.get('router').transitionTo('home');
          }), 1000);
         }else{
           this.set('errors', true);
