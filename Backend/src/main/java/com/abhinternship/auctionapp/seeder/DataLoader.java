@@ -20,8 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
-@Order(2)
-public class ProductDataLoader implements CommandLineRunner {
+@Order(1)
+public class DataLoader implements CommandLineRunner {
     @Autowired
     ProductRepository productRepository;
     @Autowired
@@ -31,7 +31,7 @@ public class ProductDataLoader implements CommandLineRunner {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public ProductDataLoader(ProductRepository productRepository) {
+    public DataLoader(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -44,6 +44,8 @@ public class ProductDataLoader implements CommandLineRunner {
         List<Product> listOfProducts = new ArrayList<>();
         Set<Category> setOfCategories = new HashSet<>();
         List<Address> listOfAddresses = new ArrayList<>();
+        List<User> listOfUsers = new ArrayList<>();
+
         Date currentDate = new Date();
         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -52,10 +54,22 @@ public class ProductDataLoader implements CommandLineRunner {
         setOfCategories.add(category1);
         setOfCategories.add(category2);
 
+        listOfAddresses.add(new Address("3432  Dog Hill Lane", "KINGDOM CITY", "Missouri", "US", "65262"));
+        listOfAddresses.add(new Address("1620  Clearview Drive", "Denver", "Colorado", "US", "80202"));
+        listOfAddresses.add(new Address("51  Arbutus Drive", "MAYSLICK", "Kentucky", "US", "41055"));
+        listOfAddresses.add(new Address("4089  Archwood Avenue", "Riverton", "Wyoming", "US", "82501"));
+        addressRepository.saveAll(listOfAddresses);
 
+        listOfUsers.add(new User("Haris", "Hodzic", "haris@hotmail.com", "male", new Date("07/03/1997"), "062-987-654", bCryptPasswordEncoder.encode("Haris123")));
+        listOfUsers.add(new User("Edis", "Hodzic", "edis@hotmail.com", "male", new Date("04/12/1987"), "062-123-456", bCryptPasswordEncoder.encode("Edis123")));
+        listOfUsers.add(new User("Todd", "Hutchins", "bu3q95kp5ct@powerencry.com", "male", new Date("6/19/1998"), "307-240-4091", bCryptPasswordEncoder.encode("Haris123")));
+        listOfUsers.add(new User("Karen", "Wallace", "cemg3km2fyj@classesmail.com", "female", new Date("12/2/1957"), "214-205-7905", bCryptPasswordEncoder.encode("Haris123")));
+        listOfUsers.get(0).setAddress(listOfAddresses.get(0));
+        listOfUsers.get(1).setAddress(listOfAddresses.get(1));
+        listOfUsers.get(2).setAddress(listOfAddresses.get(2));
+        listOfUsers.get(3).setAddress(listOfAddresses.get(3));
+        userRepository.saveAll(listOfUsers);
 
-        User user= new User("Haris", "Hodzic", "harishodzic@hotmail.com", "male", new Date("07/03/1997"), "062-987-654", bCryptPasswordEncoder.encode("Haris123"));
-        userRepository.save(user);
         Set<String> product0 = new HashSet<>();
         Set<String> product1 = new HashSet<>();
         Set<String> product2 = new HashSet<>();
@@ -98,24 +112,24 @@ public class ProductDataLoader implements CommandLineRunner {
         product7.add("/assets/images/product7p2.jpg");
         product7.add("/assets/images/product7p3.jpg");
 
-        listOfProducts.add(new Product("Tissot Watch T120", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 520.00, new Date(), new Date("2019/11/29"), false, "061123456", 520.00));
-        listOfProducts.add(new Product("iPhone 11 Pro Max", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 2779.00, new Date(), new Date("2019/11/17"), false, "061123456", 2779.00));
-        listOfProducts.add(new Product("iPhone XR", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 1949.00, new Date(), new Date("2019/11/16"), false, "061123456", 1949.00));
-        listOfProducts.add(new Product("MacBook Pro 13″", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 3499.00, new Date(), new Date("2019/11/20"), false, "061123456", 3499.00));
-        listOfProducts.add(new Product("Nike Air Force 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 129.95, new Date(), new Date("2019/11/10"), false, "061123456", 129.95));
-        listOfProducts.add(new Product("Nike NIKE AIR MAX LTD 3", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 179.00, new Date("2019/10/28"), new Date("2019/11/22"), false, "061123456", 179.23));
-        listOfProducts.add(new Product("Nike M NSW CE TRK", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 102.99, new Date("2019/09/29"), new Date("2019/11/23"), false, "061123456", 102.99));
-        listOfProducts.add(new Product("Nike M J 23ALPHA", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 145.77, new Date("2019/11/02"), new Date("2019/12/30"), false, "061123456", 145.77));
-        listOfProducts.add(new Product("Shoes", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 110.00, new Date("2019/02/19"), new Date("2019/11/01"), false, "061123456", 110.00));
-        listOfProducts.add(new Product("Shoes", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 110.00, new Date(), new Date("2019/11/29"), false, "061123456", 110.00));
-        listOfProducts.add(new Product("Shoes", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 110.00, new Date(), new Date("2019/11/29"), false, "061123456", 110.00));
-        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/23"), false, "061123456", 110.00));
-        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/01"), false, "061123456", 110.00));
-        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/05"), false, "061123456", 110.00));
-        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/29"), false, "061123456", 110.00));
-        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/21"), false, "061123456", 110.00));
+        listOfProducts.add(new Product("Tissot Watch T120", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 520.00, new Date(), new Date("2019/11/29"), false, "061123456", 520.00, listOfUsers.get(0)));
+        listOfProducts.add(new Product("iPhone 11 Pro Max", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 2779.00, new Date(), new Date("2019/11/17"), false, "061123456", 2779.00, listOfUsers.get(1)));
+        listOfProducts.add(new Product("iPhone XR", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 1949.00, new Date(), new Date("2019/11/16"), false, "061123456", 1949.00, listOfUsers.get(2)));
+        listOfProducts.add(new Product("MacBook Pro 13″", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 3499.00, new Date(), new Date("2019/11/20"), false, "061123456", 3499.00, listOfUsers.get(3)));
+        listOfProducts.add(new Product("Nike Air Force 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 129.95, new Date(), new Date("2019/11/10"), false, "061123456", 129.95, listOfUsers.get(0)));
+        listOfProducts.add(new Product("Nike NIKE AIR MAX LTD 3", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 179.00, new Date("2019/10/28"), new Date("2019/11/22"), false, "061123456", 179.23, listOfUsers.get(1)));
+        listOfProducts.add(new Product("Nike M NSW CE TRK", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 102.99, new Date("2019/09/29"), new Date("2019/11/23"), false, "061123456", 102.99, listOfUsers.get(2)));
+        listOfProducts.add(new Product("Nike M J 23ALPHA", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 145.77, new Date("2019/11/02"), new Date("2019/12/30"), false, "061123456", 145.77, listOfUsers.get(3)));
+        listOfProducts.add(new Product("Shoes", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 110.00, new Date("2019/02/19"), new Date("2019/11/01"), false, "061123456", 110.00, listOfUsers.get(0)));
+        listOfProducts.add(new Product("Shoes", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 110.00, new Date(), new Date("2019/11/29"), false, "061123456", 110.00, listOfUsers.get(1)));
+        listOfProducts.add(new Product("Shoes", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 110.00, new Date(), new Date("2019/11/29"), false, "061123456", 110.00, listOfUsers.get(2)));
+        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/23"), false, "061123456", 110.00, listOfUsers.get(3)));
+        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/01"), false, "061123456", 110.00, listOfUsers.get(0)));
+        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/05"), false, "061123456", 110.00, listOfUsers.get(1)));
+        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/29"), false, "061123456", 110.00, listOfUsers.get(2)));
+        listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/21"), false, "061123456", 110.00, listOfUsers.get(3)));
         listOfProducts.get(0).setCategories(setOfCategories);
-        listOfProducts.get(0).setUser(user);
+
         listOfProducts.get(0).setPhoto(product0);
         listOfProducts.get(1).setPhoto(product1);
         listOfProducts.get(2).setPhoto(product2);

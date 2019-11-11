@@ -1,9 +1,9 @@
 <div class="loginBox">
   <form class="loginForm" {{action "authenticate" on="submit"}}>
-    <div id="loginTitle">
-      <p id="titleText">LOGIN</p>
+    <div class="loginTitle">
+      <p class="titleText">LOGIN</p>
     </div>
-    <label for="" class="label">Enter Email</label>
+    <p class="inputLabel">Enter Email</p>
     {{input value=email class="input" type="email" focus-out=(action (mut showEmailError) true)}}
     {{#if errors}}
       {{#if showEmailError}}
@@ -12,7 +12,7 @@
         </div>
       {{/if}}
     {{/if}}
-    <label class="label">Password</label>
+    <p class="inputLabel">Password</p>
     {{input type="password" value=password class="input" focus-out=(action (mut showPasswordError) true)}}
     {{#if errors}}
       {{#if showPasswordError}}
@@ -26,9 +26,10 @@
         Invalid email or password.
       </div>
     {{/if}}
-    <Input @type="checkbox" @id="checkBox"/>
-    <label for="remember" class="labelCB">Remember me</label>
-
+    <div class="rememberMe">
+      {{input type="checkbox" class="checkB"}}
+      <p for="remember" class="labelCB">Remember me</p>
+    </div>
     <button class="loginButton" type="submit">LOGIN</button>
 
     <button class="loginBFB">LOGIN WITH FACEBOOK</button>
