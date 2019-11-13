@@ -1,6 +1,6 @@
-export function initialize( application ) {
+export function initialize(application) {
   application.inject('route', 'router', 'router:main')
-  application.inject('component', 'router', 'router:main') 
+  application.inject('component', 'router', 'router:main')
 }
 
 export default {

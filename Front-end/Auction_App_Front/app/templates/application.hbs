@@ -22,9 +22,10 @@
   </div>
 </header>
 <nav>
+
   <div class="navLogo">
     <img src="/assets/images/logo.PNG" alt="">
-    <p>AUCTION</p>
+    {{#link-to "home"}}<p>AUCTION</p>{{/link-to}}
   </div>
   <div class="nav-search">
     <input type="text" placeholder="Try enter: Shoes">
@@ -37,7 +38,7 @@
     </ul>
   </div>
 </nav>
-<div>
+<div class="pageBody">
   {{outlet}}
 </div>
 <footer>

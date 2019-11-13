@@ -19,10 +19,10 @@
       <p class="productTitleP">{{this.product.name}}</p>
       <p class="productTitlePrice">Star from - ${{this.product.startPrice}}</p>
       <p class="productTitleDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.</p>
-      <button class="productTitleButton">BID NOW</button>
+      <button class="productTitleButton" {{action "bidNow"}}>BID NOW</button>
     </div>
     <div class="titleImage">
-      <img src={{get this.product.photo "2"}} alt="">
+      <img src={{get this.product.photo "1"}} alt="">
     </div>
   </div>
 </div>

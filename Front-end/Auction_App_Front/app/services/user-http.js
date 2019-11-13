@@ -1,12 +1,10 @@
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
+import Config from '../config/environment';
 
 export default Service.extend({
   httpBase: service(),
   register(data) {
-    this.get('httpBase').ajaxReq('http://localhost:8080/authentication', data, 'POST');
-  },
-  getProducts(data){
-    this.get('httpBase').ajaxReq('http://localhost:8080/api', data, 'GET');
+    this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/authentication', data, 'POST');
   }
 });

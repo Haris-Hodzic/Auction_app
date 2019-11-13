@@ -4,5 +4,7 @@
     <p class="date">Date</p>
     <p class="bid">Bid</p>
   </div>
-  <SingleBid @product={{this.product}}></SingleBid>
+  {{#each bids as |bid|}}
+    <SingleBid @product={{this.product}} @bid={{bid}}></SingleBid>
+  {{/each}}
 </div>

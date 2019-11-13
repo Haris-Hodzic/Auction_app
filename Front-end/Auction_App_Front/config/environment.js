@@ -47,21 +47,8 @@ ENV['ember-simple-auth-token'] = {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.APP.SERVER_URL = 'http://localhost:8080'
   }
- /*
-// config/environment.js
-ENV['ember-simple-auth-token'] = {
-   authorizationHeaderName: 'Authorization', // Header name added to each API request
-  authorizationPrefix: 'Bearer ', // Prefix added to each API request
-  serverTokenEndpoint: 'http://localhost:8080/authentication/login', // Server endpoint to send authenticate request
-  tokenPropertyName: 'token', // Key in server response that contains the access token
-  headers: {}, // Headers to add to the
-  refreshAccessTokens: true,
-  refreshLeeway: 300 // refresh 5 minutes (300 seconds) before expiration
-};
-ENV['simple-auth'] = {
-    authorizer: 'simple-auth-authorizer:token'
-  };*/
 
 
   if (environment === 'test') {

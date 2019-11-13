@@ -7,16 +7,11 @@ import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.repository.AddressRepository;
 import com.abhinternship.auctionapp.repository.ProductRepository;
 import com.abhinternship.auctionapp.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
@@ -46,9 +41,6 @@ public class DataLoader implements CommandLineRunner {
         List<Address> listOfAddresses = new ArrayList<>();
         List<User> listOfUsers = new ArrayList<>();
 
-        Date currentDate = new Date();
-        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-
         Category category1 = new Category("Shoes");
         Category category2 = new Category("Men");
         setOfCategories.add(category1);
@@ -60,10 +52,10 @@ public class DataLoader implements CommandLineRunner {
         listOfAddresses.add(new Address("4089  Archwood Avenue", "Riverton", "Wyoming", "US", "82501"));
         addressRepository.saveAll(listOfAddresses);
 
-        listOfUsers.add(new User("Haris", "Hodzic", "haris@hotmail.com", "male", new Date("07/03/1997"), "062-987-654", bCryptPasswordEncoder.encode("Haris123")));
-        listOfUsers.add(new User("Edis", "Hodzic", "edis@hotmail.com", "male", new Date("04/12/1987"), "062-123-456", bCryptPasswordEncoder.encode("Edis123")));
-        listOfUsers.add(new User("Todd", "Hutchins", "bu3q95kp5ct@powerencry.com", "male", new Date("6/19/1998"), "307-240-4091", bCryptPasswordEncoder.encode("Haris123")));
-        listOfUsers.add(new User("Karen", "Wallace", "cemg3km2fyj@classesmail.com", "female", new Date("12/2/1957"), "214-205-7905", bCryptPasswordEncoder.encode("Haris123")));
+        listOfUsers.add(new User("Haris", "Hodzic", "haris@hotmail.com", "male", new Date("07/03/1997"), "062-987-654", bCryptPasswordEncoder.encode("Haris123"), "/assets/images/profile1.jpg"));
+        listOfUsers.add(new User("Edis", "Hodzic", "edis@hotmail.com", "male", new Date("04/12/1987"), "062-123-456", bCryptPasswordEncoder.encode("Edis123"), "/assets/images/profile2.jpg"));
+        listOfUsers.add(new User("Todd", "Hutchins", "bu3q95kp5ct@powerencry.com", "male", new Date("6/19/1998"), "307-240-4091", bCryptPasswordEncoder.encode("Haris123"), "/assets/images/profile3.png"));
+        listOfUsers.add(new User("Karen", "Wallace", "cemg3km2fyj@classesmail.com", "female", new Date("12/2/1957"), "214-205-7905", bCryptPasswordEncoder.encode("Haris123"), "/assets/images/profile4.jpg"));
         listOfUsers.get(0).setAddress(listOfAddresses.get(0));
         listOfUsers.get(1).setAddress(listOfAddresses.get(1));
         listOfUsers.get(2).setAddress(listOfAddresses.get(2));
@@ -94,7 +86,7 @@ public class DataLoader implements CommandLineRunner {
         product3.add("/assets/images/product3p0.png");
         product3.add("/assets/images/product3p1.png");
         product3.add("/assets/images/product3p2.png");
-        product3.add("/assets/images/product3p3.jpg");
+        product3.add("/assets/images/product3p3.png");
         product4.add("/assets/images/product4p0.jpeg");
         product4.add("/assets/images/product4p1.jpeg");
         product4.add("/assets/images/product4p2.jpeg");

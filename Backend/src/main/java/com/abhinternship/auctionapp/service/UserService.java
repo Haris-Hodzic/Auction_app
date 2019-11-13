@@ -1,4 +1,5 @@
 package com.abhinternship.auctionapp.service;
+
 import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
 @Service
 public class UserService implements BaseService<User>, UserDetailsService {
 
@@ -25,11 +27,11 @@ public class UserService implements BaseService<User>, UserDetailsService {
         return null;
     }
 
-    public User checkEmail(String email){
+    public User checkEmail(String email) {
         User emailDb = repository.findByEmail(email);
-        if (emailDb==null){
+        if (emailDb == null) {
             return new User();
-        }else {
+        } else {
             return emailDb;
         }
     }
@@ -37,8 +39,8 @@ public class UserService implements BaseService<User>, UserDetailsService {
     @Override
     public User create(LinkedHashMap request) {
         ObjectMapper objectMapper = new ObjectMapper();
-        User user;
-        User req = objectMapper.convertValue(request, new TypeReference<User>() { });
+        User req = objectMapper.convertValue(request, new TypeReference<User>() {
+        });
         req.setPassword(bCryptPasswordEncoder.encode(req.getPassword()));
         repository.save(req);
         return new User();

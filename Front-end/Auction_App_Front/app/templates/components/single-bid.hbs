@@ -1,6 +1,6 @@
 <div class="singleBidBody">
-  <div class="bidderImage"><img src="" alt=""></div>
-  <div class="bidderName"></div>
-  <div class="bidDate"></div>
-  <div class="bidPrice"></div>
+  <div class="bidderImage"><img src={{bid.bidder.profilePhoto}} alt=""></div>
+  <div class="bidderName">{{bid.bidder.firstName}} {{bid.bidder.lastName}}</div>
+  <div class="bidDate">{{date}}</div>
+  <div class="bidPrice">${{bid.price}}</div>
 </div>

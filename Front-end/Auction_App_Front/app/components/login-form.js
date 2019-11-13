@@ -1,32 +1,37 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
-import { set } from '@ember/object';
+import {inject as service} from '@ember/service';
+import {set} from '@ember/object';
 
 export default Component.extend({
   session: service('session'),
-  luser: null,
+  loginuser: null,
   errors: false,
   errorMessage: false,
   actions: {
     authenticate() {
-      let luser = this.get('luser');
+      let loginuser = this.get('luser');
       const email = this.get('email');
       const password = this.get('password');
 
-      set(luser,'email', email); 
-      set(luser,'password', password);
+      set(loginuser, 'email', email);
+      set(loginuser, 'password', password);
 
-      luser.validate()
-      .then(({ validations }) => {
+      loginuser.validate()
+      .then(({
+        validations
+      }) => {
         if (validations.get('isValid')) {
-          this.get('session').authenticate('authenticator:token', {email, password})
+          this.get('session').authenticate('authenticator:token', {
+            email,
+            password
+          })
           .then(() => {
             this.get('session').set('data.email', email);
             this.get('router').transitionTo('home');
-          }).catch(()=>{
+          }).catch(() => {
             this.set('errorMessage', true);
-          });             
-        }else{
+          });
+        } else {
           this.set('errors', true);
         }
       });

@@ -8,7 +8,7 @@ export default Controller.extend({
   ratingClass: '',
   chanceClass: '',
   actions: {
-    onArrivals(){
+    onArrivals() {
       this.set('arrivalsActive', true);
       this.set('ratingActive', false);
       this.set('chanceActive', false);
@@ -16,7 +16,7 @@ export default Controller.extend({
       this.set('ratingClass', '');
       this.set('chanceClass', '');
     },
-    onRating(){
+    onRating() {
       this.set('arrivalsActive', false);
       this.set('ratingActive', true);
       this.set('chanceActive', false);
@@ -24,13 +24,13 @@ export default Controller.extend({
       this.set('ratingClass', 'active');
       this.set('chanceClass', '');
     },
-    onChance(){
+    onChance() {
       this.set('arrivalsActive', false);
       this.set('ratingActive', false);
       this.set('chanceActive', true);
       this.set('arrivalsClass', '');
       this.set('ratingClass', '');
       this.set('chanceClass', 'active');
-    }
+    },
   }
 });

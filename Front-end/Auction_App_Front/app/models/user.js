@@ -1,11 +1,11 @@
 import DS from 'ember-data';
-import { validator, buildValidations } from 'ember-cp-validations';
+import { validator, buildValidations} from 'ember-cp-validations';
 const { attr } = DS;
 const Validations = buildValidations({
   firstName: [
   validator('presence', {
     presence: true
-  }), 
+  }),
   ],
   lastName: [
   validator('presence', true),
@@ -13,7 +13,7 @@ const Validations = buildValidations({
   email: [
   validator('presence', true),
   validator('username-available'),
-  validator('format', { 
+  validator('format', {
     type: 'email',
     message: 'Enter the valid email format!'
   }),
@@ -23,10 +23,9 @@ const Validations = buildValidations({
   validator('length', {
     min: 4
   }),
-  validator('format', {  
+  validator('format', {
     regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,10}$/,
-    message:
-    '{description} must include at least one upper case letter, one lower case letter, and a number'
+    message: '{description} must include at least one upper case letter, one lower case letter, and a number'
   }),
   validator('length', {
     isWarning: true,

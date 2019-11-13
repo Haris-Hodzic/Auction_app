@@ -17,10 +17,10 @@ public class ProductService implements BaseService<Product> {
     @Override
     public Product getById(Long requestId) {
         Optional<Product> result = repository.findById(requestId);
-        if (result.isPresent()){
+        if (result.isPresent()) {
             Product productOptional = result.get();
             return productOptional;
-        }else {
+        } else {
             return null;
         }
     }
@@ -39,12 +39,14 @@ public class ProductService implements BaseService<Product> {
     public Product update(Integer id, Product request) {
         return null;
     }
-    public List<Product> findAllProductByStartDateDesc(int size) {
-        Pageable limit = PageRequest.of(0, size);
-        return repository.findAllProductByStartDateDesc(limit);
+
+    public List<Product> findAllProductByStartDateDesc(Long pageNumber) {
+        Pageable page = PageRequest.of(Math.toIntExact(pageNumber), 8);
+        return repository.findAllByOrderByStartDateDesc(page);
     }
-    public List<Product> findAllProductByEndDateAsc(int size) {
-        Pageable limit = PageRequest.of(0, size);
-        return repository.findAllProductByEndDateAsc(limit);
+
+    public List<Product> findAllProductByEndDateAsc(Long pageNumber) {
+        Pageable page = PageRequest.of(Math.toIntExact(pageNumber), 8);
+        return repository.findAllByOrderByEndDateAsc(page);
     }
 }

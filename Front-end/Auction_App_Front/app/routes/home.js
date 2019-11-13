@@ -2,9 +2,8 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
 export default Route.extend({
-  httpBase: service(),
-  products: null,
+  productHttp: service(),
   model() {
-    return this.get('httpBase').ajaxReq('http://localhost:8080/api', '', 'GET');
+    return this.get('productHttp').getAllProducts();
   }
 });

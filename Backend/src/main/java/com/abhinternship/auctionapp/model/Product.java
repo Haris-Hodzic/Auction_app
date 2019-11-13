@@ -1,6 +1,5 @@
 package com.abhinternship.auctionapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -9,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,6 +17,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @Column(length = 4095, columnDefinition = "text")
     private String description;
     private double startPrice;
     private Date startDate;
@@ -32,7 +31,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnoreProperties({"password", "id", "firstName", "lastName", "gender", "dateOfBirth", "phoneNumber", "wishlist"})
+    @JsonIgnoreProperties({"password", "id", "firstName", "lastName", "gender", "dateOfBirth", "phoneNumber", "address", "wishlist", "hibernateLazyInitializer"})
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -41,8 +40,8 @@ public class Product {
                     CascadeType.MERGE
             })
     @JoinTable(name = "product_category",
-            joinColumns = { @JoinColumn(name = "product_id") },
-            inverseJoinColumns = { @JoinColumn(name = "category_id") })
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private Set<Category> categories = new HashSet<>();
 
     public Product() {
