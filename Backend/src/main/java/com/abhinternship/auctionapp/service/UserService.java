@@ -1,6 +1,5 @@
 package com.abhinternship.auctionapp.service;
 
-
 import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.repository.UserRepository;
