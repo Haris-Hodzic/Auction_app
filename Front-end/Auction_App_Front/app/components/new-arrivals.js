@@ -9,7 +9,6 @@ export default Component.extend({
     this._super(...arguments);
     this.get('productHttp').loadArrivals(this.get('pageNumber')).then((result) => {
       this.set('arrivals', result);
-
     })
   },
   actions: {
