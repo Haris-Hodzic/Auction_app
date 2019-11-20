@@ -26,8 +26,9 @@ public class ProductService implements BaseService<Product> {
     }
 
     @Override
-    public Product create(LinkedHashMap request) {
-        return null;
+    public boolean create(LinkedHashMap request) {
+        //TODO
+        return false;
     }
 
     @Override
@@ -37,16 +38,17 @@ public class ProductService implements BaseService<Product> {
 
     @Override
     public Product update(Integer id, Product request) {
+        //TODO
         return null;
     }
 
     public List<Product> findAllProductByStartDateDesc(Long pageNumber) {
         Pageable page = PageRequest.of(Math.toIntExact(pageNumber), 8);
-        return repository.findAllByOrderByStartDateDesc(page);
+        return repository.getAllByOrderByStartDateDesc(page);
     }
 
     public List<Product> findAllProductByEndDateAsc(Long pageNumber) {
         Pageable page = PageRequest.of(Math.toIntExact(pageNumber), 8);
-        return repository.findAllByOrderByEndDateAsc(page);
+        return repository.getAllByOrderByEndDateAsc(page);
     }
 }

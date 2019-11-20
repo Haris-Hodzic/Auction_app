@@ -17,13 +17,13 @@ public class ProductController extends BaseController<Product> {
         super(productService);
     }
 
-    @RequestMapping(value = "/arrivals/{pageNumber}", method = RequestMethod.GET)
+    @GetMapping("/arrivals/{pageNumber}")
     @ResponseBody
     public List<Product> getNewProducts(@PathVariable Long pageNumber) {
         return productService.findAllProductByStartDateDesc(pageNumber);
     }
 
-    @RequestMapping(value = "/lastchance/{pageNumber}", method = RequestMethod.GET)
+    @GetMapping("/lastchance/{pageNumber}")
     @ResponseBody
     public List<Product> getLastChance(@PathVariable Long pageNumber) {
         return productService.findAllProductByEndDateAsc(pageNumber);

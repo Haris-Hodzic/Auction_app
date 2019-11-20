@@ -17,7 +17,7 @@ public class UserController extends BaseController<User> {
     }
 
     @PostMapping("/emailAvailable")
-    public User checkEmail(@RequestBody String email) {
+    public Boolean checkEmail(@RequestBody String email) {
         return userService.checkEmail(email);
     }
 }

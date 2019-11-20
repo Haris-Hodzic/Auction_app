@@ -4,28 +4,19 @@ import {inject as service} from '@ember/service';
 export default Component.extend({
   bidHttp: service(),
   session: service('session'),
-  endDate: null,
-  endDateDay: null,
-  endDateMonth: null,
-  today: null,
-  todayDay: null,
-  todayMonth: null,
   timeLeft: null,
-  watchList: 'wl',
+  isWatchList: false,
+  watchListClass: 'wlInactive',
   currentPhoto: '0',
-  user: null,
   owner: false,
-  price: 0,
   bidderEmail: '',
-  currentProduct: null,
-  data: null,
   error: false,
   errorMessage: 'There are higher bids than yours. You could give a second try!',
-  successfulBid: 'Congrats! You are the higest bider!',
+  successfulBidMessage: 'Congrats! You are the higest bider!',
   isOwnerMessage: 'You are the seller of this product!',
+  notAuthenticatedMessage: 'You need to log in to place a bid!',
   bidTry: false,
   singleProduct: null,
-  notAuthenticatedMessage: 'You need to log in to place a bid!',
   init() {
     this._super(...arguments);
     let today = new Date().toJSON().slice(0, 10);
@@ -54,10 +45,12 @@ export default Component.extend({
   },
   actions: {
     setWatchList() {
-      if (this.get('watchList') != 'wl') {
-        this.set('watchList', 'wl');
+      if (this.get('isWatchList') != false) {
+        this.set('watchListClass', 'wlInactive');
+        this.set('isWatchList', false);
       } else {
-        this.set('watchList', 'wlActive');
+        this.set('watchListClass', 'wlActive');
+        this.set('isWatchList', true);
       }
     },
     setPhoto(num) {
@@ -77,7 +70,7 @@ export default Component.extend({
           'userEmail': bidderEmail
         });
         this.get('bidHttp').createBid(data).then((result) => {
-          if (result.price === null) {
+          if (result === false) {
             this.set('error', true);
           } else {
             this.set('error', false);

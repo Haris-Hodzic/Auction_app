@@ -6,7 +6,7 @@ import java.util.List;
 public interface BaseService<T> {
     T getById(Long requestId);
 
-    T create(LinkedHashMap request);
+    boolean create(LinkedHashMap request);
 
     List<T> getAll();
 

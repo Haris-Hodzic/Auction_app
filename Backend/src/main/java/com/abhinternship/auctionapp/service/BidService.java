@@ -24,18 +24,19 @@ public class BidService implements BaseService<Bid> {
 
     @Override
     public Bid getById(Long requestId) {
+        //TODO
         return null;
     }
 
     @Override
-    public Bid create(LinkedHashMap request) {
+    public boolean create(LinkedHashMap request) {
         ObjectMapper objectMapper = new ObjectMapper();
         BidRequest req = objectMapper.convertValue(request, new TypeReference<BidRequest>() {
         });
         String userEmail = req.getUserEmail();
-        User bidder = userRepository.findByEmail(userEmail);
+        User bidder = userRepository.getOneByEmail(userEmail);
         Product product = req.getProduct();
-        User creator = userRepository.findByEmail(product.getUser().getEmail());
+        User creator = userRepository.getOneByEmail(product.getUser().getEmail());
         Double price = req.getPrice();
         Date date = req.getDate();
         DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
@@ -46,9 +47,9 @@ public class BidService implements BaseService<Bid> {
             productRepository.save(product);
             Bid bid = new Bid(price, date, bidder, product);
             bidRepository.save(bid);
-            return bid;
+            return true;
         } else {
-            return new Bid();
+            return false;
         }
     }
 
@@ -69,6 +70,7 @@ public class BidService implements BaseService<Bid> {
 
     @Override
     public Bid update(Integer id, Bid request) {
+        //TODO
         return null;
     }
 }

@@ -24,26 +24,27 @@ public class UserService implements BaseService<User>, UserDetailsService {
 
     @Override
     public User getById(Long requestId) {
+        //TODO
         return null;
     }
 
-    public User checkEmail(String email) {
+    public boolean checkEmail(String email) {
         User emailDb = repository.findByEmail(email);
         if (emailDb == null) {
-            return new User();
+            return true;
         } else {
-            return emailDb;
+            return false;
         }
     }
 
     @Override
-    public User create(LinkedHashMap request) {
+    public boolean create(LinkedHashMap request) {
         ObjectMapper objectMapper = new ObjectMapper();
         User req = objectMapper.convertValue(request, new TypeReference<User>() {
         });
         req.setPassword(bCryptPasswordEncoder.encode(req.getPassword()));
         repository.save(req);
-        return new User();
+        return true;
     }
 
     @Override
@@ -53,6 +54,7 @@ public class UserService implements BaseService<User>, UserDetailsService {
 
     @Override
     public User update(Integer id, User request) {
+        //TODO
         return null;
     }
 

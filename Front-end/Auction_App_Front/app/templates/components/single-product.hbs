@@ -4,10 +4,10 @@
       {{#if owner}}
         <p class="ownerMessage">{{isOwnerMessage}}</p>
       {{else}}
-        {{#if errorComputed}}
+        {{#if error}}
           <p class="errorNotificationText">{{errorMessage}}</p>
         {{else}}
-          <p class="successNotificationText">{{successfulBid}}</p>
+          <p class="successNotificationText">{{successfulBidMessage}}</p>
         {{/if}}
       {{/if}}
     {{else}}
@@ -40,7 +40,7 @@
         <p>No bids: {{singleProduct.length}}</p>
         <p>Time left: {{this.timeLeft}}</p>
       </div>
-      <button class="watchListBtn" {{action "setWatchList"}}>Watchlist <i class="fa fa-heart {{watchList}}"></i></button>
+      <button class="watchListBtn" {{action "setWatchList"}}>Watchlist <i class="fa fa-heart {{watchListClass}}"></i></button>
       <p class="bidDetails">Details</p>
       <p class="bidDetailsText">{{this.product.description}}</p>
     </div>

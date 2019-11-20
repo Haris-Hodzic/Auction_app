@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> findAllByOrderByStartDateDesc(Pageable pageable);
+    List<Product> getAllByOrderByStartDateDesc(Pageable pageable);
 
-    List<Product> findAllByOrderByEndDateAsc(Pageable pageable);
+    List<Product> getAllByOrderByEndDateAsc(Pageable pageable);
 }

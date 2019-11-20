@@ -5,4 +5,8 @@
     </div>
   {{/each}}
 </div>
-<button class="loadMoreBtn" {{action "loadMoreChance"}}>Load More</button>
+<div class="pagination">
+  {{#each buttonsList as |buttonNumber index|}}
+    <button class="loadMoreBtn" {{action "loadMoreChance" index}}>{{buttonNumber.page}}</button>
+  {{/each}}
+</div>

@@ -19,7 +19,7 @@ public class BidController extends BaseController<Bid> {
 
     @GetMapping("/product/{productId}")
     @ResponseBody
-    public List<Bid> bidsById(@PathVariable Long productId) {
+    public List<Bid> getBidsByProductId(@PathVariable Long productId) {
         return bidService.getAllByProductId(productId);
     }
 }

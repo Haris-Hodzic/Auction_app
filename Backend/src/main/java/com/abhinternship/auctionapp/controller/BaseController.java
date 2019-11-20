@@ -16,25 +16,25 @@ abstract public class BaseController<T> {
         this.implementedService = baseService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     @ResponseBody
     public List<T> getAll() {
         return implementedService.getAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseBody
-    public T create(@RequestBody @Valid LinkedHashMap request, BindingResult errors) {
+    public boolean create(@RequestBody @Valid LinkedHashMap request, BindingResult errors) {
         return implementedService.create(request);
     }
 
-    @RequestMapping(value = "/{requestId}", method = RequestMethod.GET)
+    @GetMapping("/{requestId}")
     @ResponseBody
     public T get(@PathVariable Long requestId) {
         return implementedService.getById(requestId);
     }
 
-    @RequestMapping(value = "/{requestId}", method = RequestMethod.PUT)
+    @PutMapping("/{requestId}")
     @ResponseBody
     public ResponseEntity<?> modify(@PathVariable Integer requestId, @RequestBody @Valid final T request, final BindingResult errors) {
         return ResponseEntity.ok(implementedService.update(requestId, request));
