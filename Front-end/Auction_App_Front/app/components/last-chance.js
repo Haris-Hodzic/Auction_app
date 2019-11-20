@@ -4,7 +4,7 @@ import {inject as service} from '@ember/service';
 export default Component.extend({
   productHttp: service(),
   chances: null,
-  buttonsList: [],
+  buttonsList: null,
   init() {
     this._super(...arguments);
     this.set('buttonsList',[]);

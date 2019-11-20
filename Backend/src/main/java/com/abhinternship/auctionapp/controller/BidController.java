@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.controller;
 
+import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.Bid;
 import com.abhinternship.auctionapp.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class BidController extends BaseController<Bid> {
 
     @GetMapping("/product/{productId}")
     @ResponseBody
-    public List<Bid> getBidsByProductId(@PathVariable Long productId) {
+    public List<Bid> getBidsByProductId(@PathVariable Long productId) throws RepositoryException {
         return bidService.getAllByProductId(productId);
     }
 }

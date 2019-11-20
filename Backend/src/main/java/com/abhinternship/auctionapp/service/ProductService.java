@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.service;
 
+import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.Product;
 import com.abhinternship.auctionapp.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,17 @@ public class ProductService implements BaseService<Product> {
     ProductRepository repository;
 
     @Override
-    public Product getById(Long requestId) {
+    public Product getById(Long requestId) throws RepositoryException{
         Optional<Product> result = repository.findById(requestId);
-        if (result.isPresent()) {
-            Product productOptional = result.get();
-            return productOptional;
-        } else {
-            return null;
+        try {
+            if (result.isPresent()) {
+                Product productOptional = result.get();
+                return productOptional;
+            }
+        }catch (Exception e) {
+            throw new RepositoryException("No products found");
         }
+        return null;
     }
 
     @Override
@@ -32,8 +36,12 @@ public class ProductService implements BaseService<Product> {
     }
 
     @Override
-    public List<Product> getAll() {
-        return repository.findAll();
+    public List<Product> getAll() throws RepositoryException{
+        try {
+            return repository.findAll();
+        }catch (Exception e){
+            throw new RepositoryException("No products found");
+        }
     }
 
     @Override
@@ -42,13 +50,22 @@ public class ProductService implements BaseService<Product> {
         return null;
     }
 
-    public List<Product> findAllProductByStartDateDesc(Long pageNumber) {
+    public List<Product> findAllProductByStartDateDesc(Long pageNumber) throws RepositoryException{
         Pageable page = PageRequest.of(Math.toIntExact(pageNumber), 8);
-        return repository.getAllByOrderByStartDateDesc(page);
+        try {
+            return repository.getAllByOrderByStartDateDesc(page);
+        }catch (Exception e){
+            throw new RepositoryException("No products found");
+        }
     }
 
-    public List<Product> findAllProductByEndDateAsc(Long pageNumber) {
-        Pageable page = PageRequest.of(Math.toIntExact(pageNumber), 8);
-        return repository.getAllByOrderByEndDateAsc(page);
+    public List<Product> findAllProductByEndDateAsc(Long pageNumber) throws RepositoryException{
+        try {
+            Pageable page = PageRequest.of(Math.toIntExact(pageNumber), 8);
+            return repository.getAllByOrderByEndDateAsc(page);
+        }catch (Exception e){
+            throw new RepositoryException("No products found");
+        }
+
     }
 }

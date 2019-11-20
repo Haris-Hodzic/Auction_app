@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.controller;
 
+import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.Product;
 import com.abhinternship.auctionapp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,13 @@ public class ProductController extends BaseController<Product> {
 
     @GetMapping("/arrivals/{pageNumber}")
     @ResponseBody
-    public List<Product> getNewProducts(@PathVariable Long pageNumber) {
+    public List<Product> getNewProducts(@PathVariable Long pageNumber) throws RepositoryException {
         return productService.findAllProductByStartDateDesc(pageNumber);
     }
 
     @GetMapping("/lastchance/{pageNumber}")
     @ResponseBody
-    public List<Product> getLastChance(@PathVariable Long pageNumber) {
+    public List<Product> getLastChance(@PathVariable Long pageNumber) throws RepositoryException {
         return productService.findAllProductByEndDateAsc(pageNumber);
     }
 }

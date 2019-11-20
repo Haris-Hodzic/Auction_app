@@ -25,7 +25,7 @@ export default Component.extend({
     let endDateDay = endDate.slice(8, 10);
     let endDateMonth = endDate.slice(5, 7);
     let todayMonth = today.slice(5, 7);
-    let user = this.product.user.email;
+    let ownerEmail = this.product.user.email;
 
     this.get('bidHttp').getSingleBid(this.product.id).then((result) => {
       this.set('singleProduct', result);
@@ -37,7 +37,7 @@ export default Component.extend({
     } else {
       this.set('timeLeft', 'finished');
     }
-    if (this.get('session.data.email') === user) {
+    if (this.get('session.data.email') === ownerEmail) {
       this.set('owner', true);
     } else {
       this.set('owner', false);

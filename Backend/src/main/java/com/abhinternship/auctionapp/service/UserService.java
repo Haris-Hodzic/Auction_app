@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.service;
 
+import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -29,27 +30,31 @@ public class UserService implements BaseService<User>, UserDetailsService {
     }
 
     public boolean checkEmail(String email) {
-        User emailDb = repository.findByEmail(email);
-        if (emailDb == null) {
+        return repository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean create(LinkedHashMap request) throws RepositoryException{
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            User req = objectMapper.convertValue(request, new TypeReference<User>() {
+            });
+            req.setPassword(bCryptPasswordEncoder.encode(req.getPassword()));
+            repository.save(req);
             return true;
-        } else {
-            return false;
+        }catch (Exception e){
+            throw new RepositoryException("User cannot be created");
         }
     }
 
     @Override
-    public boolean create(LinkedHashMap request) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        User req = objectMapper.convertValue(request, new TypeReference<User>() {
-        });
-        req.setPassword(bCryptPasswordEncoder.encode(req.getPassword()));
-        repository.save(req);
-        return true;
-    }
+    public List<User> getAll() throws RepositoryException {
+        try {
+            return repository.findAll();
+        }catch (Exception e){
+            throw new RepositoryException("No user found");
+        }
 
-    @Override
-    public List<User> getAll() {
-        return repository.findAll();
     }
 
     @Override
@@ -61,7 +66,11 @@ public class UserService implements BaseService<User>, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         com.abhinternship.auctionapp.model.User user = repository.findByEmail(username);
         if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
+            try {
+                throw new RepositoryException("User not found with username: " + username);
+            } catch (RepositoryException e) {
+                e.printStackTrace();
+            }
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 new ArrayList<>());

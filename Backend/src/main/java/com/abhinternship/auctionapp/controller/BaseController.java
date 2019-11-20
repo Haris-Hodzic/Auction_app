@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.controller;
 
+import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.service.BaseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -18,25 +19,25 @@ abstract public class BaseController<T> {
 
     @GetMapping
     @ResponseBody
-    public List<T> getAll() {
+    public List<T> getAll() throws RepositoryException {
         return implementedService.getAll();
     }
 
     @PostMapping
     @ResponseBody
-    public boolean create(@RequestBody @Valid LinkedHashMap request, BindingResult errors) {
+    public boolean create(@RequestBody @Valid LinkedHashMap request, BindingResult errors) throws RepositoryException{
         return implementedService.create(request);
     }
 
     @GetMapping("/{requestId}")
     @ResponseBody
-    public T get(@PathVariable Long requestId) {
+    public T get(@PathVariable Long requestId) throws RepositoryException {
         return implementedService.getById(requestId);
     }
 
     @PutMapping("/{requestId}")
     @ResponseBody
-    public ResponseEntity<?> modify(@PathVariable Integer requestId, @RequestBody @Valid final T request, final BindingResult errors) {
+    public ResponseEntity<?> modify(@PathVariable Integer requestId, @RequestBody @Valid final T request, final BindingResult errors) throws RepositoryException{
         return ResponseEntity.ok(implementedService.update(requestId, request));
     }
 }

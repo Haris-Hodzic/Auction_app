@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.service;
 
+import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.Bid;
 import com.abhinternship.auctionapp.model.BidRequest;
 import com.abhinternship.auctionapp.model.Product;
@@ -29,36 +30,49 @@ public class BidService implements BaseService<Bid> {
     }
 
     @Override
-    public boolean create(LinkedHashMap request) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        BidRequest req = objectMapper.convertValue(request, new TypeReference<BidRequest>() {
-        });
-        String userEmail = req.getUserEmail();
-        User bidder = userRepository.getOneByEmail(userEmail);
-        Product product = req.getProduct();
-        User creator = userRepository.getOneByEmail(product.getUser().getEmail());
-        Double price = req.getPrice();
-        Date date = req.getDate();
-        DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+    public boolean create(LinkedHashMap request) throws RepositoryException{
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            BidRequest req = objectMapper.convertValue(request, new TypeReference<BidRequest>() {
+            });
+            String userEmail = req.getUserEmail();
+            User bidder = userRepository.getOneByEmail(userEmail);
+            Product product = req.getProduct();
+            User creator = userRepository.getOneByEmail(product.getUser().getEmail());
+            Double price = req.getPrice();
+            Date date = req.getDate();
+            DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 
-        if (price > product.getHighestBid()) {
-            product.setHighestBid(price);
-            product.setUser(creator);
-            productRepository.save(product);
-            Bid bid = new Bid(price, date, bidder, product);
-            bidRepository.save(bid);
-            return true;
-        } else {
-            return false;
+            if (price > product.getHighestBid()) {
+                product.setHighestBid(price);
+                product.setUser(creator);
+                productRepository.save(product);
+                Bid bid = new Bid(price, date, bidder, product);
+                bidRepository.save(bid);
+                return true;
+            } else {
+                return false;
+            }
+        }catch (Exception e){
+            throw new RepositoryException(e.getMessage());
         }
     }
 
     @Override
-    public List<Bid> getAll() {
-        return bidRepository.findAll();
+    public List<Bid> getAll() throws RepositoryException{
+        try {
+            return bidRepository.findAll();
+        }catch (Exception e){
+            throw new RepositoryException("No bids found");
+        }
     }
 
-    public List<Bid> getAllByProductId(Long productId) {
+    public List<Bid> getAllByProductId(Long productId) throws RepositoryException {
+        try {
+
+        }catch (Exception e){
+            throw new RepositoryException("No bids found");
+        }
         Optional<Product> productRequest = productRepository.findById(productId);
         if (productRequest.isPresent()) {
             Product product = productRequest.get();

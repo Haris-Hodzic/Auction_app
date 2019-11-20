@@ -5,8 +5,8 @@ const UsernameAvailable = BaseValidator.extend({
   productHttp: service(),
   validate(value) {
     return this.get('productHttp').emailAvailable(value).then((result) => {
-      if (result === true) {
-        return result;
+      if (result === false) {
+        return true;
       } else {
         return "The email is already in use";
       }

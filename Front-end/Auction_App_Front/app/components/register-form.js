@@ -40,7 +40,7 @@ export default Component.extend({
               email,
               password
             });
-            this.get('session').set('data.email', email);
+            _this.get('session').set('data.email', email);
             _this.get('router').transitionTo('home');
           }), 1000);
         } else {
