@@ -1,13 +1,13 @@
 <header>
-  <div class="header-left">
-    <ul class="footer-social list-inline">
+  <div class="headerLeft">
+    <ul>
       <li><a href=""><i class="fa fa-facebook icons"></i></a></li>
       <li><a href=""><i class="fa fa-instagram icons"></i></a></li>
       <li><a href=""><i class="fa fa-twitter icons"></i></a></li>
       <li><a href=""><i class="fa fa-google-plus icons"></i></a></li>
     </ul>
   </div>  
-  <div class="header-right">
+  <div class="headerRight">
     {{#if session.isAuthenticated}}
       <ul>
         <li>{{#link-to "login"}}<span {{action "logout"}} role="button">Logout</span>{{/link-to}}</li>
@@ -22,9 +22,10 @@
   </div>
 </header>
 <nav>
-  <div class="nav-logo">
+
+  <div class="navLogo">
     <img src="/assets/images/logo.PNG" alt="">
-    <p>AUCTION</p>
+    {{#link-to "home"}}<p>AUCTION</p>{{/link-to}}
   </div>
   <div class="nav-search">
     <input type="text" placeholder="Try enter: Shoes">
@@ -32,12 +33,12 @@
   <div class="nav-links">
     <ul>
       <li><a href="">{{#link-to "home"}}HOME{{/link-to}}</a></li>
-      <li><a href="">SHOP</a></li>
+      <li><a href="">{{#link-to "shop"}}SHOP{{/link-to}}</a></li>
       <li><a href="">MY ACCOUNT</a></li>
     </ul>
   </div>
 </nav>
-<div>
+<div class="pageBody">
   {{outlet}}
 </div>
 <footer>
@@ -51,7 +52,7 @@
     <h3 class="footerH">GET IN TOUCH</h3>
     <p class="footerP">Call Us at    +123 797-567-2535</p>
     <p class="footerP">support@auction.com</p>
-    <ul class="footer-social list-inline">
+    <ul class="footer-social">
       <li><a href=""><i class="fa fa-facebook icons"></i></a></li>
       <li><a href=""><i class="fa fa-instagram icons"></i></a></li>
       <li><a href=""><i class="fa fa-twitter icons"></i></a></li>

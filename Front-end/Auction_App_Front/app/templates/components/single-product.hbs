@@ -1,0 +1,53 @@
+<div class="errorNotification">
+  {{#if bidTry}}
+    {{#if session.isAuthenticated}}
+      {{#if owner}}
+        <p class="ownerMessage">{{isOwnerMessage}}</p>
+      {{else}}
+        {{#if error}}
+          <p class="errorNotificationText">{{errorMessage}}</p>
+        {{else}}
+          <p class="successNotificationText">{{successfulBidMessage}}</p>
+        {{/if}}
+      {{/if}}
+    {{else}}
+      <p class="notAuthenticatedNotification">{{notAuthenticatedMessage}}</p>
+    {{/if}}
+  {{/if}}
+</div>
+<div class="singleProductBody">
+  <div class="spTopPart">
+    <div class="spImages">
+      <div class="bigImageDiv">
+        <div class="bigImage"><img src={{get this.product.photo currentPhoto}} alt=""></div>
+      </div>
+      <div class="row smallImageDiv">
+        {{#each this.product.photo as |photo index|}}
+          <div class="smallImage"><img src={{photo}} alt="" role="button" {{action "setPhoto" index}}></div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="spRightSide">
+      <p class="spName">{{this.product.name}}</p>
+      <p class="spStartPrice">Start from - ${{this.product.highestBid}}</p>
+      <div class="bidDiv">
+        {{input value=price class="bidInput" type="number"}}
+        <button class="bidBtn" {{action "placeBid"}}>PLACE BID</button>
+      </div>
+      <p class="bidLabel">Enter ${{this.product.highestBid}} or more</p>
+      <div class="bidInfo">
+        <p>Highest bid:  <span class="hpInfo">${{this.product.highestBid}}</span></p>
+        <p>No bids: {{singleProduct.length}}</p>
+        <p>Time left: {{this.timeLeft}}</p>
+      </div>
+      <button class="watchListBtn" {{action "setWatchList"}}>Watchlist <i class="fa fa-heart {{watchListClass}}"></i></button>
+      <p class="bidDetails">Details</p>
+      <p class="bidDetailsText">{{this.product.description}}</p>
+    </div>
+  </div>
+</div>
+{{#if this.owner}}
+  <BidsList @product={{this.product}} @bids={{singleProduct}}></BidsList>
+{{else}}
+  <RelatedProducts @products={{products}}></RelatedProducts>
+{{/if}}

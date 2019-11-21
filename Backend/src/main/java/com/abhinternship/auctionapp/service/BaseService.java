@@ -1,15 +1,17 @@
 package com.abhinternship.auctionapp.service;
 
+import com.abhinternship.auctionapp.exception.RepositoryException;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface BaseService<T> {
-    T getById(Integer requestId);
+    T getById(Long requestId) throws RepositoryException;
 
-    T create(LinkedHashMap request);
+    boolean create(LinkedHashMap request) throws RepositoryException;
 
-    List<T> getAll();
+    List<T> getAll() throws RepositoryException;
 
-    T update(Integer id, T request);
+    T update(Integer id, T request) throws RepositoryException;
 
 }

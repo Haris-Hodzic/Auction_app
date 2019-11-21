@@ -1,0 +1,10 @@
+<div class="bidsListBody">
+  <div class="bidHeader">
+    <p class="bidder">Bidder</p>
+    <p class="date">Date</p>
+    <p class="bid">Bid</p>
+  </div>
+  {{#each bids as |bid|}}
+    <SingleBid @product={{this.product}} @bid={{bid}}></SingleBid>
+  {{/each}}
+</div>

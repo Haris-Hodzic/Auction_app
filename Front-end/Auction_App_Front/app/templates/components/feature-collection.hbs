@@ -1,0 +1,8 @@
+<div class="featureCollectionBody">
+  <p class="featureCollectionTitle">Feature Collection</p>
+  <div class="featureCollectionImages">
+    {{#each products as |product|}}
+      <Product  @className="featureCollection" @product={{product}}></Product>
+    {{/each}}
+  </div>
+</div>

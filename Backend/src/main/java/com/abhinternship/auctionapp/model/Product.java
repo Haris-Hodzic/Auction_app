@@ -1,6 +1,6 @@
 package com.abhinternship.auctionapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -17,18 +17,21 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @Column(length = 4095, columnDefinition = "text")
     private String description;
     private double startPrice;
     private Date startDate;
     private Date endDate;
     private boolean shipping;
     private String phone;
-    private double highestBid;
+    private Double highestBid;
+    @ElementCollection
+    private Set<String> photo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JsonIgnoreProperties({"password", "id", "firstName", "lastName", "gender", "dateOfBirth", "phoneNumber", "address", "wishlist", "hibernateLazyInitializer"})
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -37,14 +40,14 @@ public class Product {
                     CascadeType.MERGE
             })
     @JoinTable(name = "product_category",
-            joinColumns = { @JoinColumn(name = "product_id") },
-            inverseJoinColumns = { @JoinColumn(name = "category_id") })
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private Set<Category> categories = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(@NotBlank String name, String description, @NotBlank double startPrice, @NotBlank Date startDate, @NotBlank Date endDate, @NotBlank boolean shipping, String phone, Double highestBid) {
+    public Product(@NotBlank String name, String description, @NotBlank double startPrice, @NotBlank Date startDate, @NotBlank Date endDate, @NotBlank boolean shipping, String phone, Double highestBid, User user) {
         this.name = name;
         this.description = description;
         this.startPrice = startPrice;
@@ -53,6 +56,7 @@ public class Product {
         this.shipping = shipping;
         this.phone = phone;
         this.highestBid = highestBid;
+        this.user = user;
     }
 
     public Long getId() {
@@ -143,4 +147,11 @@ public class Product {
         this.phone = phone;
     }
 
+    public Set<String> getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Set<String> photo) {
+        this.photo = photo;
+    }
 }

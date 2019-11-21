@@ -1,4 +1,5 @@
 package com.abhinternship.auctionapp.model;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class User {
     private String phoneNumber;
     @NotBlank
     private String password;
+    private String profilePhoto;
 
     public User() {
     }
@@ -34,7 +36,7 @@ public class User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Address address;
 
-    public User(String firstName, String lastName, @NotBlank String email, String gender, Date dateOfBirth, String phoneNumber, @NotBlank String password) {
+    public User(String firstName, String lastName, @NotBlank String email, String gender, Date dateOfBirth, String phoneNumber, @NotBlank String password, String profilePhoto) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -42,6 +44,7 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.profilePhoto = profilePhoto;
     }
 
     public Long getId() {
@@ -122,5 +125,13 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 }

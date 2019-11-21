@@ -6,18 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value ="/authentication")
-public class UserController extends BaseController {
+@RequestMapping(value = "/authentication")
+public class UserController extends BaseController<User> {
     @Autowired
-    private UserService implementedService;
+    private UserService userService;
 
-    @PostMapping("/emailAvailable")
-    public User checkEmail(@RequestBody String email) {
-        return implementedService.checkEmail(email);
+    @Autowired
+    public UserController(UserService userService) {
+        super(userService);
     }
 
-    @Override
-    protected UserService baseService() {
-        return implementedService;
+    @PostMapping("/emailAvailable")
+    public Boolean checkEmail(@RequestBody String email) {
+        return userService.checkEmail(email);
     }
 }

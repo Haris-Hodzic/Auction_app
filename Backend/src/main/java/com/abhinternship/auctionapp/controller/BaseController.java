@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.controller;
 
+import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.service.BaseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -10,29 +11,33 @@ import java.util.List;
 
 abstract public class BaseController<T> {
 
-    protected abstract BaseService<T> baseService();
+    private final BaseService<T> implementedService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public List<T> getAll() {
-        return baseService().getAll();
+    public BaseController(BaseService<T> baseService) {
+        this.implementedService = baseService;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @GetMapping
     @ResponseBody
-    public T create(@RequestBody @Valid LinkedHashMap request, BindingResult errors) {
-        return baseService().create(request);
+    public List<T> getAll() throws RepositoryException {
+        return implementedService.getAll();
     }
 
-    @RequestMapping(value = "/{requestId}", method = RequestMethod.GET)
+    @PostMapping
     @ResponseBody
-    public ResponseEntity<?> get(@PathVariable Integer requestId) {
-        return ResponseEntity.ok(baseService().getById(requestId));
+    public boolean create(@RequestBody @Valid LinkedHashMap request, BindingResult errors) throws RepositoryException{
+        return implementedService.create(request);
     }
 
-    @RequestMapping(value = "/{requestId}", method = RequestMethod.PUT)
+    @GetMapping("/{requestId}")
     @ResponseBody
-    public ResponseEntity<?> modify(@PathVariable Integer requestId, @RequestBody @Valid final T request, final BindingResult errors) {
-        return ResponseEntity.ok(baseService().update(requestId, request));
+    public T get(@PathVariable Long requestId) throws RepositoryException {
+        return implementedService.getById(requestId);
+    }
+
+    @PutMapping("/{requestId}")
+    @ResponseBody
+    public ResponseEntity<?> modify(@PathVariable Integer requestId, @RequestBody @Valid final T request, final BindingResult errors) throws RepositoryException{
+        return ResponseEntity.ok(implementedService.update(requestId, request));
     }
 }
