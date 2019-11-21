@@ -1,0 +1,12 @@
+<div class="row bottomPartBody">
+  {{#each chances as |product|}}
+    <div class="col">
+      <Product  @className="bottomPart" @product={{product}}></Product>
+    </div>
+  {{/each}}
+</div>
+<div class="pagination">
+  {{#each buttonsList as |buttonNumber index|}}
+    <button class="loadMoreBtn" {{action "loadMoreChance" index}}>{{buttonNumber.page}}</button>
+  {{/each}}
+</div>

@@ -1,0 +1,17 @@
+<TopBodyHome @product={{get this.model "1"}}></TopBodyHome>
+<div class="homeBody">
+  <FeatureCollection @products={{this.model}}></FeatureCollection>
+  <FeatureProduct @products={{this.model}}></FeatureProduct>
+  <div class="bottomPartButtons">
+    <a class="bottomPartBtn {{arrivalsClass}}" {{action "onArrivals"}} href="">New Arrivals</a>
+    <a class="bottomPartBtn {{ratingClass}}" {{action "onRating"}} href="">Top Rated</a>
+    <a class="bottomPartBtn {{chanceClass}}" {{action "onChance"}} href="">Last Chance</a>
+  </div>
+  {{#if arrivalsActive}}
+    <NewArrivals @products={{this.model}}></NewArrivals>
+  {{else if ratingActive}}
+    <TopRated @products={{this.model}}></TopRated>
+  {{else if chanceActive}}
+    <LastChance @products={{this.model}}></LastChance>
+  {{/if}}
+</div>

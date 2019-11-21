@@ -1,0 +1,45 @@
+<div class="registrBox">
+  <form class="loginForm" {{action "register" on="submit"}}>
+    <div class="registerTitle">
+      <p class="titleText">REGISTER</p>
+    </div>
+    <p class="inputLabel">First Name</p>
+    {{input value=firstName type="text" class="input" focus-out=(action (mut showFirstNameError) true)}}
+    {{#if errors}}
+      {{#if showFirstNameError}}
+        <div class="error">
+          {{v-get user "firstName" "message"}}
+        </div>
+      {{/if}}
+    {{/if}}
+    <p class="inputLabel">Last Name</p>
+    {{input value=lastName type="text" class="input" focus-out=(action (mut showLastNameError) true)}}
+    {{#if errors}}
+      {{#if showLastNameError}}
+        <div class="error">
+          {{v-get user "lastName" "message"}}
+        </div>
+      {{/if}}
+    {{/if}}
+    <p class="inputLabel">Enter Email</p>
+    {{input value=email type="email" class="input" focus-out=(action (mut showEmailError) true)}}
+    {{#if errors}}
+      {{#if showEmailError}}
+        <div class="error">
+          {{v-get user "email" "message"}}
+        </div>
+      {{/if}}
+    {{/if}}
+    <p class="inputLabel">Password</p>
+    {{input type="password" value=password class="input" focus-out=(action (mut showPasswordError) true)}}
+    {{#if errors}}
+      {{#if showPasswordError}}
+        <div class="error">
+          {{v-get user "password" "message"}}
+        </div>
+      {{/if}}
+    {{/if}}
+    <button class="registerButton" type="submit">REGISTER</button>
+    <p id="haveAcc">Already have an account? {{#link-to "login" class="linkToClass"}}<span class="liginLink">Login</span>{{/link-to}}</p>
+  </form>
+</div>

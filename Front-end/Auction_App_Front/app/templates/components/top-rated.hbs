@@ -1,0 +1,7 @@
+<div class="row bottomPartBody">
+  {{#each products as |product|}}
+    <div class="col">
+      <Product  @className="bottomPart" @product={{product}}></Product>
+    </div>
+  {{/each}}
+</div>
