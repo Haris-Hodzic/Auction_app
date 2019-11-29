@@ -1,2 +1,126 @@
 <PageBar @title={{"SHOP"}}>
 </PageBar>
+<div class="shopBody">
+  <div class="shopLeft">
+    <div class="productCategories">
+      <p class="productCategoriesTitle">PRODUCT CATEGORIES</p>
+      <ul>
+        <li><a href="" {{action "filterProductsByCategory" "Women"}}>Women</a><button {{action "listSubcategories" "Women"}}>{{get categoryButtons "Women"}}</button></li>
+        {{#if (get isActiveCategory "Women")}}
+          {{#each (get subcategories "Women") as |subcategory|}}
+            <li><a href="" class="subcategoryListItem" {{action "filterProductsBySubcategory" "Women" subcategory.subcategory}}>{{subcategory.subcategory}} ({{subcategory.counter}})</a></li>
+          {{/each}}
+        {{/if}}
+        <li><a href="" {{action "filterProductsByCategory" "Men"}}>Men</a><button {{action "listSubcategories" "Men"}}>{{get categoryButtons "Men"}}</button></li>
+        {{#if (get isActiveCategory "Men")}}
+          {{#each (get subcategories "Men") as |subcategory|}}
+            <li><a href="" class="subcategoryListItem" {{action "filterProductsBySubcategory" "Men" subcategory.subcategory}}>{{subcategory.subcategory}} ({{subcategory.counter}})</a></li>
+          {{/each}}
+        {{/if}}
+        <li><a href="" {{action "filterProductsByCategory" "Kids"}}>Kids</a><button {{action "listSubcategories" "Kids"}}>{{get categoryButtons "Kids"}}</button></li>
+        {{#if (get isActiveCategory "Kids")}}
+          {{#each (get subcategories "Kids") as |subcategory|}}
+            <li><a href="" class="subcategoryListItem" {{action "filterProductsBySubcategory" "Kids" subcategory.subcategory}}>{{subcategory.subcategory}} ({{subcategory.counter}})</a></li>
+          {{/each}}
+        {{/if}}
+        <li><a href="" {{action "filterProductsByCategory" "Accesorise"}}>Accesorise</a><button {{action "listSubcategories" "Accesorise"}}>{{get categoryButtons "Accesorise"}}</button></li>
+        {{#if (get isActiveCategory "Accesorise")}}
+          {{#each (get subcategories "Accesorise") as |subcategory|}}
+            <li><a href="" class="subcategoryListItem" {{action "filterProductsBySubcategory" "Accesorise" subcategory.subcategory}}>{{subcategory.subcategory}} ({{subcategory.counter}})</a></li>
+          {{/each}}
+        {{/if}}
+        <li><a href="" {{action "filterProductsByCategory" "Home"}}>Home</a><button {{action "listSubcategories" "Home"}}>{{get categoryButtons "Home"}}</button></li>
+        {{#if (get isActiveCategory "Home")}}
+          {{#each (get subcategories "Home") as |subcategory|}}
+            <li><a href="" class="subcategoryListItem" {{action "filterProductsBySubcategory" "Home" subcategory.subcategory}}>{{subcategory.subcategory}} ({{subcategory.counter}})</a></li>
+          {{/each}}
+        {{/if}}
+        <li><a href="" {{action "filterProductsByCategory" "Art"}}>Art</a><button {{action "listSubcategories" "Art"}}>{{get categoryButtons "Art"}}</button></li>
+        {{#if (get isActiveCategory "Art")}}
+          {{#each (get subcategories "Art") as |subcategory|}}
+            <li><a href="" class="subcategoryListItem" {{action "filterProductsBySubcategory" "Art" subcategory.subcategory}}>{{subcategory.subcategory}} ({{subcategory.counter}})</a></li>
+          {{/each}}
+        {{/if}}
+        <li><a href="" {{action "filterProductsByCategory" "Computer"}}>Computer</a><button {{action "listSubcategories" "Computer"}}>{{get categoryButtons "Computer"}}</button></li>
+        {{#if (get isActiveCategory "Computer")}}
+          {{#each (get subcategories "Computer") as |subcategory|}}
+            <li><a href="" class="subcategoryListItem" {{action "filterProductsBySubcategory" "Computer" subcategory.subcategory}}>{{subcategory.subcategory}} ({{subcategory.counter}})</a></li>
+          {{/each}}
+        {{/if}}
+      </ul>
+    </div>
+    <div class="priceFilter">
+      <p class="priceFilterTitle">FILTER BY PRICE</p>
+      <div class="graph">
+        <PriceGraph @prices={{this.prices}} class="priceGraph"></PriceGraph>
+        {{range-slider min=lowestPrice max=highestPrice start=slider connect=true on-end=(action "filterByPrice")}}
+        <div class="priceInfo">
+          <p>${{filters.startPrice}} - ${{filters.endPrice}}</p>
+          <p>The average price is ${{averagePrice}}</p> 
+        </div>
+      </div>
+    </div>
+    <div class="colorFilter">
+      <p class="colorFilterTitle">FILTER BY COLOR</p>
+      <ul>
+        {{#each colorList as |color|}}
+          <li><a href="" {{action "filterProductsByColor" color.color}}>{{color.color}} ({{color.counter}})</a></li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="sizeFilter">
+      <p class="sizeFilterTitle">FILTER BY SIZE</p>
+      <ul>
+        {{#each sizeList as |size|}}
+          <li><a href="" {{action "filterProductsBySize" size.size}}>{{size.size}} ({{size.counter}})</a></li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="activeFilters">
+      <p class="activeFilterTitle">ACTIVE FILTERS</p>
+      <ul>
+        {{#if activeFilters.category}}
+          <li>Category: {{activeFilters.category}} <button class="disableFilterBtn" {{action "removeFilter" "category"}}>X</button></li>
+        {{/if}}
+        {{#if activeFilters.subcategory}}
+          <li>SubCategory: {{activeFilters.subcategory}} <button class="disableFilterBtn" {{action "removeFilter" "subcategory"}}>X</button></li>
+        {{/if}}
+        {{#if activeFilters.price}}
+          <li>Price: {{activeFilters.price}} <button class="disableFilterBtn" {{action "removeFilter" "price"}}>X</button></li>
+        {{/if}}
+        {{#if activeFilters.color}}
+          <li>Color: {{activeFilters.color}} <button class="disableFilterBtn" {{action "removeFilter" "color"}}>X</button></li>
+        {{/if}}
+        {{#if activeFilters.size}}
+          <li>Size: {{activeFilters.size}} <button class="disableFilterBtn" {{action "removeFilter" "size"}}>X</button></li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+  <div class="shopRight">
+    <div class="sortAndView">
+      <div class="dropdownBox" role="button" {{action "listSorting"}}>
+        <p class="dropdownText">{{selectedSorting}}</p><img src="/assets/images/dropdown.png" class="dropdownImage" alt="">
+      </div>
+      {{#if isSortingButtonActive}}
+        <ul class="dropdownOptions">
+          <li class={{defaultSortingActiveClass}} {{action "setSorting" "default"}} role="button"><p>Default Sorting</p></li>
+          <li class={{sortingBynewnessActiveClass}} {{action "setSorting" "newness"}} role="button"><p>Sort by Newness</p></li>
+          <li class={{sortingByPriceActiveClass}} {{action "setSorting" "price"}} role="button"><p>Sort by Price</p></li>
+          <li class={{sortingByPopularityActiveClass}} {{action "setSorting" "popularity"}} role="button"><p>Sort by Popularity</p></li>
+        </ul>
+      {{/if}}
+      <button class="displayBtn gridBtn {{gridActive}}" {{action "setView"}}><i class="fa fa-th fa-2x"></i><p>Grid</p></button>
+      <button class="displayBtn listBtn {{listActive}}" {{action "setView"}}><i class="fa fa-th-list fa-2x"></i><p>List</p></button>
+    </div>
+    {{#if isGridActive}}
+      <ShopGridView @products={{this.model.content}}></ShopGridView>
+    {{/if}}
+    {{#if isListActive}}
+      <ShopListView @products={{this.model.content}}></ShopListView>
+    {{/if}}
+    {{#if (lte pageSize totalNumberOfProducts)}}
+      <button class="moreBtn" {{action "exploreMore"}}>EXPLORE MORE</button>
+    {{/if}}
+  </div>
+</div>

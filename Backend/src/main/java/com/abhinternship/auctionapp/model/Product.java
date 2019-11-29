@@ -3,11 +3,9 @@ package com.abhinternship.auctionapp.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,6 +23,7 @@ public class Product {
     private boolean shipping;
     private String phone;
     private Double highestBid;
+    private int numberOfBids;
     @ElementCollection
     private Set<String> photo;
 
@@ -34,15 +33,23 @@ public class Product {
     @JsonIgnoreProperties({"password", "id", "firstName", "lastName", "gender", "dateOfBirth", "phoneNumber", "address", "wishlist", "hibernateLazyInitializer"})
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "product_category",
-            joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")})
-    private Set<Category> categories = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "subcategory_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    private Category subcategory;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "properties_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    private AdditionalProperties additionalProperties;
 
     public Product() {
     }
@@ -123,14 +130,6 @@ public class Product {
         this.user = user;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
     public boolean isShipping() {
         return shipping;
     }
@@ -153,5 +152,37 @@ public class Product {
 
     public void setPhoto(Set<String> photo) {
         this.photo = photo;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Category getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(Category subcategory) {
+        this.subcategory = subcategory;
+    }
+
+    public AdditionalProperties getAdditionalProperties() {
+        return additionalProperties;
+    }
+
+    public void setAdditionalProperties(AdditionalProperties additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
+    public int getNumberOfBids() {
+        return numberOfBids;
+    }
+
+    public void setNumberOfBids(int numberOfBids) {
+        this.numberOfBids = numberOfBids;
     }
 }

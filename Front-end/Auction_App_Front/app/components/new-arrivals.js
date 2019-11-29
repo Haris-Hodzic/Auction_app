@@ -8,7 +8,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.set('buttonsList',[]);
-    this.get('productHttp').loadArrivals('0').then((result) => {
+    this.get('productHttp').getArrivals('0').then((result) => {
       this.set('arrivals', result);
     })
     for (var i = 0; i < this.get('products.length')/8; i++) {
@@ -17,7 +17,7 @@ export default Component.extend({
   },
   actions: {
     loadMore(page) {
-      this.get('productHttp').loadArrivals(page).then((result) => {
+      this.get('productHttp').getArrivals(page).then((result) => {
         this.set('arrivals', result);
       })
     }

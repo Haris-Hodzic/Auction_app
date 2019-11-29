@@ -1,0 +1,7 @@
+<div class="listView">
+  <div class="listViewImages">
+    {{#each products as |product|}}
+      <div><ProductList  @className="shopListCollection" @product={{product}}></ProductList></div>
+    {{/each}}
+  </div>
+</div>

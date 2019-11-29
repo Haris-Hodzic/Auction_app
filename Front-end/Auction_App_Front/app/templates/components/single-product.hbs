@@ -37,7 +37,7 @@
       <p class="bidLabel">Enter ${{this.product.highestBid}} or more</p>
       <div class="bidInfo">
         <p>Highest bid:  <span class="hpInfo">${{this.product.highestBid}}</span></p>
-        <p>No bids: {{singleProduct.length}}</p>
+        <p>No bids: {{this.product.numberOfBids}}</p>
         <p>Time left: {{this.timeLeft}}</p>
       </div>
       <button class="watchListBtn" {{action "setWatchList"}}>Watchlist <i class="fa fa-heart {{watchListClass}}"></i></button>
