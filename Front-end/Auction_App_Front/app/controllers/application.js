@@ -1,4 +1,4 @@
-import {inject as service} from '@ember/service';
+import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { getOwner } from '@ember/application';
 import { set } from '@ember/object';
