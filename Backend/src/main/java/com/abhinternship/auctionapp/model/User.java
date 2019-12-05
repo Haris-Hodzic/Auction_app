@@ -26,11 +26,6 @@ public class User {
     public User() {
     }
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "wishlist_id", nullable = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Wishlist wishlist;
-
     @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -109,14 +104,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Wishlist getWishlist() {
-        return wishlist;
-    }
-
-    public void setWishlist(Wishlist wishlist) {
-        this.wishlist = wishlist;
     }
 
     public Address getAddress() {

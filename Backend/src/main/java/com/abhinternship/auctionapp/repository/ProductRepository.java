@@ -21,22 +21,22 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     List<Product> getAllByOrderByStartDateDesc(Pageable pageable);
 
-    @Query(value = "SELECT distinct d.name as subcategory, count(d) as counter FROM products e " +
-            "JOIN category d on  e.subcategory_id = d.id " +
-            "JOIN category s on e.category_id = s.id " +
-            "where s.name=?1 group by d.name", nativeQuery = true)
+    @Query(value = "SELECT distinct new com.abhinternship.auctionapp.model.SubcategoryDto(d.name, count(d)) FROM Product e " +
+            "JOIN Category d on  e.subcategory = d.id " +
+            "JOIN Category s on e.category = s.id " +
+            "where s.name=?1 group by d.name")
     List<SubcategoryDto> getAllDistinctCountedGroupBySubcategory(String category);
 
-    @Query(value = "SELECT d.color as color, count(d) as counter FROM products e " +
-            "JOIN properties d on  e.properties_id = d.id group by d.color", nativeQuery = true)
+    @Query(value = "SELECT new com.abhinternship.auctionapp.model.ColorDto(d.color, COUNT(d)) " +
+            "FROM Product AS e JOIN AdditionalProperties AS d ON e.additionalProperties = d.id GROUP BY d.color")
     List<ColorDto> getAllProductsCountedGroupByColor();
 
-    @Query(value = "SELECT d.size as size, count(d) as counter FROM products e " +
-            "JOIN properties d on  e.properties_id = d.id group by d.size", nativeQuery = true)
+    @Query(value = "SELECT new com.abhinternship.auctionapp.model.SizeDto(d.size, count(d)) FROM Product e " +
+            "JOIN AdditionalProperties d on  e.additionalProperties = d.id group by d.size")
     List<SizeDto> getAllProductsCountedGroupBySize();
 
     @Query(value = "select highest_bid from products order by highest_bid", nativeQuery = true)
-    List<Double> getAllPrices();
+    List<Double> getAllByOrderByHighestBid();
 
     List<Product> getAllByOrderByEndDateAsc(Pageable pageable);
 }

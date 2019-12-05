@@ -97,12 +97,8 @@ public class ProductService implements BaseService<Product> {
         }
     }
 
-    public List<ColorDto> getProductsColor() throws RepositoryException {
-        try {
+    public List<ColorDto> getProductsColor()  {
             return repository.getAllProductsCountedGroupByColor();
-        } catch (Exception e) {
-            throw new RepositoryException("No products found");
-        }
     }
 
     public List<SizeDto> getProductsSize() throws RepositoryException {
@@ -118,6 +114,6 @@ public class ProductService implements BaseService<Product> {
     }
 
     public List<Double> getAllPrices() {
-        return repository.getAllPrices();
+        return repository.getAllByOrderByHighestBid();
     }
 }

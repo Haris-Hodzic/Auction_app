@@ -5,12 +5,12 @@ export default Component.extend({
   isWatchListActive: false,
   actions: {
     setWatchList() {
-      if (this.get('isWatchList') != false) {
+      if (this.get('isWatchListActive') != false) {
         this.set('watchListClass', '');
-        this.set('isWatchList', false);
+        this.set('isWatchListActive', false);
       } else {
         this.set('watchListClass', 'active');
-        this.set('isWatchList', true);
+        this.set('isWatchListActive', true);
       }
     },
   }
