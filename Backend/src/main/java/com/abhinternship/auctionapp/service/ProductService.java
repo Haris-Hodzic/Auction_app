@@ -22,9 +22,6 @@ public class ProductService implements BaseService<Product> {
     @Autowired
     ProductRepository repository;
 
-    ProductSpecification productSpecification = new ProductSpecification();
-
-
     @Override
     public Product getById(Long requestId) throws RepositoryException {
         Optional<Product> result = repository.findById(requestId);
@@ -80,6 +77,7 @@ public class ProductService implements BaseService<Product> {
 
     public Page<Product> getFilteredProducts(String category, String subcategory, String searchString, String startPrice, String endPrice, String color, String size, Long pageSize, String sortingType, String order) throws RepositoryException {
         try {
+            ProductSpecification productSpecification = new ProductSpecification();
             productSpecification.setCategory(category);
             productSpecification.setSubcategory(subcategory);
             productSpecification.setSearchString(searchString);

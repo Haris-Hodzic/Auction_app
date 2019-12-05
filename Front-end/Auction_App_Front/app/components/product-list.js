@@ -2,7 +2,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
   watchListClass: '',
-  isWatchList: false,
+  isWatchListActive: false,
   actions: {
     setWatchList() {
       if (this.get('isWatchList') != false) {
