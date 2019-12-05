@@ -1,0 +1,24 @@
+<PageBar @title="MY ACCOUNT">
+</PageBar>
+<div class="accountBody">
+	<div class="accountOptions">
+		<button class="accountBtns profileBtn {{profileActiveClass}}" {{action "setProfileView"}}><i class="fa fa-user"></i>Profile</button>
+		<button class="accountBtns sellerBtn {{sellerActiveClass}}" {{action "setSellerView"}}><i class="fa fa-list"></i>Seller</button>
+		<button class="accountBtns bidsBtn {{bidsActiveClass}}" {{action "setBidsView"}}><i class="fa fa-gavel"></i>Bids</button>
+		<button class="accountBtns wishlistBtn {{wishlistActiveClass}}" {{action "setWishlistView"}}><i class="fa fa-gift"></i>Wishlist</button>
+	</div>
+	<div class="accountTabs">
+		{{#if isProfileButtonActive}}
+		<ProfileView></ProfileView>
+		{{/if}}
+		{{#if isSellerButtonActive}}
+		<SellerView  @activeProducts={{activeProductList}} @soldProducts={{soldProductList}}></SellerView>
+		{{/if}}
+		{{#if isBidsButtonActive}}
+		<BidsView @bids={{userBids}}></BidsView>
+		{{/if}}
+		{{#if isWishlistButtonActive}}
+		<WishlistView @userWishlist={{userWishlist}} @userInfo={{userInfo}}></WishlistView>
+		{{/if}}
+	</div>
+</div>

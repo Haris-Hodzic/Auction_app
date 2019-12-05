@@ -11,6 +11,8 @@ import com.abhinternship.auctionapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -87,8 +89,19 @@ public class BidService implements BaseService<Bid> {
     }
 
     @Override
-    public Bid update(Integer id, Bid request) {
+    public Bid update(Long id, LinkedHashMap request) {
         //TODO
         return null;
+    }
+
+    @Override
+    public Boolean delete(LinkedHashMap request) throws RepositoryException {
+        //TODO
+        return false;
+    }
+
+    public List<Bid> getAllByUser(User user, Long pageSize) throws RepositoryException {
+        Pageable pageable = PageRequest.of(0, Math.toIntExact(pageSize));
+        return bidRepository.getAllByBidder(user, pageable);
     }
 }

@@ -12,6 +12,8 @@ public interface BaseService<T> {
 
     List<T> getAll() throws RepositoryException;
 
-    T update(Integer id, T request) throws RepositoryException;
+    T update(Long id, LinkedHashMap request);
+
+    Boolean delete(LinkedHashMap request) throws RepositoryException;
 
 }

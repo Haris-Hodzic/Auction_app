@@ -12,6 +12,15 @@ export default Controller.extend({
   shopController: inject('shop'),
   shopModel: alias('shopController.model'),
   shopFilters: alias('shopController.filters'),
+  isAccountActive: false,
+  isProfileButtonActive: false,
+  isSellerButtonActive: false,
+  isBidsButtonActive: false,
+  isWishlistButtonActive: false,
+  profileActiveClass: '',
+  sellerActiveClass: '',
+  bidsActiveClass: '',
+  wishlistActiveClass: '',
   actions: {
     logout() {
       this.get('session').set('data.email', '');
@@ -24,6 +33,61 @@ export default Controller.extend({
       this.get('productHttp').filterProductsBySubcategory(this.get('shopFilters')).then((result) => {
         this.set('shopModel', result);
       });
+    },
+    myAccount() {
+      if (this.get('isAccountActive')) {
+        this.set('isAccountActive', false);
+      } else {
+        this.set('isAccountActive', true);
+      }
+    },
+    setProfileView(){
+      this.set('isProfileButtonActive', true);
+      this.set('profileActiveClass', 'active');
+      this.set('isSellerButtonActive', false);
+      this.set('sellerActiveClass', '');
+      this.set('isBidsButtonActive', false);
+      this.set('bidsActiveClass', '');
+      this.set('isWishlistButtonActive', false);
+      this.set('wishlistActiveClass', '');
+      this.set('isAccountActive', false);
+      this.transitionToRoute('account.show', "profile");
+    },
+    setSellerView(){
+      this.set('isProfileButtonActive', false);
+      this.set('profileActiveClass', '');
+      this.set('isSellerButtonActive', true);
+      this.set('sellerActiveClass', 'active');
+      this.set('isBidsButtonActive', false);
+      this.set('bidsActiveClass', '');
+      this.set('isWishlistButtonActive', false);
+      this.set('wishlistActiveClass', '');
+      this.set('isAccountActive', false);
+      this.transitionToRoute('account.show', "seller");
+    },
+    setBidsView(){
+      this.set('isProfileButtonActive', false);
+      this.set('profileActiveClass', '');
+      this.set('isSellerButtonActive', false);
+      this.set('sellerActiveClass', '');
+      this.set('isBidsButtonActive', true);
+      this.set('bidsActiveClass', 'active');
+      this.set('isWishlistButtonActive', false);
+      this.set('wishlistActiveClass', '');
+      this.set('isAccountActive', false);
+      this.transitionToRoute('account.show', "bids");
+    },
+    setWishlistView(){
+      this.set('isProfileButtonActive', false);
+      this.set('profileActiveClass', '');
+      this.set('isSellerButtonActive', false);
+      this.set('sellerActiveClass', '');
+      this.set('isBidsButtonActive', false);
+      this.set('bidsActiveClass', '');
+      this.set('isWishlistButtonActive', true);
+      this.set('wishlistActiveClass', 'active');
+      this.set('isAccountActive', false);
+      this.transitionToRoute('account.show', "wishlist");
     }
   }
 });

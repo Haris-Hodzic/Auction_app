@@ -1,0 +1,108 @@
+<div class="profileViewBody">
+	<div class="required">
+		<div class="profileTitle"><p>PERSONAL INFO</p></div>
+		<div class="profileRequiredForm">
+			<div class="profileRequiredLeft">
+				<img src={{userInfo.profilePhoto}} alt="" class="profilePhoto">
+                <label for="file" class="changePhotoLabel">CHANGE PHOTO</label>
+				<Input multiple="true" name="file" id="file" @class="changePhoto" onchange={{action "upload"}} accept="image/png,image/jpeg" @type="file"></Input>
+			</div>
+			<div class="profileRequiredRight">
+				<p class="inputLabel">* First Name</p>
+    			{{input value=userInfo.firstName class="input" type="text" focus-out=(action (mut showFirstNameError) true)}}
+                {{#if errors}}
+                  {{#if showFirstNameError}}
+                    <div class="error">
+                      {{v-get userProfile "firstName" "message"}}
+                    </div>
+                  {{/if}}
+                {{/if}}
+    			<p class="inputLabel">* Last Name</p>
+    			{{input value=userInfo.lastName class="input" type="text" focus-out=(action (mut showLastNameError) true)}}
+                {{#if errors}}
+                  {{#if showLastNameError}}
+                    <div class="error">
+                      {{v-get userProfile "lastName" "message"}}
+                    </div>
+                  {{/if}}
+                {{/if}}
+    			<p class="inputLabel">I am</p>
+    			<div class="profileGender" role="button" {{action "setDropdownButtonsActive" "gender"}}>{{gender}}<img src="/assets/images/profileDD.png" class="genderDropdownImg" alt=""></div>
+    			{{#if isGenderButtonActive}}
+    			<ul class="genderOptions">
+    				<li {{action "setGender" "Male"}}>Male</li>
+    				<li>Female</li>
+    			</ul>
+    			{{/if}}
+    			<p class="inputLabel phoneLabel">Date of Birth</p>
+    			<div class="dateOfBirth">
+    				<div class="month">
+    					<div class="monthButton" {{action "setDropdownButtonsActive" "month"}}>
+	    					<p>{{displayedMonth}}</p>
+	    					<img src="/assets/images/profileDD.png" alt="">
+	    				</div>
+	    				{{#if isMonthButtonActive}}
+		    				<ul class="monthOptions">
+		    					{{#each monthOptions as |month index|}}
+		    						<li {{action "setMonth" index month}}>{{month}}</li>
+		    					{{/each}}
+		    				</ul>
+	    				{{/if}}
+    				</div>
+    				<div class="date">
+    					<div class="dateButton" {{action "setDropdownButtonsActive" "date"}}>
+    						<p>{{selectedDate}}</p>
+    						<img src="/assets/images/profileDD.png" alt="">
+    					</div>
+    					{{#if isDateButtonActive}}
+		    				<ul class="dateOptions">
+		    					{{#each dateOptions as |date|}}
+		    						<li {{action "setDate" date}}>{{date}}</li>
+		    					{{/each}}
+		    				</ul>
+	    				{{/if}}
+    				</div>
+    				<div class="year">
+    					<Input @value={{year}} @type="number" min="1900" max="2099" step="1"></Input>
+    				</div>
+    				
+    			</div>
+    			
+
+    			<p class="inputLabel phoneLabel">Phone Number</p>
+    			<Input @value={{userInfo.phoneNumber}} @class="input" @type="text" required=true></Input>
+    			<p class="inputLabel">* Email Address</p>
+    			{{input value=userInfo.email class="input" type="email" focus-out=(action (mut showEmailError) true)}}
+                {{#if errors}}
+                  {{#if showEmailError}}
+                    <div class="error">
+                      {{v-get userProfile "email" "message"}}
+                    </div>
+                  {{/if}}
+                {{/if}}
+                <p class="legend">Fields marked with an * are required</p>
+			</div>
+		</div>
+	</div>
+	<div class="optional">
+		<div class="profileTitle"><p>OPTIONAL</p></div>
+		<div class="optionalBody">
+			<p class="addressTitle">Address</p>
+			<p class="inputLabel">Street</p>
+    		<Input @value={{userInfo.address.street}} @class="input" @type="email" required=true placeholder="e.g. 5th Avenue"></Input>
+    		<div class="middlePartLabels">
+    			<p class="inputLabel">City</p>
+    			<p class="inputLabel zipLabel">ZipCode</p>
+    		</div>
+    		<div class="middlePart">
+    			<Input @value={{userInfo.address.city}} @class="input" @type="email" required=true placeholder="e.g. New York"></Input>
+    			<Input @value={{userInfo.address.zip}} @class="input zip" @type="email" required=true placeholder="e.g. 10065"></Input>
+    		</div>
+    		<p class="inputLabel">State</p>
+    		<Input @value={{userInfo.address.state}} @class="input" @type="email" required=true placeholder="e.g. New York"></Input>
+    		<p class="inputLabel">Country</p>
+    		<Input @value={{userInfo.address.country}} @class="input" @type="email" required=true placeholder="e.g. USA"></Input>
+		</div>
+	</div>
+	<button class="saveProfile" {{action "saveInfo" userInfo}}>SAVE INFO</button>
+</div>

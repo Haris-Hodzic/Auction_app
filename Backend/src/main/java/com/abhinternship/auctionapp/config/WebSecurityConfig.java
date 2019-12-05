@@ -2,9 +2,11 @@ package com.abhinternship.auctionapp.config;
 
 import com.abhinternship.auctionapp.service.BidService;
 import com.abhinternship.auctionapp.service.ProductService;
+import com.abhinternship.auctionapp.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -59,15 +61,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return bidService;
     }
 
+    @Bean
+    public WishlistService wishlistService() {
+        WishlistService wishlistService = new WishlistService();
+        return wishlistService;
+    }
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // We don't need CSRF for this example
+        httpSecurity.cors();
+        httpSecurity
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/**").permitAll();
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests()
                 .antMatchers("/authentication").permitAll()
                 .antMatchers("/authentication/**").permitAll()
                 .antMatchers("/api").permitAll()
+                .antMatchers(HttpMethod.PUT, "/authentication/**").authenticated()
                 .antMatchers("/api/**").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and().

@@ -5,6 +5,8 @@ import com.abhinternship.auctionapp.service.BaseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,7 +39,17 @@ abstract public class BaseController<T> {
 
     @PutMapping("/{requestId}")
     @ResponseBody
-    public ResponseEntity<?> modify(@PathVariable Integer requestId, @RequestBody @Valid final T request, final BindingResult errors) throws RepositoryException{
-        return ResponseEntity.ok(implementedService.update(requestId, request));
+    @CrossOrigin
+    public T modify(@PathVariable Long requestId, @RequestBody @Valid final LinkedHashMap request) throws RepositoryException{
+        return implementedService.update(requestId, request);
+    }
+
+    @DeleteMapping
+    @ResponseBody
+    @Transactional
+    @CrossOrigin
+    public Boolean delete(@RequestBody @Valid LinkedHashMap request) throws RepositoryException{
+        System.out.println(request);
+        return implementedService.delete(request);
     }
 }

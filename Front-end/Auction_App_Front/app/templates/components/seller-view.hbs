@@ -1,0 +1,12 @@
+<div class="sellerView">
+	<div class="sellerButtons">
+		<button class="sellerBtn {{sellerActiveButtonClass}}" {{action "setSellerView"}}>Active</button>
+		<button class="sellerBtn {{sellerSoldButtonClass}}" {{action "setSellerView"}}>Sold</button>
+	</div>
+	{{#if isSellerActiveButtonActive}}
+		<SellerActiveView @activeProducts={{activeProducts}}></SellerActiveView>
+	{{/if}}
+	{{#if isSellerSoldButtonActive}}
+		<SellerSoldView @soldProducts={{soldProducts}}></SellerSoldView>
+	{{/if}}
+</div>

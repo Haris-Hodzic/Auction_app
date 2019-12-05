@@ -33,5 +33,11 @@ export default Service.extend({
   },
   getCountedProductSize() {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/filter/size', '', 'GET');
-  }
+  },
+  getSoldProductsByUserId(user, pageSize) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/sold?user=' + user +'&pageSize=' + pageSize, '', 'GET');
+  },
+  getActiveProductsByUserId(user, pageSize) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/active?user=' + user + '&pageSize=' + pageSize, '', 'GET');
+  },
 });

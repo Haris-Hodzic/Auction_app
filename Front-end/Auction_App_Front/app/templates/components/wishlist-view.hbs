@@ -1,0 +1,24 @@
+<div class="wishlistView">
+	<div class="accountTable">
+	<div class="accountTableHeader">
+		<p class="header labelItem">Item</p>
+		<p class="header labelName">Name</p>
+		<p class="header labelTime">Time left</p>
+		<p class="header labelPrice">Your Price</p>
+		<p class="header labelNoBids">No. Bids</p>
+		<p class="header labelHiBids">Highest Bid</p>
+	</div>
+	{{#each userWishlist as |wishlist|}}
+		<div class="products">
+			<img src={{get wishlist.product.photo "1"}} alt="" class="accountProductImg">
+			<p class="productName">{{wishlist.product.name}}</p>
+			<p class="productTime">{{wishlist.timeLeft}} days</p>
+			<p class="productPrice">${{wishlist.product.startPrice}}</p>
+			<p class="productNoBids">{{wishlist.product.numberOfBids}}</p>
+			<p class="productHighestBid">${{wishlist.product.highestBid}}</p>
+		</div>
+	{{/each}}
+</div>	
+		<button class="moreBtn" {{action "exploreMore"}}>EXPLORE MORE</button>
+	
+</div>

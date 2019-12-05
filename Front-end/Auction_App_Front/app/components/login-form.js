@@ -25,7 +25,7 @@ export default Component.extend({
             email,
             password
           })
-          .then(() => {
+          .then((result) => {
             this.get('session').set('data.email', email);
             this.get('router').transitionTo('home');
           }).catch(() => {

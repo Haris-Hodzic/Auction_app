@@ -1,6 +1,7 @@
 package com.abhinternship.auctionapp.service;
 
 import com.abhinternship.auctionapp.exception.RepositoryException;
+import com.abhinternship.auctionapp.model.Address;
 import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -58,9 +59,35 @@ public class UserService implements BaseService<User>, UserDetailsService {
     }
 
     @Override
-    public User update(Integer id, User request) {
+    public User update(Long user_id, LinkedHashMap request) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        User req = objectMapper.convertValue(request, new TypeReference<User>() {
+        });
+        User user = repository.getOne(req.getId());
+        user.setFirstName(req.getFirstName());
+        user.setLastName(req.getLastName());
+        user.setGender(req.getGender());
+        user.setPhoneNumber(req.getPhoneNumber());
+        user.setEmail(req.getEmail());
+        user.setAddress(req.getAddress());
+        user.setDateOfBirth(req.getDateOfBirth());
+        user.setProfilePhoto(req.getProfilePhoto());
+        repository.save(user);
+        return user;
+    }
+
+    @Override
+    public Boolean delete(LinkedHashMap request) throws RepositoryException {
         //TODO
-        return null;
+        return false;
+    }
+
+    public User getUserByEmail(String email) throws RepositoryException {
+        try {
+            return repository.getOneByEmail(email);
+        }catch (Exception e){
+            throw new RepositoryException("No user found");
+        }
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

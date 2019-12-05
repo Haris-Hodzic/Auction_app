@@ -2,6 +2,7 @@ package com.abhinternship.auctionapp.controller;
 
 import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.Bid;
+import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,5 +23,10 @@ public class BidController extends BaseController<Bid> {
     @ResponseBody
     public List<Bid> getBidsByProductId(@PathVariable Long productId) throws RepositoryException {
         return bidService.getAllByProductId(productId);
+    }
+
+    @GetMapping("/user")
+    public List<Bid> getByUser(@RequestParam(value = "user") User user, @RequestParam(value = "pageSize") Long pageSize) throws RepositoryException {
+        return bidService.getAllByUser(user, pageSize);
     }
 }

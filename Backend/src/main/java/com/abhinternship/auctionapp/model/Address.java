@@ -1,9 +1,12 @@
 package com.abhinternship.auctionapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "address")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -4,6 +4,8 @@ import com.abhinternship.auctionapp.model.*;
 import com.abhinternship.auctionapp.repository.AddressRepository;
 import com.abhinternship.auctionapp.repository.ProductRepository;
 import com.abhinternship.auctionapp.repository.UserRepository;
+import com.abhinternship.auctionapp.repository.WishlistRepository;
+import com.abhinternship.auctionapp.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -21,6 +23,8 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
+    private WishlistRepository wishlistRepository;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public DataLoader(ProductRepository productRepository) {
@@ -32,11 +36,13 @@ public class DataLoader implements CommandLineRunner {
         addressRepository.deleteAll();
         userRepository.deleteAll();
         productRepository.deleteAll();
+        wishlistRepository.deleteAll();
 
         List<Product> listOfProducts = new ArrayList<>();
         Set<Category> setOfCategories = new HashSet<>();
         List<Address> listOfAddresses = new ArrayList<>();
         List<User> listOfUsers = new ArrayList<>();
+        List<Wishlist> listOfWishlist = new ArrayList<>();
 
         Category category1 = new Category("Women");
         Category category2 = new Category("Men");
@@ -121,7 +127,7 @@ public class DataLoader implements CommandLineRunner {
         product7.add("https://d1rkccsb0jf1bk.cloudfront.net/products/99941071/additional/large/at4004-52e-4-1429875716-4687.jpg");
         product7.add("https://d1rkccsb0jf1bk.cloudfront.net/products/99941071/additional/large/at4004-52e-1-1429875722-3364.jpg");
 
-        listOfProducts.add(new Product("iPhone 11 Pro Max", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 520.00, new Date(), new Date("2019/11/29"), false, "061123456", 520.00, listOfUsers.get(0)));
+        listOfProducts.add(new Product("iPhone 11 Pro Max", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 520.00, new Date(), new Date("2020/04/29"), false, "061123456", 520.00, listOfUsers.get(0)));
         listOfProducts.add(new Product("Apple iPhone X 64GB", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 2779.00, new Date(), new Date("2019/11/17"), false, "061123456", 2779.00, listOfUsers.get(1)));
         listOfProducts.add(new Product("iPhone XR", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 1949.00, new Date(), new Date("2019/11/16"), false, "061123456", 1949.00, listOfUsers.get(2)));
         listOfProducts.add(new Product("Samsung Galaxy M30″", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 3499.00, new Date(), new Date("2019/11/20"), false, "061123456", 3499.00, listOfUsers.get(3)));
@@ -192,6 +198,10 @@ public class DataLoader implements CommandLineRunner {
         listOfProducts.get(15).setPhoto(product7);
         listOfProducts.get(16).setPhoto(product7);
         productRepository.saveAll(listOfProducts);
-
+        Wishlist wl1 = new Wishlist(listOfUsers.get(0), listOfProducts.get(1));
+        Wishlist wl2 = new Wishlist(listOfUsers.get(0), listOfProducts.get(3));
+        listOfWishlist.add(wl1);
+        listOfWishlist.add(wl2);
+        wishlistRepository.saveAll(listOfWishlist);
     }
 }

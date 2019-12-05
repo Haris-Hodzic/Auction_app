@@ -134,6 +134,36 @@ nav{
       padding: 0;
       overflow: hidden;
       display: flex;
+      .accountList{
+        position: absolute;
+        top:54px;
+        border: black solid 1px;
+        display: block;
+        z-index: 10000;
+        left: 148px;
+        width: 172px;
+        height: auto;
+        background: #FFFFFF;
+        border: 1px solid #ECECEC;
+        li{
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #9B9B9B;
+          letter-spacing: 0.56px;
+          margin-bottom: 25px;
+          margin-left: 30px;
+          cursor: pointer;
+        }
+        .firstInList{
+          margin-top: 25px;
+        }
+        .active{
+          color: #8367D8;
+        }
+        li:hover{
+          color: #8367D8;
+        }
+      }
     }
     li {
       margin-right: 11.9%;
@@ -1025,7 +1055,62 @@ footer{
         height: 350px;
         margin-top: 25px;      
         object-fit: cover; 
-      }   
+      }
+      .imageOptions{
+        visibility: hidden;
+        .watchListBtn{
+          i{
+            color: #ECECEC;
+            margin-left: 7px;
+          }
+          .active{
+            color: #8367D8;
+          }
+        }
+      }
+    }
+    .relatedCollection:hover{
+
+      img{
+        opacity: 0.5;
+      }
+      .imageOptions{
+        position: absolute;
+        z-index: 1000;
+        visibility: visible;
+        margin-left: 10px;
+        padding-top: 192px;
+        .watchListBtn{
+          width: 140px;
+          height: 36px;
+          font-family: Lato-Regular;
+          font-size: 15px;
+          color: #252525;
+          letter-spacing: 0.52px;
+          line-height: 22px;
+          i{
+            margin-left: 6px;
+          }
+        }
+        .bidBtn{
+          width: 100px;
+          height: 36px;
+          font-family: Lato-Regular;
+          font-size: 15px;
+          color: #252525;
+          letter-spacing: 0.52px;
+          line-height: 22px;
+          i{
+            margin-left: 6px;
+          }
+        }
+        .bidBtn:hover{
+          border: #8367D8 solid 2px;
+        }
+        .watchListBtn:hover{
+          border: #8367D8 solid 2px;
+        }
+      }
     }
   }
   
@@ -1284,6 +1369,15 @@ footer{
       }
       .imageOptions{
         visibility: hidden;
+        .watchListBtn{
+          i{
+            color: #ECECEC;
+            margin-left: 7px;
+          }
+          .active{
+            color: #8367D8;
+          }
+        }
       }
     }
     .shopCollection:hover{
@@ -1320,6 +1414,12 @@ footer{
           i{
             margin-left: 6px;
           }
+        }
+        .bidBtn:hover{
+          border: #8367D8 solid 2px;
+        }
+        .watchListBtn:hover{
+          border: #8367D8 solid 2px;
         }
       }
     }
@@ -1402,6 +1502,12 @@ footer{
               margin-left: 7px;
             }
           }
+        .bidBtn:hover{
+          border: #8367D8 solid 2px;
+        }
+        .watchListBtn:hover{
+          border: #8367D8 solid 2px;
+        }
         }
       }
     }
@@ -1575,4 +1681,487 @@ footer{
       }
     }
   }
+}
+
+/*---------My Account---------*/
+
+.accountBody{
+  width: 60%;
+  height: auto;
+  margin-top: 40px;
+  margin-bottom: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  .accountOptions{
+    .accountBtns{
+      height: 46px;
+      background: #F0F0F0;
+      font-family: Lato-Bold;
+      font-size: 16px;
+      color: #252525;
+      letter-spacing: 0.56px;
+      margin-right: 10px;
+      border: none;
+      i{
+        margin-right: 10px;
+      }
+    }
+    .accountBtns:hover{
+      background: #8367D8;
+      color: #FFF;
+      i{
+        color: #FFF;
+      }
+    }
+    .active{
+      background: #8367D8;
+      color: #FFF;
+      i{
+        color: #FFF;
+      }
+    }
+    .profileBtn{
+      width: 118px;
+    }
+    .sellerBtn{
+      width: 116px;
+    }
+    .bidsBtn{
+      width: 107px;
+    }
+    .wishlistBtn{
+      width: 133px;    
+    }
+  }
+}
+%profileTitle{
+  background: #FAFAFA;
+  height: 50px;
+  width: 100%;
+  p{
+    margin: 0;
+    position: relative;
+    top: 13px;
+    left: 32.5px;
+    font-family: Lato-Bold;
+    font-size: 20px;
+    color: #252525;
+    letter-spacing: 0.7px;
+  }
+}
+%dateOptions{
+  background: #FCFCFC;
+  border: 1px solid #D8D8D8;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  padding-bottom: 19px;
+  li{
+    cursor: pointer;
+    margin-left: 15px;
+    font-family: Lato-Regular;
+    font-size: 18px;
+    color: #252525;
+    letter-spacing: 0.63px;
+    padding-top: 19px;
+  }
+}
+.profileViewBody{
+  width: 1100px;
+  margin-top: 15px;
+  .required{
+    width: 100%;
+    height: auto;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    margin-bottom: 39px;
+    .profileTitle{
+      @extend %profileTitle;
+      border-right: 1px solid #D8D8D8; 
+    }
+    .profileRequiredForm{
+      display: flex;
+      margin-top: 49px;
+      .error{
+        margin-left: 2px;
+        margin-bottom: 10px;
+        color: #8367D8;
+        @extend %inputFont;
+      }
+      .profileRequiredLeft{
+        margin-left: 41px;
+        button{
+          display: block;
+          width: 203px;
+          height: 49px;
+          background: #FFFFFF;
+          border: 3px solid #E3E3E3;
+          box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+          font-family: Lato-Bold;
+          font-size: 16px;
+          color: #252525;
+          letter-spacing: 0.56px;
+          text-align: center;
+        }
+        .changePhoto{
+          width: 0.1px;
+          height: 0.1px;
+          opacity: 0;
+          overflow: hidden;
+          position: absolute;
+          z-index: -1;
+        }
+        .changePhotoLabel{
+          display: block;
+          width: 200px;
+          height: 33px;
+          padding-top: 12px;
+          background: #FFFFFF;
+          border: 3px solid #E3E3E3;
+          box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+          font-family: Lato-Bold;
+          font-size: 16px;
+          color: #252525;
+          letter-spacing: 0.56px;
+          text-align: center;
+        }
+        .profilePhoto{
+          margin-bottom: 11px;
+          max-width: 203px;
+          max-height: 264px;
+        }
+      }
+      .profileRequiredRight{
+        padding-bottom: 45px;
+        margin-left: 52px;
+        width: 690px;
+        .inputLabel{
+         @extend %inLabel;
+         margin-top: 0px;
+         margin-left: 0px;
+         color: #252525;
+       }
+       .legend{
+        position: relative;
+        margin-top: 10px;
+        font-style: italic;
+        margin-left: 360px;
+      }
+      .input{
+        @extend %authInput;
+        margin-bottom: 19px;
+        margin-left: 0px;
+      }
+      .dateOfBirth{
+        display: flex;
+        .month{
+          .monthButton{
+            display: flex;
+            width: 140px;
+            height: 46px;
+            background: #FCFCFC;
+            border: 1px solid #D8D8D8;
+            padding-bottom: 9px;
+            cursor: pointer;
+            p{
+              margin-left: 15px;
+              font-family: Lato-Regular;
+              font-size: 18px;
+              color: #252525;
+              letter-spacing: 0.63px;
+            }
+            img{
+              width: 34px;
+              margin-top: 16px;
+              margin-left: 8px;
+              height: 24px;
+            }
+          }
+          .monthOptions{
+            @extend %dateOptions;
+            max-height: 150px;
+            overflow-y: auto;
+          }
+        }
+        .date{
+          margin-left: 20px;
+          .dateButton{
+            display: flex;
+            width: 100px;
+            height: 46px;
+            background: #FCFCFC;
+            border: 1px solid #D8D8D8;
+            padding-bottom: 9px;
+            cursor: pointer;
+            p{
+              margin-left: 15px;
+              font-family: Lato-Regular;
+              font-size: 18px;
+              color: #252525;
+              letter-spacing: 0.63px;
+            }
+            img{
+              width: 34px;
+              margin-top: 16px;
+              margin-left: 16px;
+              height: 24px;
+            }
+          }
+          .dateOptions{
+            @extend %dateOptions;
+            max-height: 150px;
+            overflow-y: auto;
+          }
+        }
+        .year{
+          margin-left: 20px;
+          input[type=number] {
+            width: 125px;
+            height: 53px;
+            background: #FCFCFC;
+            border: 1px solid #D8D8D8;
+            font-family: Lato-Regular;
+            font-size: 18px;
+            color: #252525;
+            letter-spacing: 0.63px;
+            padding-left: 15px;
+          }
+        }
+      }
+      .phoneLabel{
+        margin-top: 19px;
+      }
+      ::placeholder{
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+      }
+      .profileGender{
+        width: 290px;
+        height: 38px;
+        background: #FCFCFC;
+        border: 1px solid #D8D8D8;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        padding-left: 15px;
+        padding-top: 19px;
+        display: flex;
+        .genderDropdownImg{
+          margin-left: 190px;
+          width: 34px;
+          height: 24px;
+        }
+      }
+      .genderOptions{
+        width: 290px;
+        height: auto;
+        background: #FCFCFC;
+        border: 1px solid #D8D8D8;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 19px;
+        padding-left: 15px;
+        overflow: hidden;
+        padding-bottom: 19px;
+        li{
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-top: 19px;
+        }
+      }
+    }
+  }
+
+}
+
+.optional{
+  width: 100%;
+  height: auto;
+  background: #FFFFFF;
+  border: 1px solid #D8D8D8;
+  padding-bottom: 40px;
+  .profileTitle{
+    @extend %profileTitle;
+    border-right: 1px solid #D8D8D8; 
+  }
+  .inputLabel{
+   @extend %inLabel;
+   margin-top: 0px;
+   margin-left: 0px;
+   color: #252525;
+ }
+ .input{
+  @extend %authInput;
+  width: 100%;
+  margin-bottom: 19px;
+  margin-left: 0px;
+}
+.middlePartLabels{
+  display: flex;
+  .zipLabel{
+    margin-left: 286px;
+  }
+}
+.middlePart{
+  width: 615px;
+  display: flex;
+  .input{
+    @extend %authInput;
+    width: 45%;
+    margin-bottom: 19px;
+    margin-left: 0px;
+  }
+  .zip{
+    margin-left: 34px;
+  }
+}
+.optionalBody{
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 39px;
+  height: auto;
+  .addressTitle{
+    font-family: Lato-Regular;
+    font-size: 28px;
+    color: #252525;
+    letter-spacing: 0.98px;
+  }
+}
+}
+.saveProfile{
+  background: #FFFFFF;
+  border: 3px solid #8367D8;
+  box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+  width: 243px;
+  height: 57px;
+  font-family: Lato-Bold;
+  font-size: 18px;
+  color: #252525;
+  letter-spacing: 0.63px;
+  margin-left: 78.3%;
+  margin-top: 39px;
+}
+}
+
+/*--------Seller View-------*/
+.sellerView{
+  margin-top: 46px;
+  .sellerButtons{
+    display: flex;
+    .sellerBtn{
+      width: 111px;
+      height: 48px;
+      background: #FAFAFA;
+      border: 1px solid #D8D8D8;
+      font-family: Lato-Regular;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+    }
+    .active{
+      background: #8367D8;
+      border: 1px solid #8367D8;
+      border: 1px solid #979797;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.63px;
+    }
+  }
+}
+%headerTitles{
+  font-family: Lato-Regular;
+  font-size: 18px;
+  color: #252525;
+  letter-spacing: 0.63px;
+}
+%sellerActiveFont{
+  font-family: Lato-Regular;
+  font-size: 18px;
+  color: #252525;
+  letter-spacing: 0.63px;
+}
+.accountTable{
+  width: 1120px;
+  height: auto;
+  .accountTableHeader{
+    padding-top: 3px;
+    width: 100%;
+    height: 60px;
+    background: #FAFAFA;
+    display: flex;
+    .header{
+      @extend %headerTitles;
+    }
+    .labelItem{
+      margin-left: 40px;
+    }
+    .labelName{
+      margin-left: 64px;
+    }
+    .labelTime{
+      margin-left: 237px;
+    }
+    .labelPrice{
+      margin-left: 64px;
+    }
+    .labelNoBids{
+      margin-left: 56px;
+    }
+    .labelHiBids{
+      margin-left: 66px;
+    }
+  }
+  .products{
+    display: flex;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    .accountProductImg{
+      width: 80px;
+      max-height: 80px;
+      margin-left: 21px;
+    }
+    .productName{
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      width: 250px;
+      margin-left: 40px;
+    }
+    .productTime{
+      @extend %sellerActiveFont;
+      margin-left: 40px;
+      width: 100px;
+    }
+    .productPrice{
+      @extend %sellerActiveFont;
+      margin-left: 50px;
+      width: 110px;
+    }
+    .productNoBids{
+      @extend %sellerActiveFont;
+      margin-left: 34px;
+      width: 90px;
+    }
+    .productHighestBid{
+      @extend %sellerActiveFont;
+      color: #5B9ED6;
+      margin-left: 40px;
+    }
+  }
+}
+.wishlistView{
+  margin-top: 94px;
+}
+.bidsView{
+  margin-top: 94px;
 }

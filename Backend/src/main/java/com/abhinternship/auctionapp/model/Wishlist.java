@@ -12,8 +12,8 @@ public class Wishlist {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "userwl_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
@@ -26,6 +26,9 @@ public class Wishlist {
     public Wishlist(User user, Product product) {
         this.user = user;
         this.product = product;
+    }
+
+    public Wishlist() {
     }
 
     public User getUser() {

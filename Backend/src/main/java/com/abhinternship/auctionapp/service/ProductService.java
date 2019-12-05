@@ -1,10 +1,7 @@
 package com.abhinternship.auctionapp.service;
 
 import com.abhinternship.auctionapp.exception.RepositoryException;
-import com.abhinternship.auctionapp.model.ColorDto;
-import com.abhinternship.auctionapp.model.Product;
-import com.abhinternship.auctionapp.model.SizeDto;
-import com.abhinternship.auctionapp.model.SubcategoryDto;
+import com.abhinternship.auctionapp.model.*;
 import com.abhinternship.auctionapp.model.filter.ProductSpecification;
 import com.abhinternship.auctionapp.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
 public class ProductService implements BaseService<Product> {
@@ -55,9 +52,15 @@ public class ProductService implements BaseService<Product> {
     }
 
     @Override
-    public Product update(Integer id, Product request) {
+    public Product update(Long id, LinkedHashMap request) {
         //TODO
         return null;
+    }
+
+    @Override
+    public Boolean delete(LinkedHashMap request) throws RepositoryException {
+        //TODO
+        return false;
     }
 
     public List<Product> findAllProductByStartDateDesc(Long pageNumber) throws RepositoryException {
@@ -118,5 +121,35 @@ public class ProductService implements BaseService<Product> {
 
     public List<Double> getAllPrices() {
         return repository.getAllByOrderByHighestBid();
+    }
+
+    public List<Product> getAllActiveProductsByUser(User user, Long pageSize) throws RepositoryException {
+        Pageable pageable = PageRequest.of(0, Math.toIntExact(pageSize));
+        List<Product> userProducts = repository.getAllByUser(user, pageable);
+        List<Product> activeProducts = new ArrayList<>();
+        Date today = new Date(System.currentTimeMillis());
+        System.out.println(today);
+        for (int i = 0; i < userProducts.size(); i++){
+            if (userProducts.get(i).getEndDate().compareTo(today) > 0){
+                activeProducts.add(userProducts.get(i));
+            } else if (userProducts.get(i).getEndDate().compareTo(today) == 0){
+                activeProducts.add(userProducts.get(i));
+            }
+        }
+        return activeProducts;
+    }
+
+    public List<Product> getAllSoldProductsByUser(User user, Long pageSize) throws RepositoryException {
+        Pageable pageable = PageRequest.of(0, Math.toIntExact(pageSize));
+        List<Product> userProducts = repository.getAllByUser(user, pageable);
+        List<Product> soldProducts = new ArrayList<>();
+        Date today = new Date(System.currentTimeMillis());
+        System.out.println(today);
+        for (int i = 0; i < userProducts.size(); i++){
+            if (userProducts.get(i).getEndDate().compareTo(today) < 0){
+                soldProducts.add(userProducts.get(i));
+            }
+        }
+        return soldProducts;
     }
 }
