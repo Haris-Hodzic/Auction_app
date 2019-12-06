@@ -36,4 +36,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     List<Double> getAllByOrderByHighestBid();
 
     List<Product> getAllByOrderByEndDateAsc(Pageable pageable);
+
+    List<Product> getAllByUser(User user, Pageable pageable);
 }

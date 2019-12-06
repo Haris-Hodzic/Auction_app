@@ -9,18 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 
 public class ProductService implements BaseService<Product> {
     @Autowired
     ProductRepository repository;
-
-    ProductSpecification productSpecification = new ProductSpecification();
-
 
     @Override
     public Product getById(Long requestId) throws RepositoryException {

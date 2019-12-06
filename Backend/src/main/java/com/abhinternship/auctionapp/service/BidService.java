@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -49,7 +48,6 @@ public class BidService implements BaseService<Bid> {
             if (price > product.getHighestBid()) {
                 product.setHighestBid(price);
                 int numberOfBids = product.getNumberOfBids() + 1;
-                System.out.println(numberOfBids);
                 product.setNumberOfBids(numberOfBids);
                 product.setUser(creator);
                 productRepository.save(product);

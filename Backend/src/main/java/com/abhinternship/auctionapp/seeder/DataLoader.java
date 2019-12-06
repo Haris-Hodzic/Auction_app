@@ -5,7 +5,6 @@ import com.abhinternship.auctionapp.repository.AddressRepository;
 import com.abhinternship.auctionapp.repository.ProductRepository;
 import com.abhinternship.auctionapp.repository.UserRepository;
 import com.abhinternship.auctionapp.repository.WishlistRepository;
-import com.abhinternship.auctionapp.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;

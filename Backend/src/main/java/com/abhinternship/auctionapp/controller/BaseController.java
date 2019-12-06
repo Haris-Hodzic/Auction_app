@@ -2,10 +2,8 @@ package com.abhinternship.auctionapp.controller;
 
 import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.service.BaseService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.LinkedHashMap;
