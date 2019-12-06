@@ -1,20 +1,28 @@
-<div class="accountTable">
-	<div class="accountTableHeader">
-		<p class="header labelItem">Item</p>
-		<p class="header labelName">Name</p>
-		<p class="header labelTime">Time left</p>
-		<p class="header labelPrice">Your Price</p>
-		<p class="header labelNoBids">No. Bids</p>
-		<p class="header labelHiBids">Highest Bid</p>
-	</div>
-	{{#each soldProducts as |product|}}
-		<div class="products">
-			<img src={{get product.photo "1"}} alt="" class="accountProductImg">
-			<p class="productName">{{product.name}}</p>
-			<p class="productTime">{{product.timeLeft}} days</p>
-			<p class="productPrice">${{product.startPrice}}</p>
-			<p class="productNoBids">{{product.numberOfBids}}</p>
-			<p class="productHighestBid">${{product.highestBid}}</p>
-		</div>
-	{{/each}}
+<div class="sellerSold">
+  <div class="accountTable">
+    <div class="accountTableHeader">
+      <p class="header labelItem">Item</p>
+      <p class="header labelName">Name</p>
+      <p class="header labelTime">Time left</p>
+      <p class="header labelPrice">Your Price</p>
+      <p class="header labelNoBids">No. Bids</p>
+      <p class="header labelHiBids">Highest Bid</p>
+    </div>
+    {{#each soldProducts as |product|}}
+      <div class="products">
+        <img src={{get product.photo "1"}} alt="" class="accountProductImg">
+        <p class="productName">{{product.name}}</p>
+        <p class="productTime">{{product.timeLeft}} days</p>
+        <p class="productPrice">${{product.startPrice}}</p>
+        <p class="productNoBids">{{product.numberOfBids}}</p>
+        <p class="productHighestBid">${{product.highestBid}}</p>
+        {{#link-to "product.show" product.id class="linkToClass"}}
+          <button class="viewBtn">VIEW</button>
+        {{/link-to}}
+      </div>
+    {{/each}}
+  </div>
+  {{#if (gte soldProducts.length 5)}}
+    <button class="moreBtn" {{action "exploreMore"}}>LOAD MORE</button>
+  {{/if}}
 </div>

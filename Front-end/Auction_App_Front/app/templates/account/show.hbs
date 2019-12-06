@@ -12,10 +12,10 @@
 		<ProfileView></ProfileView>
 		{{/if}}
 		{{#if isSellerButtonActive}}
-		<SellerView  @activeProducts={{activeProductList}} @soldProducts={{soldProductList}}></SellerView>
+		<SellerView  @activeProducts={{activeProductList}} @soldProducts={{soldProductList}} @userInfo={{userInfo}}></SellerView>
 		{{/if}}
 		{{#if isBidsButtonActive}}
-		<BidsView @bids={{userBids}}></BidsView>
+		<BidsView @bids={{userBids}} @userInfo={{userInfo}}></BidsView>
 		{{/if}}
 		{{#if isWishlistButtonActive}}
 		<WishlistView @userWishlist={{userWishlist}} @userInfo={{userInfo}}></WishlistView>

@@ -13,6 +13,7 @@ export default Controller.extend({
   pageSize: 5,
   activeProductList: null,
   soldProductList: null,
+  isLoadMoreButtonActive: true,
   productHttp: service(),
   userHttp: service(),
   bidHttp: service(),
@@ -80,12 +81,27 @@ export default Controller.extend({
           let differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
           if (differenceDays >= 0) {
             set(this.get('userWishlist')[i], 'timeLeft', differenceDays);
+            set(this.get('userWishlist')[i], 'status', 'OPEN');
+            set(this.get('userWishlist')[i], 'statusClass', 'open')
           } else {
             set(this.get('userWishlist')[i], 'timeLeft', 0);
+            set(this.get('userWishlist')[i], 'status', 'CLOSED');
+            set(this.get('userWishlist')[i], 'statusClass', 'closed')
           }
         }
       });
     });
+  },
+  afterModel() {
+    if (this.get('model').option === 'profile') {
+      this.send('setProfileView');
+    } else if(this.get('model').option === 'seller') {
+      this.send('setSellerView');
+    }else if (this.get('model').option === 'bids') {
+      this.send('setBidsView');
+    }else if (this.get('model').option === 'wishlist') {
+      this.send('setWishlistView');
+    }
   },
   actions: {
     setProfileView(){

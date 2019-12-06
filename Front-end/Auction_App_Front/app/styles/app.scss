@@ -1348,7 +1348,6 @@ footer{
       font-size: 18px;
       color: #FFFFFF;
       letter-spacing: 0.63px;
-
     }
   }
 }
@@ -1502,12 +1501,12 @@ footer{
               margin-left: 7px;
             }
           }
-        .bidBtn:hover{
-          border: #8367D8 solid 2px;
-        }
-        .watchListBtn:hover{
-          border: #8367D8 solid 2px;
-        }
+          .bidBtn:hover{
+            border: #8367D8 solid 2px;
+          }
+          .watchListBtn:hover{
+            border: #8367D8 solid 2px;
+          }
         }
       }
     }
@@ -2052,6 +2051,18 @@ footer{
 }
 
 /*--------Seller View-------*/
+%moreButton{
+  position: absolute;
+  left: 40%;
+  margin-top: 92px;
+  width: 150px;
+  height: 50px;
+  background: #8367D8;
+  font-family: Lato-Bold;
+  font-size: 16px;
+  color: #FFFFFF;
+  letter-spacing: 0.63px; 
+}
 .sellerView{
   margin-top: 46px;
   .sellerButtons{
@@ -2156,12 +2167,73 @@ footer{
       @extend %sellerActiveFont;
       color: #5B9ED6;
       margin-left: 40px;
+      width: 90px;
+    }
+    .viewBtn{
+      margin-left: 20px;
+      width: 103px;
+      height: 49px;
+      background: #FFFFFF;
+      border: 3px solid #E3E3E3;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
     }
   }
 }
 .wishlistView{
   margin-top: 94px;
+  .moreBtn{
+    @extend %moreButton;
+  }
+  .accountTable{
+    .accountTableHeader{
+      .labelStatus{
+        margin-left: 85px;
+      }
+    }
+    .products{
+      .status{
+        background: #F0F0F0;
+        width: 102px;
+        height: 49px;
+        margin-left: 25px;
+        .open{
+          font-family: Lato-Bold;
+          font-size: 14px;
+          color: #417505;
+          letter-spacing: 0.49px;
+          text-align: center;
+          padding-top: 3px;
+        }
+        .closed{
+          font-family: Lato-Bold;
+          font-size: 14px;
+          color: #A6555F;
+          letter-spacing: 0.49px;
+          text-align: center;
+          padding-top: 3px;
+        }
+      }
+      .viewBtn{
+      margin-left: 60px;
+      cursor: pointer;
+    }
+    }
+  }
 }
 .bidsView{
   margin-top: 94px;
+  .moreBtn{
+    @extend %moreButton;
+  }
+}
+.sellerActive{
+  .moreBtn{
+    @extend %moreButton;
+  }
+}
+.sellerSold{
+  .moreBtn{
+    @extend %moreButton;
+  }
 }

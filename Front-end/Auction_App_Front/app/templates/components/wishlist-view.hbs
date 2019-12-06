@@ -4,9 +4,8 @@
 		<p class="header labelItem">Item</p>
 		<p class="header labelName">Name</p>
 		<p class="header labelTime">Time left</p>
-		<p class="header labelPrice">Your Price</p>
-		<p class="header labelNoBids">No. Bids</p>
 		<p class="header labelHiBids">Highest Bid</p>
+		<p class="header labelStatus">Status</p>
 	</div>
 	{{#each userWishlist as |wishlist|}}
 		<div class="products">
@@ -14,11 +13,14 @@
 			<p class="productName">{{wishlist.product.name}}</p>
 			<p class="productTime">{{wishlist.timeLeft}} days</p>
 			<p class="productPrice">${{wishlist.product.startPrice}}</p>
-			<p class="productNoBids">{{wishlist.product.numberOfBids}}</p>
-			<p class="productHighestBid">${{wishlist.product.highestBid}}</p>
+			<div class="status"><p class={{wishlist.statusClass}}>{{wishlist.status}}</p></div>
+			{{#link-to "product.show" wishlist.product.id class="linkToClass"}}
+				<button class="viewBtn">BID</button>
+			{{/link-to}}
 		</div>
 	{{/each}}
-</div>	
-		<button class="moreBtn" {{action "exploreMore"}}>EXPLORE MORE</button>
-	
+</div>
+	{{#if (gte userWishlist.length 5)}}
+		<button class="moreBtn" {{action "exploreMore"}}>LOAD MORE</button>
+	{{/if}}
 </div>

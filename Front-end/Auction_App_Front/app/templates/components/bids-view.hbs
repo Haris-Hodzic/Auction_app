@@ -16,7 +16,13 @@
 			<p class="productPrice">${{bid.price}}</p>
 			<p class="productNoBids">{{bid.product.numberOfBids}}</p>
 			<p class="productHighestBid">${{bid.product.highestBid}}</p>
+			{{#link-to "product.show" bid.product.id class="linkToClass"}}
+				<button class="viewBtn">VIEW</button>
+			{{/link-to}}
 		</div>
 	{{/each}}
-</div>
+	</div>
+	{{#if (gte bids.length 5)}}
+		<button class="moreBtn" {{action "exploreMore"}}>LOAD MORE</button>
+	{{/if}}
 </div>
