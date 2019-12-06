@@ -32,7 +32,6 @@ public class ProductSpecification implements Specification<Product> {
         if (!searchString.isEmpty()) {
             predicates.add(builder.equal(
                     root.get("name"), searchString));
-            System.out.println(root.get("name").getJavaType());
         }
         if (!startPrice.isEmpty() && !endPrice.isEmpty()) {
             predicates.add(builder.between(

@@ -1,26 +1,26 @@
 <div class="wishlistView">
-	<div class="accountTable">
-	<div class="accountTableHeader">
-		<p class="header labelItem">Item</p>
-		<p class="header labelName">Name</p>
-		<p class="header labelTime">Time left</p>
-		<p class="header labelHiBids">Highest Bid</p>
-		<p class="header labelStatus">Status</p>
-	</div>
-	{{#each userWishlist as |wishlist|}}
-		<div class="products">
-			<img src={{get wishlist.product.photo "1"}} alt="" class="accountProductImg">
-			<p class="productName">{{wishlist.product.name}}</p>
-			<p class="productTime">{{wishlist.timeLeft}} days</p>
-			<p class="productPrice">${{wishlist.product.startPrice}}</p>
-			<div class="status"><p class={{wishlist.statusClass}}>{{wishlist.status}}</p></div>
-			{{#link-to "product.show" wishlist.product.id class="linkToClass"}}
-				<button class="viewBtn">BID</button>
-			{{/link-to}}
-		</div>
-	{{/each}}
-</div>
-	{{#if (gte userWishlist.length 5)}}
-		<button class="moreBtn" {{action "exploreMore"}}>LOAD MORE</button>
-	{{/if}}
+  <div class="accountTable">
+    <div class="accountTableHeader">
+      <p class="header labelItem">Item</p>
+      <p class="header labelName">Name</p>
+      <p class="header labelTime">Time left</p>
+      <p class="header labelHiBids">Highest Bid</p>
+      <p class="header labelStatus">Status</p>
+    </div>
+    {{#each userWishlist as |wishlist|}}
+      <div class="products">
+        <img src={{get wishlist.product.photo "1"}} alt="" class="accountProductImg">
+        <p class="productName">{{wishlist.product.name}}</p>
+        <p class="productTime">{{wishlist.timeLeft}} days</p>
+        <p class="productPrice">${{wishlist.product.startPrice}}</p>
+        <div class="status"><p class={{wishlist.statusClass}}>{{wishlist.status}}</p></div>
+        {{#link-to "product.show" wishlist.product.id class="linkToClass"}}
+          <button class="viewBtn">BID</button>
+        {{/link-to}}
+      </div>
+    {{/each}}
+  </div>
+  {{#if (gte userWishlist.length 5)}}
+    <button class="moreBtn" {{action "exploreMore"}}>LOAD MORE</button>
+  {{/if}}
 </div>

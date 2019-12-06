@@ -39,5 +39,5 @@ export default Service.extend({
   },
   getActiveProductsByUserId(user, pageSize) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/active?user=' + user + '&pageSize=' + pageSize, '', 'GET');
-  },
+  }
 });

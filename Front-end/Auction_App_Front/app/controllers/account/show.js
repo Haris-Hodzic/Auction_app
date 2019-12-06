@@ -3,7 +3,6 @@ import { observer } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { set } from '@ember/object';
 
-
 export default Controller.extend({
   userInfo: null,
   userProducts: null,
@@ -95,16 +94,16 @@ export default Controller.extend({
   afterModel() {
     if (this.get('model').option === 'profile') {
       this.send('setProfileView');
-    } else if(this.get('model').option === 'seller') {
+    } else if (this.get('model').option === 'seller') {
       this.send('setSellerView');
-    }else if (this.get('model').option === 'bids') {
+    } else if (this.get('model').option === 'bids') {
       this.send('setBidsView');
-    }else if (this.get('model').option === 'wishlist') {
+    } else if (this.get('model').option === 'wishlist') {
       this.send('setWishlistView');
     }
   },
   actions: {
-    setProfileView(){
+    setProfileView() {
       this.set('isProfileButtonActive', true);
       this.set('profileActiveClass', 'active');
       this.set('isSellerButtonActive', false);
@@ -115,7 +114,7 @@ export default Controller.extend({
       this.set('wishlistActiveClass', '');
       this.transitionToRoute('account.show', "profile");
     },
-    setSellerView(){
+    setSellerView() {
       this.set('isProfileButtonActive', false);
       this.set('profileActiveClass', '');
       this.set('isSellerButtonActive', true);
@@ -126,7 +125,7 @@ export default Controller.extend({
       this.set('wishlistActiveClass', '');
       this.transitionToRoute('account.show', "seller");
     },
-    setBidsView(){
+    setBidsView() {
       this.set('isProfileButtonActive', false);
       this.set('profileActiveClass', '');
       this.set('isSellerButtonActive', false);
@@ -137,7 +136,7 @@ export default Controller.extend({
       this.set('wishlistActiveClass', '');
       this.transitionToRoute('account.show', "bids");
     },
-    setWishlistView(){
+    setWishlistView() {
       this.set('isProfileButtonActive', false);
       this.set('profileActiveClass', '');
       this.set('isSellerButtonActive', false);
@@ -146,17 +145,17 @@ export default Controller.extend({
       this.set('bidsActiveClass', '');
       this.set('isWishlistButtonActive', true);
       this.set('wishlistActiveClass', 'active');
-      this.transitionToRoute('account.show', "wishlist");  
+      this.transitionToRoute('account.show', "wishlist");
     },
   },
   valueObserver: observer('model', function() {
     if (this.get('model').option === 'profile') {
       this.send('setProfileView');
-    } else if(this.get('model').option === 'seller') {
+    } else if (this.get('model').option === 'seller') {
       this.send('setSellerView');
-    }else if (this.get('model').option === 'bids') {
+    } else if (this.get('model').option === 'bids') {
       this.send('setBidsView');
-    }else if (this.get('model').option === 'wishlist') {
+    } else if (this.get('model').option === 'wishlist') {
       this.send('setWishlistView');
     }
   })

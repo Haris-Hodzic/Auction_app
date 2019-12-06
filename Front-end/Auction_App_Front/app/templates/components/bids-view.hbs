@@ -1,28 +1,28 @@
 <div class="bidsView">
-	<div class="accountTable">
-	<div class="accountTableHeader">
-		<p class="header labelItem">Item</p>
-		<p class="header labelName">Name</p>
-		<p class="header labelTime">Time left</p>
-		<p class="header labelPrice">Your Price</p>
-		<p class="header labelNoBids">No. Bids</p>
-		<p class="header labelHiBids">Highest Bid</p>
-	</div>
-	{{#each bids as |bid|}}
-		<div class="products">
-			<img src={{get bid.product.photo "1"}} alt="" class="accountProductImg">
-			<p class="productName">{{bid.product.name}}</p>
-			<p class="productTime">{{bid.timeLeft}} days</p>
-			<p class="productPrice">${{bid.price}}</p>
-			<p class="productNoBids">{{bid.product.numberOfBids}}</p>
-			<p class="productHighestBid">${{bid.product.highestBid}}</p>
-			{{#link-to "product.show" bid.product.id class="linkToClass"}}
-				<button class="viewBtn">VIEW</button>
-			{{/link-to}}
-		</div>
-	{{/each}}
-	</div>
-	{{#if (gte bids.length 5)}}
-		<button class="moreBtn" {{action "exploreMore"}}>LOAD MORE</button>
-	{{/if}}
+  <div class="accountTable">
+    <div class="accountTableHeader">
+      <p class="header labelItem">Item</p>
+      <p class="header labelName">Name</p>
+      <p class="header labelTime">Time left</p>
+      <p class="header labelPrice">Your Price</p>
+      <p class="header labelNoBids">No. Bids</p>
+      <p class="header labelHiBids">Highest Bid</p>
+    </div>
+    {{#each bids as |bid|}}
+      <div class="products">
+        <img src={{get bid.product.photo "1"}} alt="" class="accountProductImg">
+        <p class="productName">{{bid.product.name}}</p>
+        <p class="productTime">{{bid.timeLeft}} days</p>
+        <p class="productPrice">${{bid.price}}</p>
+        <p class="productNoBids">{{bid.product.numberOfBids}}</p>
+        <p class="productHighestBid">${{bid.product.highestBid}}</p>
+        {{#link-to "product.show" bid.product.id class="linkToClass"}}
+          <button class="viewBtn">VIEW</button>
+        {{/link-to}}
+      </div>
+    {{/each}}
+  </div>
+  {{#if (gte bids.length 5)}}
+    <button class="moreBtn" {{action "exploreMore"}}>LOAD MORE</button>
+  {{/if}}
 </div>

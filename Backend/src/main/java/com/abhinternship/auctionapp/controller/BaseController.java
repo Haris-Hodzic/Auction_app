@@ -49,7 +49,6 @@ abstract public class BaseController<T> {
     @Transactional
     @CrossOrigin
     public Boolean delete(@RequestBody @Valid LinkedHashMap request) throws RepositoryException{
-        System.out.println(request);
         return implementedService.delete(request);
     }
 }

@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-import {inject as service} from '@ember/service';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
-	wishlistHttp: service(),
+  wishlistHttp: service(),
   session: service('session'),
   watchListClass: '',
   userEmail: '',
@@ -10,7 +10,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.set('userEmail', this.get('session.data.email'));
-    this.get('wishlistHttp').existInWishlist(this.product).then((result)=> {
+    this.get('wishlistHttp').existInWishlist(this.product).then((result) => {
       this.set('isWatchList', result);
       if (this.get('isWatchList') != false) {
         this.set('watchListClass', 'active');
@@ -20,11 +20,11 @@ export default Component.extend({
     });
   },
   actions: {
-      setWatchList() {
-        var data = JSON.stringify({
-          'product': this.product,
-          'userEmail': this.get('userEmail')
-        });
+    setWatchList() {
+      var data = JSON.stringify({
+        'product': this.product,
+        'userEmail': this.get('userEmail')
+      });
       if (this.get('isWatchList') != false) {
         this.set('watchListClass', '');
         this.set('isWatchList', false);

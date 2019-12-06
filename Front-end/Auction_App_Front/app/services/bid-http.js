@@ -11,6 +11,6 @@ export default Service.extend({
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/bid/', data, 'POST');
   },
   getBidsByUserId(user, pageSize) {
-  	return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/bid/user?user=' + user + '&pageSize=' + pageSize, '', 'GET');
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/bid/user?user=' + user + '&pageSize=' + pageSize, '', 'GET');
   }
 });

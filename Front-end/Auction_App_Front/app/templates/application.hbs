@@ -44,10 +44,10 @@
       <li><a href="" {{action "myAccount"}}>MY ACCOUNT</a></li>
       {{#if isAccountActive}}
         <ul class="accountList">
-          <li class="firstInList {{profileActiveClass}}" {{action "setProfileView"}}>Profile</li>
-          <li class="{{sellerActiveClass}}" {{action "setSellerView"}}>Become Seller</li>
-          <li class="{{bidsActiveClass}}" {{action "setBidsView"}}>Your Bids</li>
-          <li class="{{wishlistActiveClass}}" {{action "setWishlistView"}}>Wishlist</li>
+          <li class="firstInList {{profileActiveClass}}" role="button" {{action "setProfileView"}}>Profile</li>
+          <li class={{sellerActiveClass}} role="button" {{action "setSellerView"}}>Become Seller</li>
+          <li class={{bidsActiveClass}} role="button" {{action "setBidsView"}}>Your Bids</li>
+          <li class={{wishlistActiveClass}} role="button" {{action "setWishlistView"}}>Wishlist</li>
         </ul>
       {{/if}}
     </ul>

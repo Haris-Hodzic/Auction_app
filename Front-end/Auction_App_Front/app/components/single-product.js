@@ -7,7 +7,7 @@ export default Component.extend({
   wishlistHttp: service(),
   session: service('session'),
   timeLeft: null,
-  isWatchList: false,
+  isWatchListActive: false,
   watchListClass: 'wlInactive',
   currentPhoto: '0',
   owner: false,
@@ -32,8 +32,8 @@ export default Component.extend({
     this.set('bidderEmail', this.get('session.data.email'));
 
     this.get('wishlistHttp').existInWishlist(this.product).then((result)=> {
-      this.set('isWatchList', result);
-      if (this.get('isWatchList') != false) {
+      this.set('isWatchListActive', result);
+      if (this.get('isWatchListActive') != false) {
         this.set('watchListClass', 'wlActive');
       } else {
         this.set('watchListClass', 'wlInactive');
@@ -57,17 +57,17 @@ export default Component.extend({
   },
   actions: {
     setWatchList() {
-        var data = JSON.stringify({
-          'product': this.product,
-          'userEmail': this.get('bidderEmail')
-        });
-      if (this.get('isWatchList') != false) {
+      var data = JSON.stringify({
+        'product': this.product,
+        'userEmail': this.get('bidderEmail')
+      });
+      if (this.get('isWatchListActive') != false) {
         this.set('watchListClass', 'wlInactive');
-        this.set('isWatchList', false);
+        this.set('isWatchListActive', false);
         this.get('wishlistHttp').deleteProductFromWishlist(this.product);
       } else {
         this.set('watchListClass', 'wlActive');
-        this.set('isWatchList', true);
+        this.set('isWatchListActive', true);
         this.get('wishlistHttp').addToWishlist(data);
       }
     },

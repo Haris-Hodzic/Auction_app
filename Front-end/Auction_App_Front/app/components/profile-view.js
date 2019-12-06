@@ -41,10 +41,10 @@ export default Component.extend({
       this.set('userInfo', result);
       this.set('selectedDate', result.dateOfBirth.slice(8, 10));
       if (result.dateOfBirth.slice(5, 6) === '0') {
-        this.set('displayedMonth', this.get('monthOptions')[result.dateOfBirth.slice(6, 7)-1]);
+        this.set('displayedMonth', this.get('monthOptions')[result.dateOfBirth.slice(6, 7) - 1]);
         this.set('selectedMonth', result.dateOfBirth.slice(6, 7));
       } else {
-        this.set('displayedMonth', this.get('monthOptions')[result.dateOfBirth.slice(5, 7)-1]);
+        this.set('displayedMonth', this.get('monthOptions')[result.dateOfBirth.slice(5, 7) - 1]);
         this.set('selectedMonth', result.dateOfBirth.slice(5, 7));
       }
       this.set('year', result.dateOfBirth.slice(0, 4));
@@ -81,7 +81,7 @@ export default Component.extend({
       this.set('displayedMonth', monthDisplayed);
       this.set('isMonthButtonActive', false);
     },
-    setDate(date){
+    setDate(date) {
       this.set('selectedDate', date);
       this.set('isDateButtonActive', false);
     },
@@ -101,7 +101,7 @@ export default Component.extend({
     saveInfo(userInfo) {
       if (this.get('selectedMonth') > 9) {
         this.set('userInfo.dateOfBirth', this.get('year') + '-' + this.get('selectedMonth') + '-' + this.get('selectedDate'));
-      } else if(this.get('selectedMonth') === null){
+      } else if (this.get('selectedMonth') === null) {
         this.set('userInfo.dateOfBirth', '');
       } else {
         this.set('userInfo.dateOfBirth', this.get('year') + '-0' + this.get('selectedMonth') + '-' + this.get('selectedDate'));
@@ -122,14 +122,11 @@ export default Component.extend({
         } else {
           for (var i = 0; i < validations.errors.length; i++) {
             if (validations.errors[i].type === 'username-available') {
-              console.log(account.email)
-              console.log(this.get('session.data.email'))
               if (account.email === this.get('session.data.email')) {
                 this.set('isValidEmail', true);
                 this.set('errors', false);
               } else {
                 this.set('isValidEmail', false);
-                console.log('nisu' + this.get('isValid'))
               }
             } else if (validations.errors[i].attribute === 'password') {
               this.set('isValidPassword', true);
@@ -138,15 +135,12 @@ export default Component.extend({
           if (validations.errors.length > 2) {
             this.set('isValid', false);
           }
-          console.log(this.get('isValid'))
-          console.log(this.get('isValidEmail'))
-          console.log(this.get('isValidPassword'))
           if (this.get('isValid') && this.get('isValidEmail') && this.get('isValidPassword')) {
             this.set('errors', false);
             this.get('userHttp').updateUser(userInfo);
           } else {
             this.set('errors', true);
-          }   
+          }
         }
       });
     }

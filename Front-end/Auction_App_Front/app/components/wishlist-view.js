@@ -8,7 +8,7 @@ export default Component.extend({
   actions: {
     exploreMore() {
       let today = new Date().toJSON().slice(0, 10);
-      this.set('pageSize', this.get('pageSize') +5)
+      this.set('pageSize', this.get('pageSize') + 5);
       this.get('wishlistHttp').getWishlistByUserId(this.get('userInfo.id'), this.get('pageSize')).then((result) => {
         this.set('userWishlist', result);
         for (var i = 0; i < result.length; i++) {
