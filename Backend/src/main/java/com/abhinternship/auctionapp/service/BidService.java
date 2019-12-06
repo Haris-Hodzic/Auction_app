@@ -11,6 +11,7 @@ import com.abhinternship.auctionapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -30,7 +31,7 @@ public class BidService implements BaseService<Bid> {
     }
 
     @Override
-    public boolean create(LinkedHashMap request) throws RepositoryException{
+    public boolean create(LinkedHashMap request) throws RepositoryException {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             BidRequest req = objectMapper.convertValue(request, new TypeReference<BidRequest>() {
@@ -45,6 +46,9 @@ public class BidService implements BaseService<Bid> {
 
             if (price > product.getHighestBid()) {
                 product.setHighestBid(price);
+                int numberOfBids = product.getNumberOfBids() + 1;
+                System.out.println(numberOfBids);
+                product.setNumberOfBids(numberOfBids);
                 product.setUser(creator);
                 productRepository.save(product);
                 Bid bid = new Bid(price, date, bidder, product);
@@ -53,16 +57,16 @@ public class BidService implements BaseService<Bid> {
             } else {
                 return false;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RepositoryException(e.getMessage());
         }
     }
 
     @Override
-    public List<Bid> getAll() throws RepositoryException{
+    public List<Bid> getAll() throws RepositoryException {
         try {
             return bidRepository.findAll();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RepositoryException("No bids found");
         }
     }
@@ -70,7 +74,7 @@ public class BidService implements BaseService<Bid> {
     public List<Bid> getAllByProductId(Long productId) throws RepositoryException {
         try {
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RepositoryException("No bids found");
         }
         Optional<Product> productRequest = productRepository.findById(productId);

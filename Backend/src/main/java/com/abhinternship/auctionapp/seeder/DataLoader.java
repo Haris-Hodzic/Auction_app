@@ -1,9 +1,6 @@
 package com.abhinternship.auctionapp.seeder;
 
-import com.abhinternship.auctionapp.model.Address;
-import com.abhinternship.auctionapp.model.Category;
-import com.abhinternship.auctionapp.model.Product;
-import com.abhinternship.auctionapp.model.User;
+import com.abhinternship.auctionapp.model.*;
 import com.abhinternship.auctionapp.repository.AddressRepository;
 import com.abhinternship.auctionapp.repository.ProductRepository;
 import com.abhinternship.auctionapp.repository.UserRepository;
@@ -41,8 +38,28 @@ public class DataLoader implements CommandLineRunner {
         List<Address> listOfAddresses = new ArrayList<>();
         List<User> listOfUsers = new ArrayList<>();
 
-        Category category1 = new Category("Shoes");
+        Category category1 = new Category("Women");
         Category category2 = new Category("Men");
+        Category category3 = new Category("Kids");
+        Category category4 = new Category("Accesorise");
+        Category category5 = new Category("Home");
+        Category category6 = new Category("Art");
+        Category category7 = new Category("Computer");
+        Category subcategory1 = new Category("Bag");
+        Category subcategory2 = new Category("Clothes");
+        Category subcategory3 = new Category("Bad & Bath");
+        Category subcategory4 = new Category("Swimming costume");
+        Category subcategory5 = new Category("Spot Tops & Shoes");
+        Category subcategory6 = new Category("Phones");
+        Category subcategory7 = new Category("Laptop");
+        Category subcategory8 = new Category("Watches");
+        Category subcategory9 = new Category("Shoes");
+
+
+        AdditionalProperties additionalProperties1 = new AdditionalProperties("Red", "Medium");
+        AdditionalProperties additionalProperties2 = new AdditionalProperties("Red", "Small");
+        AdditionalProperties additionalProperties3 = new AdditionalProperties("Blue", "Medium");
+
         setOfCategories.add(category1);
         setOfCategories.add(category2);
 
@@ -121,8 +138,42 @@ public class DataLoader implements CommandLineRunner {
         listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/29"), false, "061123456", 110.00, listOfUsers.get(2)));
         listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/21"), false, "061123456", 110.00, listOfUsers.get(3)));
         listOfProducts.add(new Product("iPhone 11 Pro Max", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 520.00, new Date(), new Date("2019/11/29"), false, "061123456", 520.00, listOfUsers.get(0)));
-        listOfProducts.get(0).setCategories(setOfCategories);
+        //listOfProducts.get(0).setCategories(setOfCategories);
 
+        listOfProducts.get(0).setCategory(category7);
+        listOfProducts.get(0).setSubcategory(subcategory6);
+        listOfProducts.get(1).setCategory(category7);
+        listOfProducts.get(1).setSubcategory(subcategory6);
+        listOfProducts.get(2).setCategory(category7);
+        listOfProducts.get(2).setSubcategory(subcategory6);
+        listOfProducts.get(3).setCategory(category7);
+        listOfProducts.get(3).setSubcategory(subcategory6);
+        listOfProducts.get(4).setCategory(category7);
+        listOfProducts.get(4).setSubcategory(subcategory7);
+        listOfProducts.get(5).setCategory(category7);
+        listOfProducts.get(5).setSubcategory(subcategory7);
+        listOfProducts.get(6).setCategory(category4);
+        listOfProducts.get(6).setSubcategory(subcategory8);
+        listOfProducts.get(7).setCategory(category1);
+        listOfProducts.get(7).setSubcategory(subcategory9);
+        listOfProducts.get(8).setCategory(category2);
+        listOfProducts.get(8).setSubcategory(subcategory1);
+        listOfProducts.get(9).setCategory(category1);
+        listOfProducts.get(9).setSubcategory(subcategory9);
+        listOfProducts.get(10).setCategory(category1);
+        listOfProducts.get(10).setSubcategory(subcategory9);
+        listOfProducts.get(11).setCategory(category2);
+        listOfProducts.get(11).setSubcategory(subcategory9);
+        listOfProducts.get(12).setCategory(category1);
+        listOfProducts.get(12).setSubcategory(subcategory1);
+        listOfProducts.get(13).setCategory(category1);
+        listOfProducts.get(13).setSubcategory(subcategory1);
+
+        listOfProducts.get(1).setAdditionalProperties(additionalProperties1);
+        listOfProducts.get(3).setAdditionalProperties(additionalProperties2);
+        listOfProducts.get(4).setAdditionalProperties(additionalProperties3);
+
+        listOfProducts.get(8).setCategory(category2);
         listOfProducts.get(0).setPhoto(product0);
         listOfProducts.get(1).setPhoto(product1);
         listOfProducts.get(2).setPhoto(product2);
@@ -141,5 +192,6 @@ public class DataLoader implements CommandLineRunner {
         listOfProducts.get(15).setPhoto(product7);
         listOfProducts.get(16).setPhoto(product7);
         productRepository.saveAll(listOfProducts);
+
     }
 }

@@ -4,7 +4,6 @@ import Config from '../config/environment';
 
 export default Service.extend({
   httpBase: service(),
-
   getSingleBid(data) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/bid/product/' + data, data, 'GET');
   },

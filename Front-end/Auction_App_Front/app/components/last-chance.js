@@ -8,7 +8,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.set('buttonsList',[]);
-    this.get('productHttp').loadChances('0').then((result) => {
+    this.get('productHttp').getChances('0').then((result) => {
       this.set('chances', result);
     })
     for (var i = 0; i < this.get('products.length')/8; i++) {
@@ -17,7 +17,7 @@ export default Component.extend({
   },
   actions: {
     loadMoreChance(page) {
-      this.get('productHttp').loadChances(page).then((result) => {
+      this.get('productHttp').getChances(page).then((result) => {
         this.set('chances', result);
       })
     }

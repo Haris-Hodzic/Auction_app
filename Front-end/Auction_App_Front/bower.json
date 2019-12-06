@@ -1,6 +1,6 @@
 {
   "name": "auction-app-front",
   "dependencies": {
-    
+    "ionrangeslider": "^2.1.4"
   }
 }

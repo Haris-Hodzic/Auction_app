@@ -3,6 +3,7 @@ import {inject as service} from '@ember/service';
 
 export default Component.extend({
   bidHttp: service(),
+  productHttp: service(),
   session: service('session'),
   timeLeft: null,
   isWatchList: false,
@@ -73,6 +74,9 @@ export default Component.extend({
           if (result === false) {
             this.set('error', true);
           } else {
+            this.get('productHttp').getProduct({product_id: this.get('product.id')}).then((result) => {
+              this.set('product', result);
+            });
             this.set('error', false);
           }
         })
