@@ -2241,3 +2241,8 @@ footer{
     @extend %moreButton;
   }
 }
+.sellerSold{
+  .moreBtn{
+    @extend %moreButton;
+  }
+}
