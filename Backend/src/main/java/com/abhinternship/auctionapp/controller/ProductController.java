@@ -5,6 +5,8 @@ import com.abhinternship.auctionapp.model.*;
 import com.abhinternship.auctionapp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -72,5 +74,12 @@ public class ProductController extends BaseController<Product> {
     @GetMapping("/sold")
     public List<Product> getAllSoldProductsByUserId(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pageNumber") Long pageNumber) throws RepositoryException {
         return productService.getAllSoldProductsByUserId(userId, pageNumber);
+    }
+
+    @MessageMapping("/hello")
+    @SendTo("/home")
+    public String listTraps(String message) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        return "hello haris";
     }
 }

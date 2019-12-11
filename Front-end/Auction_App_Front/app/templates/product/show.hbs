@@ -1,3 +1,4 @@
 <PageBar @title="SINGLE PRODUCT">
 </PageBar>
-<SingleProduct @product={{model}} @products={{products}}></SingleProduct>
+{{log model}}
+<SingleProduct @product={{model.product}} @products={{products}} @numberOfViews={{this.viewss}}></SingleProduct>

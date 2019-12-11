@@ -1,8 +1,11 @@
 import Component from '@ember/component';
 import {inject as service} from '@ember/service';
+import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
+import diffAttrs from 'ember-diff-attrs';
 
-export default Component.extend({
+export default Component.extend(FindQuery, {
   bidHttp: service(),
+  store: service(),
   productHttp: service(),
   wishlistHttp: service(),
   session: service('session'),
@@ -29,6 +32,32 @@ export default Component.extend({
     let endDateMonth = endDate.slice(5, 7);
     let todayMonth = today.slice(5, 7);
     let ownerEmail = this.product.user.email;
+    let self = this;
+    /*this.filterEqual(this.store, 'view', {'id': this.product.id}, function(result) {
+      console.log(result)
+      if (result.length === 0) {
+        console.log('hi')
+        var view = self.store.createRecord('view',{
+          id: self.product.id,
+          numberOfViews: 1
+        });
+        view.save();
+      }else {
+        result.set('numberOfViews', result.numberOfViews + 1);
+        result.save();
+      }
+    });*/
+    /*this.get('store').findRecord('view', this.product.id).then(function(result) {
+      result.set('numberOfViews', result.numberOfViews + 1);
+      result.save();
+    }).catch(function(){
+      var view = self.store.createRecord('view',{
+          id: self.product.id,
+          numberOfViews: 1
+        });
+        view.save();
+    });*/
+
     this.set('bidderEmail', this.get('session.data.email'));
 
     this.get('wishlistHttp').existInWishlist(this.product.id).then((result)=> {
@@ -54,6 +83,17 @@ export default Component.extend({
     } else {
       this.set('owner', false);
     }
+  },
+  willDestroyElement() {
+    this.store.query('view', {
+      filter: {
+        productId: String(this.product.id)
+      }
+    }).then(function(result) {
+      var productView = result.get("firstObject");
+        productView.set('numberOfViews', productView.numberOfViews - 1);
+        productView.save();
+    });
   },
   actions: {
     setWatchList() {

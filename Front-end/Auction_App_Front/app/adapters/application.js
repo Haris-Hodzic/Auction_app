@@ -1,8 +1,7 @@
-import JSONAPIAdapter from 'ember-data/adapters/json-api';
-import TokenAuthorizerMixin from 'ember-simple-auth-token/mixins/token-authorizer';
+import FirestoreAdapter from 'emberfire/adapters/firestore';
 
-export default JSONAPIAdapter.extend(TokenAuthorizerMixin, {
-  host: 'http://localhost:8080',
-  namespace: 'authentication/login',
-  authorizer: 'authorizer:application'
+export default FirestoreAdapter.extend({
+    // Uncomment the following lines to enable offline persistence and multi-tab support
+     enablePersistence: true,
+     persistenceSettings: { synchronizeTabs: true }
 });

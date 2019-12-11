@@ -6,6 +6,16 @@ module.exports = function(environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
+    firebase: {
+      apiKey: "AIzaSyCiA19GRqSvHj21uolTLCBJMV2wu0URW-A",
+      authDomain: "auctionapp-43a0c.firebaseapp.com",
+      databaseURL: "https://auctionapp-43a0c.firebaseio.com",
+      projectId: "auctionapp-43a0c",
+      storageBucket: "auctionapp-43a0c.appspot.com",
+      messagingSenderId: "987955105263",
+      appId: "1:987955105263:web:91dbcb13d4eb8a7adf3a1a",
+      measurementId: "G-V93MR1704G"
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -15,6 +25,29 @@ module.exports = function(environment) {
         // Prevent Ember Data from overriding Date.parse.
         Date: false
       }
+    },
+    websockets: {
+        //REQUIRED - the endpoint url used to make the socket connection,
+        //typically this is an endpoint on the app's main API host
+        baseURL: 'http://localhost:8080/ws',
+        //the name of the request header sent in all AJAX requests
+        //that uniquely identify the originating browser/client
+        clientUUIDHeader: 'x-client-uuid',
+        //the global socket channel path for app-wide socket events
+        //if there is no global channel, set this to false
+        globalChannel: '/topic/global',
+        //the name of the property in ember-data models that hold
+        //the date the record was last modified. used by ModelSocketEventMixin
+        //to determine if received model data should be pushed into the store
+        //set to false to disable this behavior
+        modelDateField: 'dateModified',
+        //display verbose sock.js logs in the dev tools console
+        debug: true,
+        //user must have an authenticated session to connect
+        requiresAuth: true,
+        //the intervals at which successive reconnect attempts
+        //are made when the socket is disconnected
+        reconnectDelaySteps: [1000, 2000, 5000, 10000, 30000, 60000]
     },
 
     APP: {
