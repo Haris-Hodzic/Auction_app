@@ -17,6 +17,14 @@
         <li><a href="">{{#link-to "login"}}Login{{/link-to}}</a></li>
         <p>   or   </p>
         <li><a href="">{{#link-to "register"}}Create an Account{{/link-to}}</a></li>
+        {{#if isAccountActive}}
+          <ul>
+            <li>Profile</li>
+            <li>Become Seller</li>
+            <li>Your Bids</li>
+            <li>Wishlist</li>
+          </ul>
+        {{/if}}
       </ul>
     {{/if}}
   </div>
@@ -33,7 +41,15 @@
     <ul>
       <li><a href="">{{#link-to "home"}}HOME{{/link-to}}</a></li>
       <li><a href="">{{#link-to "shop"}}SHOP{{/link-to}}</a></li>
-      <li><a href="">MY ACCOUNT</a></li>
+      <li><a href="" {{action "myAccount"}}>MY ACCOUNT</a></li>
+      {{#if isAccountActive}}
+        <ul class="accountList">
+          <li class="firstInList {{profileActiveClass}}" role="button" {{action "setProfileView"}}>Profile</li>
+          <li class={{sellerActiveClass}} role="button" {{action "setSellerView"}}>Become Seller</li>
+          <li class={{bidsActiveClass}} role="button" {{action "setBidsView"}}>Your Bids</li>
+          <li class={{wishlistActiveClass}} role="button" {{action "setWishlistView"}}>Wishlist</li>
+        </ul>
+      {{/if}}
     </ul>
   </div>
 </nav>

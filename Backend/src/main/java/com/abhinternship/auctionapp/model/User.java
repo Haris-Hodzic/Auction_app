@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +23,7 @@ public class User {
     private String phoneNumber;
     @NotBlank
     private String password;
+    @Column(length = 4095, columnDefinition = "text")
     private String profilePhoto;
 
     public User() {
@@ -29,6 +32,7 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Address address;
 
     public User(String firstName, String lastName, @NotBlank String email, String gender, Date dateOfBirth, String phoneNumber, @NotBlank String password, String profilePhoto) {

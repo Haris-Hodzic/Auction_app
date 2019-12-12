@@ -25,6 +25,8 @@ public class Product {
     private Double highestBid;
     private int numberOfBids;
     @ElementCollection
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "photo_id")
     private Set<String> photo;
 
     @ManyToOne(fetch = FetchType.LAZY)

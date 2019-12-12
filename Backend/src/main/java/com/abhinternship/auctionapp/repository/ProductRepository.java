@@ -1,19 +1,16 @@
 package com.abhinternship.auctionapp.repository;
 
-import com.abhinternship.auctionapp.model.ColorDto;
-import com.abhinternship.auctionapp.model.Product;
-import com.abhinternship.auctionapp.model.SizeDto;
-import com.abhinternship.auctionapp.model.SubcategoryDto;
+import com.abhinternship.auctionapp.model.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
-
 import org.springframework.data.domain.Pageable;
-
 import java.util.List;
 
 @Repository
@@ -39,4 +36,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     List<Double> getAllByOrderByHighestBid();
 
     List<Product> getAllByOrderByEndDateAsc(Pageable pageable);
+
+    List<Product> getAllByUserIdOrderByEndDateAsc(Long userId, Pageable pageable);
+
+    List<Product> getAllByUserIdOrderByEndDateDesc(Long userId, Pageable pageable);
 }

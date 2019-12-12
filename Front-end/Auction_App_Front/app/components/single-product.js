@@ -4,13 +4,15 @@ import {inject as service} from '@ember/service';
 export default Component.extend({
   bidHttp: service(),
   productHttp: service(),
+  wishlistHttp: service(),
   session: service('session'),
   timeLeft: null,
-  isWatchList: false,
+  isWatchListActive: false,
   watchListClass: 'wlInactive',
   currentPhoto: '0',
   owner: false,
   bidderEmail: '',
+  currentProduct: null,
   error: false,
   errorMessage: 'There are higher bids than yours. You could give a second try!',
   successfulBidMessage: 'Congrats! You are the higest bider!',
@@ -27,10 +29,19 @@ export default Component.extend({
     let endDateMonth = endDate.slice(5, 7);
     let todayMonth = today.slice(5, 7);
     let ownerEmail = this.product.user.email;
+    this.set('bidderEmail', this.get('session.data.email'));
 
+    this.get('wishlistHttp').existInWishlist(this.product.id).then((result)=> {
+      this.set('isWatchListActive', result);
+      if (this.get('isWatchListActive') != false) {
+        this.set('watchListClass', 'wlActive');
+      } else {
+        this.set('watchListClass', 'wlInactive');
+      }
+    });
     this.get('bidHttp').getSingleBid(this.product.id).then((result) => {
       this.set('singleProduct', result);
-    })
+    });
     if ((endDateMonth - todayMonth) > 0) {
       this.set('timeLeft', (endDateMonth - todayMonth) + ' months and ' + (endDateDay - todayDay) + ' days');
     } else if ((endDateMonth - todayMonth) == 0) {
@@ -46,12 +57,18 @@ export default Component.extend({
   },
   actions: {
     setWatchList() {
-      if (this.get('isWatchList') != false) {
+      var data = JSON.stringify({
+        'product': this.product,
+        'userEmail': this.get('bidderEmail')
+      });
+      if (this.get('isWatchListActive') != false) {
         this.set('watchListClass', 'wlInactive');
-        this.set('isWatchList', false);
+        this.set('isWatchListActive', false);
+        this.get('wishlistHttp').deleteProductFromWishlist(this.product.id);
       } else {
         this.set('watchListClass', 'wlActive');
-        this.set('isWatchList', true);
+        this.set('isWatchListActive', true);
+        this.get('wishlistHttp').addToWishlist(data);
       }
     },
     setPhoto(num) {
@@ -62,24 +79,24 @@ export default Component.extend({
       if (this.get('session.isAuthenticated') === true) {
         const price = this.get('price');
         const date = new Date().toJSON().slice(0, 10);
-        let bidderEmail = this.get('session.data.email');
-        let currentProduct = this.product;
         const data = JSON.stringify({
           'price': price,
           'date': date,
-          'product': currentProduct,
-          'userEmail': bidderEmail
+          'product': this.product,
+          'userEmail': this.get('bidderEmail')
         });
-        this.get('bidHttp').createBid(data).then((result) => {
-          if (result === false) {
-            this.set('error', true);
-          } else {
-            this.get('productHttp').getProduct({product_id: this.get('product.id')}).then((result) => {
-              this.set('product', result);
-            });
-            this.set('error', false);
-          }
-        })
+        if (this.get('owner') === false) {
+          this.get('bidHttp').createBid(data).then((result) => {
+            if (result === false) {
+              this.set('error', true);
+            } else {
+              this.get('productHttp').getProduct({product_id: this.get('product.id')}).then((result) => {
+                this.set('product', result);
+              });
+              this.set('error', false);
+            }
+          })
+        }
       }
     }
   }

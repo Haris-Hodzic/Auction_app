@@ -1,15 +1,11 @@
 package com.abhinternship.auctionapp.controller;
 
 import com.abhinternship.auctionapp.exception.RepositoryException;
-import com.abhinternship.auctionapp.model.ColorDto;
-import com.abhinternship.auctionapp.model.Product;
-import com.abhinternship.auctionapp.model.SizeDto;
-import com.abhinternship.auctionapp.model.SubcategoryDto;
+import com.abhinternship.auctionapp.model.*;
 import com.abhinternship.auctionapp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -67,5 +63,14 @@ public class ProductController extends BaseController<Product> {
     @GetMapping("/price")
     public List<Double> getAllPrices() {
         return productService.getAllPrices();
+    }
+
+    @GetMapping("/active")
+    public List<Product> getAllActiveProductsByUserId(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pageNumber") Long pageNumber) throws RepositoryException {
+        return productService.getAllActiveProductsByUserId(userId, pageNumber);
+    }
+    @GetMapping("/sold")
+    public List<Product> getAllSoldProductsByUserId(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pageNumber") Long pageNumber) throws RepositoryException {
+        return productService.getAllSoldProductsByUserId(userId, pageNumber);
     }
 }

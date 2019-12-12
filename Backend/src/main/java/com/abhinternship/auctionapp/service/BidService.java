@@ -11,7 +11,9 @@ import com.abhinternship.auctionapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -47,7 +49,6 @@ public class BidService implements BaseService<Bid> {
             if (price > product.getHighestBid()) {
                 product.setHighestBid(price);
                 int numberOfBids = product.getNumberOfBids() + 1;
-                System.out.println(numberOfBids);
                 product.setNumberOfBids(numberOfBids);
                 product.setUser(creator);
                 productRepository.save(product);
@@ -73,22 +74,30 @@ public class BidService implements BaseService<Bid> {
 
     public List<Bid> getAllByProductId(Long productId) throws RepositoryException {
         try {
-
+            return bidRepository.findAllBidByProductId(productId);
         } catch (Exception e) {
             throw new RepositoryException("No bids found");
-        }
-        Optional<Product> productRequest = productRepository.findById(productId);
-        if (productRequest.isPresent()) {
-            Product product = productRequest.get();
-            return bidRepository.findAllBidByProduct(product);
-        } else {
-            return new ArrayList<>();
         }
     }
 
     @Override
-    public Bid update(Integer id, Bid request) {
+    public Bid update(Long id, LinkedHashMap request) {
         //TODO
         return null;
+    }
+
+    @Override
+    public Boolean delete(Long bidId) throws RepositoryException {
+        //TODO
+        return false;
+    }
+
+    public Page<Bid> getBidsByUser(Long userId, Long pageNumber) throws RepositoryException {
+        try{
+            Pageable pageable = PageRequest.of(Math.toIntExact(pageNumber), 5);
+            return bidRepository.getAllByBidderId(userId, pageable);
+        } catch (Exception e) {
+            throw new RepositoryException("No bids found");
+        }
     }
 }

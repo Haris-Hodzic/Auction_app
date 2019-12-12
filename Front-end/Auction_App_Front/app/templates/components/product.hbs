@@ -1,13 +1,11 @@
-{{#link-to "product.show" product.id class="linkToClass"}}
-  <div class={{className}}>
-    <div class="imageOptions">
-      <button class="watchListBtn" {{action "setWatchList"}}>Watchlist<i class="fa fa-heart {{watchListClass}}"></i></button>
-      {{#link-to "product.show" product.id class="linkToClass"}}
-        <button class="bidBtn">Bid<i class="fa fa-gavel fa-lg"></i></button>
-      {{/link-to}}
-    </div>
-    <img src={{get this.product.photo "0"}} alt="">
+<div class={{className}}>
+  <div class="imageOptions">
+    <button class="watchListBtn" {{action "setWatchList"}}>Watchlist<i class="fa fa-heart {{watchListClass}}"></i></button>
+    {{#link-to "product.show" product.id class="linkToClass"}}
+      <button class="bidBtn">Bid<i class="fa fa-gavel fa-lg"></i></button>
+    {{/link-to}}
   </div>
-  <p class="productName">{{this.product.name}}</p>
-  <p class="productPrice">Start From ${{this.product.startPrice}}</p>
-{{/link-to}}
+  <img src={{get this.product.photo "0"}} alt="">
+</div>
+<p class="productName">{{this.product.name}}</p>
+<p class="productPrice">Start From ${{this.product.startPrice}}</p>

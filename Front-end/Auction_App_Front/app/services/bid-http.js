@@ -10,4 +10,7 @@ export default Service.extend({
   createBid(data) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/bid/', data, 'POST');
   },
+  getBidsByUserId(userId, pageNumber) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/bid/user?userId=' + userId + '&pageNumber=' + pageNumber, '', 'GET');
+  }
 });
