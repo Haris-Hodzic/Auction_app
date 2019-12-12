@@ -1,4 +1,8 @@
 <PageBar @title="SINGLE PRODUCT">
 </PageBar>
-{{log model}}
-<SingleProduct @product={{model.product}} @products={{products}} @numberOfViews={{this.viewss}}></SingleProduct>
+{{#if (eq model.length 0)}}
+  <SingleProduct @productId={{model.query.filter.productId}} @numberOfViews={{nv.numberOfViews}} @products={{products}} @previousUrl={{previousPath}}></SingleProduct>
+{{/if}}
+{{#each model as |nv|}}
+  <SingleProduct @productId={{model.query.filter.productId}} @numberOfViews={{nv.numberOfViews}} @products={{products}}></SingleProduct>
+{{/each}}

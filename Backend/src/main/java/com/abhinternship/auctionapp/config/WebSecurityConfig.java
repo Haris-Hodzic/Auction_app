@@ -74,14 +74,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/**").permitAll();
+                .antMatchers(HttpMethod.POST, "/**").permitAll();
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests()
                 .antMatchers("/authentication").permitAll()
                 .antMatchers("/authentication/**").permitAll()
                 .antMatchers("/api").permitAll()
-                .antMatchers(HttpMethod.PUT, "/authentication/**").authenticated()
                 .antMatchers("/api/**").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and().

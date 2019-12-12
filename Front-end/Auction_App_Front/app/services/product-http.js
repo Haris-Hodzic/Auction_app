@@ -7,8 +7,8 @@ export default Service.extend({
   getAllProducts() {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api', '', 'GET');
   },
-  getProduct(data) {
-    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/' + data.product_id, data.product_id, 'GET');
+  getProduct(productId) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/' + productId, productId, 'GET');
   },
   getChances(pageNumber) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/lastchance/' + pageNumber, pageNumber, 'GET');

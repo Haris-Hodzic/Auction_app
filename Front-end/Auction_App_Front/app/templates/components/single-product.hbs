@@ -14,6 +14,11 @@
       <p class="notAuthenticatedNotification">{{notAuthenticatedMessage}}</p>
     {{/if}}
   {{/if}}
+  {{#ember-notify as |message close|}}
+    <span class="message-from-block">
+      {{numberOfViews}}
+    </span>
+  {{/ember-notify}}
 </div>
 <div class="singleProductBody">
   <div class="spTopPart">

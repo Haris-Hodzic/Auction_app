@@ -1,11 +1,11 @@
 import Component from '@ember/component';
 import {inject as service} from '@ember/service';
 import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
-import diffAttrs from 'ember-diff-attrs';
 
 export default Component.extend(FindQuery, {
   bidHttp: service(),
   store: service(),
+  notify: service(),
   productHttp: service(),
   wishlistHttp: service(),
   session: service('session'),
@@ -23,28 +23,58 @@ export default Component.extend(FindQuery, {
   notAuthenticatedMessage: 'You need to log in to place a bid!',
   bidTry: false,
   singleProduct: null,
+  product: null,
+  currentPath: null,
   init() {
     this._super(...arguments);
-    let today = new Date().toJSON().slice(0, 10);
-    let endDate = this.product.endDate.slice(0, 10);
-    let todayDay = today.slice(8, 10);
-    let endDateDay = endDate.slice(8, 10);
-    let endDateMonth = endDate.slice(5, 7);
-    let todayMonth = today.slice(5, 7);
-    let ownerEmail = this.product.user.email;
-    let self = this;
-    /*this.filterEqual(this.store, 'view', {'id': this.product.id}, function(result) {
-      console.log(result)
-      if (result.length === 0) {
-        console.log('hi')
-        var view = self.store.createRecord('view',{
-          id: self.product.id,
-          numberOfViews: 1
-        });
-        view.save();
-      }else {
-        result.set('numberOfViews', result.numberOfViews + 1);
-        result.save();
+    this.set('currentPath', location.href.slice(location.href.indexOf(location.pathname)));
+    if (this.get('session.previousRouteName') !== this.get('currentPath')) {
+      this.store.query('view', {
+        filter: {
+          productId: this.productId
+        }
+      }).then((result) => {
+        if (result.length === 0) {
+          var view = this.store.createRecord('view',{
+            productId: this.productId,
+            numberOfViews: 1
+          });
+          view.save();
+        }else {
+          var productView = result.get("firstObject");
+          productView.set('numberOfViews', productView.numberOfViews + 1);
+          productView.save();
+          this.notify.info('Hello there!');
+        }
+      });
+    }
+    this.get('productHttp').getProduct(this.productId).then((result) => {
+      this.set('product', result);
+      let today = new Date().toJSON().slice(0, 10);
+      let endDate = result.endDate.slice(0, 10);
+      let todayDay = today.slice(8, 10);
+      let endDateDay = endDate.slice(8, 10);
+      let endDateMonth = endDate.slice(5, 7);
+      let todayMonth = today.slice(5, 7);
+      let ownerEmail = result.user.email;
+      this.set('bidderEmail', this.get('session.data.email'));
+      this.get('wishlistHttp').existInWishlist(result).then((result)=> {
+        this.set('isWatchListActive', result);
+        if (this.get('isWatchListActive') != false) {
+          this.set('watchListClass', 'wlActive');
+        } else {
+          this.set('watchListClass', 'wlInactive');
+        }
+      });
+      this.get('bidHttp').getSingleBid(result.id).then((result) => {
+        this.set('singleProduct', result);
+      });
+      if ((endDateMonth - todayMonth) > 0) {
+        this.set('timeLeft', (endDateMonth - todayMonth) + ' months and ' + (endDateDay - todayDay) + ' days');
+      } else if ((endDateMonth - todayMonth) == 0) {
+        this.set('timeLeft', (endDateDay - todayDay) + ' days');
+      } else {
+        this.set('timeLeft', 'finished');
       }
     });*/
     /*this.get('store').findRecord('view', this.product.id).then(function(result) {
@@ -65,34 +95,19 @@ export default Component.extend(FindQuery, {
       if (this.get('isWatchListActive') != false) {
         this.set('watchListClass', 'wlActive');
       } else {
-        this.set('watchListClass', 'wlInactive');
+        this.set('owner', false);
       }
     });
-    this.get('bidHttp').getSingleBid(this.product.id).then((result) => {
-      this.set('singleProduct', result);
-    });
-    if ((endDateMonth - todayMonth) > 0) {
-      this.set('timeLeft', (endDateMonth - todayMonth) + ' months and ' + (endDateDay - todayDay) + ' days');
-    } else if ((endDateMonth - todayMonth) == 0) {
-      this.set('timeLeft', (endDateDay - todayDay) + ' days');
-    } else {
-      this.set('timeLeft', 'finished');
-    }
-    if (this.get('session.data.email') === ownerEmail) {
-      this.set('owner', true);
-    } else {
-      this.set('owner', false);
-    }
   },
   willDestroyElement() {
     this.store.query('view', {
       filter: {
-        productId: String(this.product.id)
+        productId: String(this.get('product.id'))
       }
     }).then(function(result) {
       var productView = result.get("firstObject");
-        productView.set('numberOfViews', productView.numberOfViews - 1);
-        productView.save();
+      productView.set('numberOfViews', productView.numberOfViews - 1);
+      productView.save();
     });
   },
   actions: {
