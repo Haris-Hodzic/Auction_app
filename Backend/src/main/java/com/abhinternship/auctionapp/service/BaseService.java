@@ -13,6 +13,6 @@ public interface BaseService<T> {
 
     T update(Long id, LinkedHashMap request);
 
-    Boolean delete(LinkedHashMap request) throws RepositoryException;
+    Boolean delete(Long id) throws RepositoryException;
 
 }

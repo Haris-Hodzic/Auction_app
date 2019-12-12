@@ -15,10 +15,10 @@
       <SellerView  @activeProducts={{activeProductList}} @soldProducts={{soldProductList}} @userInfo={{userInfo}}></SellerView>
     {{/if}}
     {{#if isBidsButtonActive}}
-      <BidsView @bids={{userBids}} @userInfo={{userInfo}}></BidsView>
+      <BidsView @bids={{userBids}} @userInfo={{userInfo}} @totalNumberOfBids={{totalNumberOfBids}}></BidsView>
     {{/if}}
     {{#if isWishlistButtonActive}}
-      <WishlistView @userWishlist={{userWishlist}} @userInfo={{userInfo}}></WishlistView>
+      <WishlistView @userWishlist={{userWishlist}} @totalNumberOfWishlist={{totalNumberOfWishlist}} @userInfo={{userInfo}}></WishlistView>
     {{/if}}
   </div>
 </div>

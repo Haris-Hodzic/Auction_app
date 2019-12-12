@@ -11,6 +11,7 @@ import com.abhinternship.auctionapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import java.text.DateFormat;
@@ -73,16 +74,9 @@ public class BidService implements BaseService<Bid> {
 
     public List<Bid> getAllByProductId(Long productId) throws RepositoryException {
         try {
-
+            return bidRepository.findAllBidByProductId(productId);
         } catch (Exception e) {
             throw new RepositoryException("No bids found");
-        }
-        Optional<Product> productRequest = productRepository.findById(productId);
-        if (productRequest.isPresent()) {
-            Product product = productRequest.get();
-            return bidRepository.findAllBidByProduct(product);
-        } else {
-            return new ArrayList<>();
         }
     }
 
@@ -93,13 +87,17 @@ public class BidService implements BaseService<Bid> {
     }
 
     @Override
-    public Boolean delete(LinkedHashMap request) throws RepositoryException {
+    public Boolean delete(Long bidId) throws RepositoryException {
         //TODO
         return false;
     }
 
-    public List<Bid> getAllByUser(User user, Long pageSize) throws RepositoryException {
-        Pageable pageable = PageRequest.of(0, Math.toIntExact(pageSize));
-        return bidRepository.getAllByBidder(user, pageable);
+    public Page<Bid> getBidsByUser(Long userId, Long pageNumber) throws RepositoryException {
+        try{
+            Pageable pageable = PageRequest.of(Math.toIntExact(pageNumber), 5);
+            return bidRepository.getAllByBidderId(userId, pageable);
+        } catch (Exception e) {
+            throw new RepositoryException("No bids found");
+        }
     }
 }

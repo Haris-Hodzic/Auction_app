@@ -22,7 +22,12 @@
       </div>
     {{/each}}
   </div>
-  {{#if (gte soldProducts.length 5)}}
-    <button class="moreBtn" {{action "exploreMore"}}>LOAD MORE</button>
-  {{/if}}
+  <div class="pagination">
+    {{#if (eq soldProducts.length 5)}}
+      <button class="moreBtn" {{action "nextPage" index}}>Next</button>
+    {{/if}}
+    {{#if previousButton}}
+      <button class="moreBtn" {{action "previousPage"}}>Previous</button>
+    {{/if}}
+  </div>
 </div>

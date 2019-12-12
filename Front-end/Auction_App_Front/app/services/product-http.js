@@ -10,14 +10,11 @@ export default Service.extend({
   getProduct(data) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/' + data.product_id, data.product_id, 'GET');
   },
-  getChances(data) {
-    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/lastchance/' + data, data, 'GET');
+  getChances(pageNumber) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/lastchance/' + pageNumber, pageNumber, 'GET');
   },
-  getArrivals(data) {
-    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/arrivals/' + data, data, 'GET');
-  },
-  emailAvailable(data) {
-    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/authentication/emailAvailable', data, 'POST');
+  getArrivals(pageNumber) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/arrivals/' + pageNumber, pageNumber, 'GET');
   },
   getPrices() {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/price', '', 'GET');
@@ -34,10 +31,10 @@ export default Service.extend({
   getCountedProductSize() {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/filter/size', '', 'GET');
   },
-  getSoldProductsByUserId(user, pageSize) {
-    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/sold?user=' + user +'&pageSize=' + pageSize, '', 'GET');
+  getSoldProductsByUserId(userId, pageNumber) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/sold?userId=' + userId +'&pageNumber=' + pageNumber, '', 'GET');
   },
-  getActiveProductsByUserId(user, pageSize) {
-    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/active?user=' + user + '&pageSize=' + pageSize, '', 'GET');
+  getActiveProductsByUserId(userId, pageNumber) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/active?userId=' + userId + '&pageNumber=' + pageNumber, '', 'GET');
   }
 });

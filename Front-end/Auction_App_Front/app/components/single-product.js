@@ -31,7 +31,7 @@ export default Component.extend({
     let ownerEmail = this.product.user.email;
     this.set('bidderEmail', this.get('session.data.email'));
 
-    this.get('wishlistHttp').existInWishlist(this.product).then((result)=> {
+    this.get('wishlistHttp').existInWishlist(this.product.id).then((result)=> {
       this.set('isWatchListActive', result);
       if (this.get('isWatchListActive') != false) {
         this.set('watchListClass', 'wlActive');
@@ -64,7 +64,7 @@ export default Component.extend({
       if (this.get('isWatchListActive') != false) {
         this.set('watchListClass', 'wlInactive');
         this.set('isWatchListActive', false);
-        this.get('wishlistHttp').deleteProductFromWishlist(this.product);
+        this.get('wishlistHttp').deleteProductFromWishlist(this.product.id);
       } else {
         this.set('watchListClass', 'wlActive');
         this.set('isWatchListActive', true);
@@ -85,16 +85,18 @@ export default Component.extend({
           'product': this.product,
           'userEmail': this.get('bidderEmail')
         });
-        this.get('bidHttp').createBid(data).then((result) => {
-          if (result === false) {
-            this.set('error', true);
-          } else {
-            this.get('productHttp').getProduct({product_id: this.get('product.id')}).then((result) => {
-              this.set('product', result);
-            });
-            this.set('error', false);
-          }
-        })
+        if (this.get('owner') === false) {
+          this.get('bidHttp').createBid(data).then((result) => {
+            if (result === false) {
+              this.set('error', true);
+            } else {
+              this.get('productHttp').getProduct({product_id: this.get('product.id')}).then((result) => {
+                this.set('product', result);
+              });
+              this.set('error', false);
+            }
+          })
+        }
       }
     }
   }

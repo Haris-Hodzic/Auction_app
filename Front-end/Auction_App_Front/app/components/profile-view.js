@@ -6,25 +6,14 @@ export default Component.extend({
   userHttp: service(),
   session: service('session'),
   store: service(),
-  firstName: '',
-  lastName: '',
   gender: 'Male',
   isGenderButtonActive: false,
   isMonthButtonActive: false,
   isDateButtonActive: false,
   selectedMonth: null,
-  displayedMonth: '',
-  selectedDate: '01',
-  year: '',
+  dateOfBirth: null,
   monthOptions: null,
   dateOptions: null,
-  phoneNumber: '',
-  email: '',
-  street: '',
-  city: '',
-  zipCode: '',
-  state: '',
-  country: '',
   errors: false,
   userInfo: null,
   image: null,
@@ -34,20 +23,22 @@ export default Component.extend({
   isValid: true,
   init() {
     this._super(...arguments);
+    this.set('dateOfBirth', {date: '01', month: '', year: ''});
     this.set('userProfile', this.get('store').createRecord('user'));
     this.set('dateOptions', ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']);
     this.set('monthOptions', ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
     this.get('userHttp').getUserInfo(this.get('session.data.email')).then((result) => {
       this.set('userInfo', result);
       this.set('selectedDate', result.dateOfBirth.slice(8, 10));
+      this.set('dateOfBirth.date', result.dateOfBirth.slice(8, 10));
       if (result.dateOfBirth.slice(5, 6) === '0') {
         this.set('displayedMonth', this.get('monthOptions')[result.dateOfBirth.slice(6, 7) - 1]);
-        this.set('selectedMonth', result.dateOfBirth.slice(6, 7));
+        this.set('dateOfBirth.month', result.dateOfBirth.slice(6, 7));
       } else {
         this.set('displayedMonth', this.get('monthOptions')[result.dateOfBirth.slice(5, 7) - 1]);
-        this.set('selectedMonth', result.dateOfBirth.slice(5, 7));
+        this.set('dateOfBirth.month', result.dateOfBirth.slice(5, 7));
       }
-      this.set('year', result.dateOfBirth.slice(0, 4));
+      this.set('dateOfBirth.year', result.dateOfBirth.slice(0, 4));
     });
   },
   actions: {
@@ -77,12 +68,12 @@ export default Component.extend({
 
     },
     setMonth(monthSelected, monthDisplayed) {
-      this.set('selectedMonth', monthSelected + 1);
+      this.set('dateOfBirth.month', monthSelected + 1);
       this.set('displayedMonth', monthDisplayed);
       this.set('isMonthButtonActive', false);
     },
     setDate(date) {
-      this.set('selectedDate', date);
+      this.set('dateOfBirth.date', date);
       this.set('isDateButtonActive', false);
     },
     upload(event) {
@@ -99,12 +90,12 @@ export default Component.extend({
     },
 
     saveInfo(userInfo) {
-      if (this.get('selectedMonth') > 9) {
-        this.set('userInfo.dateOfBirth', this.get('year') + '-' + this.get('selectedMonth') + '-' + this.get('selectedDate'));
-      } else if (this.get('selectedMonth') === null) {
+      if (this.get('dateOfBirth.month') > 9) {
+        this.set('userInfo.dateOfBirth', this.get('dateOfBirth.year') + '-' + this.get('dateOfBirth.month') + '-' + this.get('dateOfBirth.date'));
+      } else if (this.get('dateOfBirth.month') === null) {
         this.set('userInfo.dateOfBirth', '');
       } else {
-        this.set('userInfo.dateOfBirth', this.get('year') + '-0' + this.get('selectedMonth') + '-' + this.get('selectedDate'));
+        this.set('userInfo.dateOfBirth', this.get('dateOfBirth.year') + '-0' + this.get('dateOfBirth.month') + '-' + this.get('dateOfBirth.date'));
       }
       let account = this.get('userProfile');
 

@@ -10,6 +10,7 @@ import com.abhinternship.auctionapp.repository.WishlistRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -38,7 +39,7 @@ public class WishlistService implements BaseService<Wishlist> {
         String userEmail = req.getUserEmail();
         User user = userRepository.getOneByEmail(userEmail);
         Product product = req.getProduct();
-        if (wishlistRepository.existsByProduct(product)){
+        if (wishlistRepository.existsByProductId(product.getId())){
             return false;
         } else {
             Wishlist wishlist = new Wishlist(user, product);
@@ -49,8 +50,11 @@ public class WishlistService implements BaseService<Wishlist> {
 
     @Override
     public List<Wishlist> getAll() throws RepositoryException {
-        //TODO
-        return null;
+        try {
+            return wishlistRepository.findAll();
+        } catch (Exception e) {
+            throw new RepositoryException("No products found");
+        }
     }
 
     @Override
@@ -60,20 +64,17 @@ public class WishlistService implements BaseService<Wishlist> {
     }
 
     @Override
-    public Boolean delete(LinkedHashMap request) throws RepositoryException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Product req = objectMapper.convertValue(request, new TypeReference<Product>() {
-        });
-        wishlistRepository.deleteByProduct(req);
+    public Boolean delete(Long productId) throws RepositoryException {
+        wishlistRepository.deleteByProductId(productId);
         return true;
     }
 
-    public List<Wishlist> getAllByUser(User user, Long pageSize) throws RepositoryException {
-        Pageable pageable = PageRequest.of(0, Math.toIntExact(pageSize));
-        return wishlistRepository.getAllByUser(user, pageable);
+    public Page<Wishlist> getAllByUser(Long userId, Long pageNumber) throws RepositoryException {
+        Pageable pageable = PageRequest.of(Math.toIntExact(pageNumber), 5);
+        return wishlistRepository.getAllByUserId(userId, pageable);
     }
 
-    public Boolean existInWishlist(Product product) {
-        return wishlistRepository.existsByProduct(product);
+    public Boolean existInWishlist(Long productId) {
+        return wishlistRepository.existsByProductId(productId);
     }
 }

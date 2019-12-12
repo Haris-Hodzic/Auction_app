@@ -6,13 +6,13 @@ export default Component.extend({
   session: service('session'),
   watchListClass: '',
   userEmail: '',
-  isWatchList: false,
+  isWatchListActive: false,
   init() {
     this._super(...arguments);
     this.set('userEmail', this.get('session.data.email'));
-    this.get('wishlistHttp').existInWishlist(this.product).then((result) => {
-      this.set('isWatchList', result);
-      if (this.get('isWatchList') != false) {
+    this.get('wishlistHttp').existInWishlist(this.product.id).then((result) => {
+      this.set('isWatchListActive', result);
+      if (this.get('isWatchListActive') != false) {
         this.set('watchListClass', 'active');
       } else {
         this.set('watchListClass', '');
@@ -25,13 +25,13 @@ export default Component.extend({
         'product': this.product,
         'userEmail': this.get('userEmail')
       });
-      if (this.get('isWatchList') != false) {
+      if (this.get('isWatchListActive') != false) {
         this.set('watchListClass', '');
-        this.set('isWatchList', false);
-        this.get('wishlistHttp').deleteProductFromWishlist(this.product);
+        this.set('isWatchListActive', false);
+        this.get('wishlistHttp').deleteProductFromWishlist(this.product.id);
       } else {
         this.set('watchListClass', 'active');
-        this.set('isWatchList', true);
+        this.set('isWatchListActive', true);
         this.get('wishlistHttp').addToWishlist(data);
       }
     },

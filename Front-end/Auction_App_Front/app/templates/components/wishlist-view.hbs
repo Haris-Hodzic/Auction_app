@@ -20,7 +20,9 @@
       </div>
     {{/each}}
   </div>
-  {{#if (gte userWishlist.length 5)}}
-    <button class="moreBtn" {{action "exploreMore"}}>LOAD MORE</button>
-  {{/if}}
+  <div class="pagination">
+    {{#each buttonsList as |buttonNumber index|}}
+      <button class="moreBtn" {{action "exploreMore" index}}>{{buttonNumber.page}}</button>
+    {{/each}}
+  </div>
 </div>

@@ -6,6 +6,7 @@ import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.model.Wishlist;
 import com.abhinternship.auctionapp.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,12 +23,12 @@ public class WishlistController extends BaseController<Wishlist> {
     }
 
     @GetMapping("/user")
-    public List<Wishlist> getByUser(@RequestParam(value = "user") User user, @RequestParam(value = "pageSize") Long pageSize) throws RepositoryException {
-        return wishlistService.getAllByUser(user, pageSize);
+    public Page<Wishlist> getByUser(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pageNumber") Long pageNumber) throws RepositoryException {
+        return wishlistService.getAllByUser(userId, pageNumber);
     }
 
     @PostMapping("/exist")
-    public Boolean existInWishlist(@RequestBody Product product) {
-        return wishlistService.existInWishlist(product);
+    public Boolean existInWishlist(@RequestParam(value = "productId") Long productId) {
+        return wishlistService.existInWishlist(productId);
     }
 }

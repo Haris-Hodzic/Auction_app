@@ -5,6 +5,7 @@ import com.abhinternship.auctionapp.model.Bid;
 import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class BidController extends BaseController<Bid> {
     }
 
     @GetMapping("/user")
-    public List<Bid> getByUser(@RequestParam(value = "user") User user, @RequestParam(value = "pageSize") Long pageSize) throws RepositoryException {
-        return bidService.getAllByUser(user, pageSize);
+        public Page<Bid> getBidsByUserId(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pageNumber") Long pageNumber) throws RepositoryException {
+        return bidService.getBidsByUser(userId, pageNumber);
     }
 }

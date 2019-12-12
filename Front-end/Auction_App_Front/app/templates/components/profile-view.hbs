@@ -51,7 +51,7 @@
           </div>
           <div class="date">
             <div class="dateButton" role="button" {{action "setDropdownButtonsActive" "date"}}>
-              <p>{{selectedDate}}</p>
+              <p>{{dateOfBirth.date}}</p>
               <img src="/assets/images/profileDD.png" alt="">
             </div>
             {{#if isDateButtonActive}}
@@ -63,7 +63,7 @@
             {{/if}}
           </div>
           <div class="year">
-            <Input @value={{year}} @type="number" min="1900" max="2099" step="1"></Input>
+            <Input @value={{dateOfBirth.year}} @type="number" min="1900" max="2099" step="1"></Input>
           </div>
         </div>
         <p class="inputLabel phoneLabel">Phone Number</p>

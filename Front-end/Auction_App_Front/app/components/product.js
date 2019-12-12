@@ -10,7 +10,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.set('userEmail', this.get('session.data.email'));
-    this.get('wishlistHttp').existInWishlist(this.product).then((result) => {
+    this.get('wishlistHttp').existInWishlist(this.product.id).then((result) => {
       this.set('isWatchList', result);
       if (this.get('isWatchList') != false) {
         this.set('watchListClass', 'active');
@@ -28,7 +28,7 @@ export default Component.extend({
       if (this.get('isWatchList') != false) {
         this.set('watchListClass', '');
         this.set('isWatchList', false);
-        this.get('wishlistHttp').deleteProductFromWishlist(this.product);
+        this.get('wishlistHttp').deleteProductFromWishlist(this.product.id);
       } else {
         this.set('watchListClass', 'active');
         this.set('isWatchList', true);

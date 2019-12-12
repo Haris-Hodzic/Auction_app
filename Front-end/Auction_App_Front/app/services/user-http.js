@@ -7,6 +7,9 @@ export default Service.extend({
   register(data) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/authentication', data, 'POST');
   },
+  emailAvailable(data) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/authentication/emailAvailable', data, 'POST');
+  },
   getUserInfo(email) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/authentication/user?email=' + email, '', 'GET');
   },

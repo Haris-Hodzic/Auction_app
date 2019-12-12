@@ -66,11 +66,11 @@ public class ProductController extends BaseController<Product> {
     }
 
     @GetMapping("/active")
-    public List<Product> getAllActiveProductsByUser(@RequestParam(value = "user") User user, @RequestParam(value = "pageSize") Long pageSize) throws RepositoryException {
-        return productService.getAllActiveProductsByUser(user, pageSize);
+    public List<Product> getAllActiveProductsByUserId(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pageNumber") Long pageNumber) throws RepositoryException {
+        return productService.getAllActiveProductsByUserId(userId, pageNumber);
     }
     @GetMapping("/sold")
-    public List<Product> getAllSoldProductsByUser(@RequestParam(value = "user") User user, @RequestParam(value = "pageSize") Long pageSize) throws RepositoryException {
-        return productService.getAllSoldProductsByUser(user, pageSize);
+    public List<Product> getAllSoldProductsByUserId(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pageNumber") Long pageNumber) throws RepositoryException {
+        return productService.getAllSoldProductsByUserId(userId, pageNumber);
     }
 }

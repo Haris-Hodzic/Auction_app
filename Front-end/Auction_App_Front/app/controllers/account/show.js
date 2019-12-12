@@ -18,6 +18,8 @@ export default Controller.extend({
   bidHttp: service(),
   wishlistHttp: service(),
   session: service('session'),
+  totalNumberOfWishlist: null,
+  totalNumberOfBids: null,
   init() {
     this._super(...arguments);
     let today = new Date().toJSON().slice(0, 10);
@@ -25,7 +27,7 @@ export default Controller.extend({
     this.set('soldProductList', []);
     this.get('userHttp').getUserInfo(this.get('session.data.email')).then((result) => {
       this.set('userInfo', result);
-      this.get('productHttp').getActiveProductsByUserId(this.get('userInfo.id'), 5).then((result) => {
+      this.get('productHttp').getActiveProductsByUserId(this.get('userInfo.id'), 0).then((result) => {
         this.set('activeProductList', result);
         for (var i = 0; i < result.length; i++) {
           let endDate = result[i].endDate.slice(0, 10);
@@ -40,7 +42,7 @@ export default Controller.extend({
           }
         }
       });
-      this.get('productHttp').getSoldProductsByUserId(this.get('userInfo.id'), 5).then((result) => {
+      this.get('productHttp').getSoldProductsByUserId(this.get('userInfo.id'), 0).then((result) => {
         this.set('soldProductList', result);
         for (var i = 0; i < result.length; i++) {
           let endDate = result[i].endDate.slice(0, 10);
@@ -55,10 +57,11 @@ export default Controller.extend({
           }
         }
       });
-      this.get('bidHttp').getBidsByUserId(this.get('userInfo.id'), 5).then((result) => {
-        this.set('userBids', result);
-        for (var i = 0; i < result.length; i++) {
-          let endDate = result[i].product.endDate.slice(0, 10);
+      this.get('bidHttp').getBidsByUserId(this.get('userInfo.id'), 0).then((result) => {
+        this.set('userBids', result.content);
+        this.set('totalNumberOfBids', result.totalElements);
+        for (var i = 0; i < result.content.length; i++) {
+          let endDate = result.content[i].product.endDate.slice(0, 10);
           let date1 = new Date(today);
           let date2 = new Date(endDate);
           let differenceTime = date2 - date1;
@@ -70,10 +73,11 @@ export default Controller.extend({
           }
         }
       });
-      this.get('wishlistHttp').getWishlistByUserId(this.get('userInfo.id'), 5).then((result) => {
-        this.set('userWishlist', result);
-        for (var i = 0; i < result.length; i++) {
-          let endDate = result[i].product.endDate.slice(0, 10);
+      this.get('wishlistHttp').getWishlistByUserId(this.get('userInfo.id'), 0).then((result) => {
+        this.set('userWishlist', result.content);
+        this.set('totalNumberOfWishlist', result.totalElements)
+        for (var i = 0; i < result.content.length; i++) {
+          let endDate = result.content[i].product.endDate.slice(0, 10);
           let date1 = new Date(today);
           let date2 = new Date(endDate);
           let differenceTime = date2 - date1;

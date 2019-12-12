@@ -51,7 +51,7 @@ public class ProductService implements BaseService<Product> {
     }
 
     @Override
-    public Boolean delete(LinkedHashMap request) throws RepositoryException {
+    public Boolean delete(Long productId) throws RepositoryException {
         //TODO
         return false;
     }
@@ -116,12 +116,11 @@ public class ProductService implements BaseService<Product> {
         return repository.getAllByOrderByHighestBid();
     }
 
-    public List<Product> getAllActiveProductsByUser(User user, Long pageSize) throws RepositoryException {
-        Pageable pageable = PageRequest.of(0, Math.toIntExact(pageSize));
-        List<Product> userProducts = repository.getAllByUser(user, pageable);
+    public List<Product> getAllActiveProductsByUserId(Long userId, Long pageNumber) throws RepositoryException {
+        Pageable pageable = PageRequest.of(Math.toIntExact(pageNumber), 5);
+        List<Product> userProducts = repository.getAllByUserIdOrderByEndDateDesc(userId, pageable);
         List<Product> activeProducts = new ArrayList<>();
         Date today = new Date(System.currentTimeMillis());
-        System.out.println(today);
         for (int i = 0; i < userProducts.size(); i++){
             if (userProducts.get(i).getEndDate().compareTo(today) > 0){
                 activeProducts.add(userProducts.get(i));
@@ -132,12 +131,11 @@ public class ProductService implements BaseService<Product> {
         return activeProducts;
     }
 
-    public List<Product> getAllSoldProductsByUser(User user, Long pageSize) throws RepositoryException {
-        Pageable pageable = PageRequest.of(0, Math.toIntExact(pageSize));
-        List<Product> userProducts = repository.getAllByUser(user, pageable);
+    public List<Product> getAllSoldProductsByUserId(Long userId, Long pageNumber) throws RepositoryException {
+        Pageable pageable = PageRequest.of(Math.toIntExact(pageNumber), 5);
+        List<Product> userProducts = repository.getAllByUserIdOrderByEndDateAsc(userId, pageable);
         List<Product> soldProducts = new ArrayList<>();
         Date today = new Date(System.currentTimeMillis());
-        System.out.println(today);
         for (int i = 0; i < userProducts.size(); i++){
             if (userProducts.get(i).getEndDate().compareTo(today) < 0){
                 soldProducts.add(userProducts.get(i));
