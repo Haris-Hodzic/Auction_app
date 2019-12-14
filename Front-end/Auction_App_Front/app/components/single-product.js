@@ -4,8 +4,10 @@ import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 
 export default Component.extend(FindQuery, {
   bidHttp: service(),
+  client: service('socket-connection'),
+  message: "",
   store: service(),
-  notify: service(),
+  notifications: service('notification-messages'),
   productHttp: service(),
   wishlistHttp: service(),
   session: service('session'),
@@ -27,6 +29,7 @@ export default Component.extend(FindQuery, {
   currentPath: null,
   init() {
     this._super(...arguments);
+    this.get('client').connect();
     this.set('currentPath', location.href.slice(location.href.indexOf(location.pathname)));
     if (this.get('session.previousRouteName') !== this.get('currentPath')) {
       this.store.query('view', {
@@ -41,10 +44,9 @@ export default Component.extend(FindQuery, {
           });
           view.save();
         }else {
-          var productView = result.get("firstObject");
+          var productView = result.get('firstObject');
           productView.set('numberOfViews', productView.numberOfViews + 1);
           productView.save();
-          this.notify.info('Hello there!');
         }
       });
     }
@@ -141,16 +143,19 @@ export default Component.extend(FindQuery, {
           'userEmail': this.get('bidderEmail')
         });
         if (this.get('owner') === false) {
-          this.get('bidHttp').createBid(data).then((result) => {
-            if (result === false) {
-              this.set('error', true);
-            } else {
-              this.get('productHttp').getProduct({product_id: this.get('product.id')}).then((result) => {
-                this.set('product', result);
-              });
-              this.set('error', false);
-            }
-          })
+        this.get('bidHttp').createBid(data).then((result) => {
+          if (result === false) {
+            this.set('error', true);
+          } else {
+            this.get('client').sendMessage(this.get('session.data.email'), this.productId);
+            var cll = this.get('client.messages')
+            console.log(cll)
+            this.get('productHttp').getProduct(this.product.id).then((result) => {
+              this.set('product', result);
+            });
+            this.set('error', false);
+          }
+        })
         }
       }
     }

@@ -14,11 +14,9 @@
       <p class="notAuthenticatedNotification">{{notAuthenticatedMessage}}</p>
     {{/if}}
   {{/if}}
-  {{#ember-notify as |message close|}}
-    <span class="message-from-block">
-      {{numberOfViews}}
-    </span>
-  {{/ember-notify}}
+  {{#if (eq productId client.messages.lastObject.productId)}}
+    {{notification-container position="top-right" zindex="9999"}}
+  {{/if}}
 </div>
 <div class="singleProductBody">
   <div class="spTopPart">

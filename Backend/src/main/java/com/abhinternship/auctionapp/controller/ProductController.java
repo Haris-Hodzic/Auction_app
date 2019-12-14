@@ -75,11 +75,4 @@ public class ProductController extends BaseController<Product> {
     public List<Product> getAllSoldProductsByUserId(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pageNumber") Long pageNumber) throws RepositoryException {
         return productService.getAllSoldProductsByUserId(userId, pageNumber);
     }
-
-    @MessageMapping("/hello")
-    @SendTo("/home")
-    public String listTraps(String message) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        return "hello haris";
-    }
 }
