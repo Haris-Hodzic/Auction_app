@@ -1057,8 +1057,17 @@ footer{
       font-size: 2.23VW;
     }
   }
+  .bottomPartBody{
+    justify-content: center;
+  }
+  .bottomPartButtons{
+    .bottomPartBtn{
+      margin-top: 50px;
+      font-size: 2.23VW;
+    }
+  }
 }
-}
+
 .pagination{
   margin-bottom: 100px;
   height: 50px;
@@ -2675,4 +2684,5 @@ footer{
   .moreBtn{
     @extend %moreButton;
   }
+}
 }
