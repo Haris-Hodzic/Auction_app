@@ -1,6 +1,9 @@
 <div class="productList">
   {{#link-to "product.show" product.id class="linkToClass"}}
     <div class={{className}}>
+      {{#if (eq this.product.user.email userEmail)}}
+        <div class="ownerTag"><p>Your item</p></div>
+      {{/if}}
       <img src={{get this.product.photo "0"}} alt="">
     </div>
   {{/link-to}}

@@ -7,17 +7,13 @@ export default Component.extend({
   pageNumber: 0,
   nextButton: true,
   previousButton: false,
-  init() {
-    this._super(...arguments);
-  
-  },
   actions: {
     nextPage() {
       let today = new Date().toJSON().slice(0, 10);
       this.set('previousButton', true);
       this.set('pageNumber', this.get('pageNumber') + 1);
       this.get('productHttp').getActiveProductsByUserId(this.get('userInfo.id'), this.get('pageNumber')).then((result) => {
-        this.set('activeProductList', result);
+        this.set('activeProducts', result);
         if (this.get('activeProducts').length < 5) {
           this.set('nextButton', false)
         }
@@ -28,9 +24,9 @@ export default Component.extend({
           let differenceTime = date2 - date1;
           let differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
           if (differenceDays >= 0) {
-            set(this.get('activeProductList')[i], 'timeLeft', differenceDays);
+            set(this.get('activeProducts')[i], 'timeLeft', differenceDays);
           } else {
-            set(this.get('activeProductList')[i], 'timeLeft', 0);
+            set(this.get('activeProducts')[i], 'timeLeft', 0);
           }
         }
       });
@@ -42,7 +38,7 @@ export default Component.extend({
         this.set('previousButton', false);
       }
       this.get('productHttp').getActiveProductsByUserId(this.get('userInfo.id'), this.get('pageNumber')).then((result) => {
-        this.set('activeProductList', result);
+        this.set('activeProducts', result);
         for (var i = 0; i < result.length; i++) {
           let endDate = result[i].endDate.slice(0, 10);
           let date1 = new Date(today);
@@ -50,9 +46,9 @@ export default Component.extend({
           let differenceTime = date2 - date1;
           let differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
           if (differenceDays >= 0) {
-            set(this.get('activeProductList')[i], 'timeLeft', differenceDays);
+            set(this.get('activeProducts')[i], 'timeLeft', differenceDays);
           } else {
-            set(this.get('activeProductList')[i], 'timeLeft', 0);
+            set(this.get('activeProducts')[i], 'timeLeft', 0);
           }
         }
       });

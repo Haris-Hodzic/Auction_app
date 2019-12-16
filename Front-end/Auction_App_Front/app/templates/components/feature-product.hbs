@@ -2,9 +2,7 @@
   <p class="featureProductTitle">Feature Products</p>
   <div class="row featureProductImages">
     {{#each products as |product|}}
-      <div class="col">
-        <Product  @className="featureProduct" @product={{product}}></Product>
-      </div>
+      <Product  @className="featureProduct" @product={{product}}></Product>
     {{/each}}
   </div>
 </div>

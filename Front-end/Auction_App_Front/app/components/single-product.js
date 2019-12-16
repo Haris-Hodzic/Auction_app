@@ -27,6 +27,7 @@ export default Component.extend(FindQuery, {
   singleProduct: null,
   product: null,
   currentPath: null,
+  isCountdownTimerActive: false,
   init() {
     this._super(...arguments);
     this.get('client').connect();
@@ -54,13 +55,30 @@ export default Component.extend(FindQuery, {
       this.set('product', result);
       let today = new Date().toJSON().slice(0, 10);
       let endDate = result.endDate.slice(0, 10);
-      let todayDay = today.slice(8, 10);
-      let endDateDay = endDate.slice(8, 10);
-      let endDateMonth = endDate.slice(5, 7);
-      let todayMonth = today.slice(5, 7);
       let ownerEmail = result.user.email;
+      let date1 = new Date(today);
+      let date2 = new Date(endDate);
+      let differenceTime = date2 - date1;
+      let differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
+
+      let currentTime = new Date().toJSON().slice(11, 19);
+      let endTime = result.endDate.slice(11, 19);
+      let timeStart = new Date(today + ' ' + currentTime).getHours();
+      let timeEnd = new Date(endDate + ' ' + endTime).getHours();
+      let hourDifference = timeEnd - timeStart; 
+      if (differenceDays > 0) {
+        this.set('isCountdownTimerActive', false);
+        this.set('timeLeft', differenceDays + ' days');
+      } else if (differenceDays === 0 && hourDifference === 0) {
+        this.set('isCountdownTimerActive', true);
+      } else if (differenceDays === 0 && hourDifference > 0) {
+        this.set('timeLeft', hourDifference + ' hours');
+      } else {
+        this.set('timeLeft', 'Sold')
+      }
+
       this.set('bidderEmail', this.get('session.data.email'));
-      this.get('wishlistHttp').existInWishlist(result).then((result)=> {
+      this.get('wishlistHttp').existInWishlist(result.id).then((result)=> {
         this.set('isWatchListActive', result);
         if (this.get('isWatchListActive') != false) {
           this.set('watchListClass', 'wlActive');
@@ -71,31 +89,8 @@ export default Component.extend(FindQuery, {
       this.get('bidHttp').getSingleBid(result.id).then((result) => {
         this.set('singleProduct', result);
       });
-      if ((endDateMonth - todayMonth) > 0) {
-        this.set('timeLeft', (endDateMonth - todayMonth) + ' months and ' + (endDateDay - todayDay) + ' days');
-      } else if ((endDateMonth - todayMonth) == 0) {
-        this.set('timeLeft', (endDateDay - todayDay) + ' days');
-      } else {
-        this.set('timeLeft', 'finished');
-      }
-    });*/
-    /*this.get('store').findRecord('view', this.product.id).then(function(result) {
-      result.set('numberOfViews', result.numberOfViews + 1);
-      result.save();
-    }).catch(function(){
-      var view = self.store.createRecord('view',{
-          id: self.product.id,
-          numberOfViews: 1
-        });
-        view.save();
-    });*/
-
-    this.set('bidderEmail', this.get('session.data.email'));
-
-    this.get('wishlistHttp').existInWishlist(this.product.id).then((result)=> {
-      this.set('isWatchListActive', result);
-      if (this.get('isWatchListActive') != false) {
-        this.set('watchListClass', 'wlActive');
+      if (this.get('session.data.email') === ownerEmail) {
+        this.set('owner', true);
       } else {
         this.set('owner', false);
       }
@@ -143,19 +138,17 @@ export default Component.extend(FindQuery, {
           'userEmail': this.get('bidderEmail')
         });
         if (this.get('owner') === false) {
-        this.get('bidHttp').createBid(data).then((result) => {
-          if (result === false) {
-            this.set('error', true);
-          } else {
-            this.get('client').sendMessage(this.get('session.data.email'), this.productId);
-            var cll = this.get('client.messages')
-            console.log(cll)
-            this.get('productHttp').getProduct(this.product.id).then((result) => {
-              this.set('product', result);
-            });
-            this.set('error', false);
-          }
-        })
+          this.get('bidHttp').createBid(data).then((result) => {
+            if (result === false) {
+              this.set('error', true);
+            } else {
+              this.get('client').sendMessage(this.get('session.data.email'), this.productId);
+              this.get('productHttp').getProduct(this.product.id).then((result) => {
+                this.set('product', result);
+              });
+              this.set('error', false);
+            }
+          })
         }
       }
     }

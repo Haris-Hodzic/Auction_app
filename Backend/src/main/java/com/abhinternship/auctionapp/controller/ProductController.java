@@ -75,4 +75,11 @@ public class ProductController extends BaseController<Product> {
     public List<Product> getAllSoldProductsByUserId(@RequestParam(value = "userId") Long userId, @RequestParam(value = "pageNumber") Long pageNumber) throws RepositoryException {
         return productService.getAllSoldProductsByUserId(userId, pageNumber);
     }
+
+    @MessageMapping("/notification")
+    @SendTo("/topic/notifications")
+    public Notification getNotification(Notification message) throws Exception {
+        Thread.sleep(1000);
+        return message;
+    }
 }

@@ -8,9 +8,6 @@ export default Component.extend({
   pageNumber: 0,
   nextButton: true,
   previousButton: false,
-  init() {
-    this._super(...arguments);
-  },
   actions: {
     nextPage() {
       let today = new Date().toJSON().slice(0, 10);

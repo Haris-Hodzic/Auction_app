@@ -42,8 +42,9 @@ export default Component.extend({
     });
   },
   actions: {
-    setProfileGender() {
-
+    setGender(gender) {
+      this.set('userInfo.gender', gender);
+      this.set('gender', gender);
     },
     setDropdownButtonsActive(button) {
       if (button === 'gender') {

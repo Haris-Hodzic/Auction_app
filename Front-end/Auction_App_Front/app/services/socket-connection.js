@@ -26,26 +26,26 @@ export default Service.extend({
     var socket = new SockJS('http://localhost:8080/ws');
     this.stompClient = Stomp.over(socket);
     this.stompClient.connect({}, function (/*frame*/) {
-       comp.set('connected', true);
-      comp.stompClient.subscribe('/topic/greetings', function (greeting) {
-      	comp.empty();
-        var productId = JSON.parse(greeting.body).productId;
-        var user = JSON.parse(greeting.body).user;
-        if (comp.get('session.data.email') === user) {
-        	comp.get('notifications').clearAll().success('You are the highest bidder', {
-		    autoClear: true,
-		    clearDuration: 4400
-		  });
-        } else {
-        	comp.get('notifications').clearAll().warning(user + ' is now the highest bidder for this product', {
-		    autoClear: true,
-		    clearDuration: 4400
-		  });
-        }
-        
-        comp.showMessage(user, productId);
-      });
+     comp.set('connected', true);
+     comp.stompClient.subscribe('/topic/notifications', function (greeting) {
+      comp.empty();
+      var productId = JSON.parse(greeting.body).productId;
+      var user = JSON.parse(greeting.body).user;
+      if (comp.get('session.data.email') === user) {
+        comp.get('notifications').clearAll().success('You are the highest bidder', {
+          autoClear: true,
+          clearDuration: 4400
+        });
+      } else {
+        comp.get('notifications').clearAll().warning(user + ' is now the highest bidder for this product', {
+          autoClear: true,
+          clearDuration: 4400
+        });
+      }
+
+      comp.showMessage(user, productId);
     });
+   });
   },
   disconnect(){
     this.clearFeedback();
@@ -59,7 +59,7 @@ export default Service.extend({
   },
   sendMessage(user, productId){
     if (this.stompClient != null && this.get('connected')) {
-      this.stompClient.send("/app/hello", {}, JSON.stringify({'user': user, 'productId': productId}));
+      this.stompClient.send("/app/notification", {}, JSON.stringify({'user': user, 'productId': productId}));
     }else{
       this.set('feedback', 'You are not connected!');
     }

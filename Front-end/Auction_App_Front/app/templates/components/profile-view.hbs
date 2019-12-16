@@ -31,7 +31,7 @@
         {{#if isGenderButtonActive}}
           <ul class="genderOptions">
             <li {{action "setGender" "Male"}} role="button">Male</li>
-            <li>Female</li>
+            <li {{action "setGender" "Female"}} role="button">Female</li>
           </ul>
         {{/if}}
         <p class="inputLabel phoneLabel">Date of Birth</p>

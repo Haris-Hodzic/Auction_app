@@ -42,7 +42,12 @@
         <p>Highest bid:  <span class="hpInfo">${{this.product.highestBid}}</span></p>
         <p>Views: {{numberOfViews}}</p>
         <p>No bids: {{this.product.numberOfBids}}</p>
-        <p>Time left: {{this.timeLeft}}</p>
+        {{#if isCountdownTimerActive}}
+          <p>Time left: {{countdown-string startDate=this.product.endDate}}</p>
+        {{/if}}
+        {{#if (eq isCountdownTimerActive false)}}
+          <p>Time left: {{timeLeft}}</p>
+        {{/if}}
       </div>
       <button class="watchListBtn" {{action "setWatchList"}}>Watchlist <i class="fa fa-heart {{watchListClass}}"></i></button>
       <p class="bidDetails">Details</p>
