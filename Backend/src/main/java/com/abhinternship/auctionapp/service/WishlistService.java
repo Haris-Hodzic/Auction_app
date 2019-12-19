@@ -64,9 +64,8 @@ public class WishlistService implements BaseService<Wishlist> {
     }
 
     @Override
-    public Boolean delete(Long productId) throws RepositoryException {
-        wishlistRepository.deleteByProductId(productId);
-        return true;
+    public Long delete(Long productId) throws RepositoryException {
+        return wishlistRepository.deleteByProductId(productId);
     }
 
     public Page<Wishlist> getAllByUser(Long userId, Long pageNumber) throws RepositoryException {

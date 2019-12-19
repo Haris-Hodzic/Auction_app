@@ -14,7 +14,7 @@ export default Component.extend(FindQuery, {
   timeLeft: null,
   isWatchListActive: false,
   watchListClass: 'wlInactive',
-  currentPhoto: '0',
+  currentPhoto: null,
   owner: false,
   bidderEmail: '',
   currentProduct: null,
@@ -44,7 +44,7 @@ export default Component.extend(FindQuery, {
             numberOfViews: 1
           });
           view.save();
-        }else {
+        } else {
           var productView = result.get('firstObject');
           productView.set('numberOfViews', productView.numberOfViews + 1);
           productView.save();
@@ -53,19 +53,24 @@ export default Component.extend(FindQuery, {
     }
     this.get('productHttp').getProduct(this.productId).then((result) => {
       this.set('product', result);
-      let today = new Date().toJSON().slice(0, 10);
-      let endDate = result.endDate.slice(0, 10);
-      let ownerEmail = result.user.email;
-      let date1 = new Date(today);
-      let date2 = new Date(endDate);
-      let differenceTime = date2 - date1;
-      let differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
+      if (result.photo.length > 0) {
+        this.set('currentPhoto', result.photo[0]);
+      } else {
+        this.set('currentPhoto', 'assets/images/noImage.png');
+      }
+      const today = new Date().toJSON().slice(0, 10);
+      const endDate = result.endDate.slice(0, 10);
+      const ownerEmail = result.user.email;
+      const date1 = new Date(today);
+      const date2 = new Date(endDate);
+      const differenceTime = date2 - date1;
+      const differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
 
-      let currentTime = new Date().toJSON().slice(11, 19);
-      let endTime = result.endDate.slice(11, 19);
-      let timeStart = new Date(today + ' ' + currentTime).getHours();
-      let timeEnd = new Date(endDate + ' ' + endTime).getHours();
-      let hourDifference = timeEnd - timeStart; 
+      const currentTime = new Date().toJSON().slice(11, 19);
+      const endTime = result.endDate.slice(11, 19);
+      const timeStart = new Date(today + ' ' + currentTime).getHours();
+      const timeEnd = new Date(endDate + ' ' + endTime).getHours();
+      const hourDifference = timeEnd - timeStart; 
       if (differenceDays > 0) {
         this.set('isCountdownTimerActive', false);
         this.set('timeLeft', differenceDays + ' days');
@@ -80,7 +85,7 @@ export default Component.extend(FindQuery, {
       this.set('bidderEmail', this.get('session.data.email'));
       this.get('wishlistHttp').existInWishlist(result.id).then((result)=> {
         this.set('isWatchListActive', result);
-        if (this.get('isWatchListActive') != false) {
+        if (this.get('isWatchListActive')) {
           this.set('watchListClass', 'wlActive');
         } else {
           this.set('watchListClass', 'wlInactive');
@@ -113,7 +118,7 @@ export default Component.extend(FindQuery, {
         'product': this.product,
         'userEmail': this.get('bidderEmail')
       });
-      if (this.get('isWatchListActive') != false) {
+      if (this.get('isWatchListActive')) {
         this.set('watchListClass', 'wlInactive');
         this.set('isWatchListActive', false);
         this.get('wishlistHttp').deleteProductFromWishlist(this.product.id);
@@ -124,11 +129,10 @@ export default Component.extend(FindQuery, {
       }
     },
     setPhoto(num) {
-      this.set('currentPhoto', num);
+      this.set('currentPhoto', this.get('product.photo')[num]);
     },
     placeBid() {
-      this.set('bidTry', true);
-      if (this.get('session.isAuthenticated') === true) {
+      if (this.get('session.isAuthenticated')) {
         const price = this.get('price');
         const date = new Date().toJSON().slice(0, 10);
         const data = JSON.stringify({
@@ -137,11 +141,12 @@ export default Component.extend(FindQuery, {
           'product': this.product,
           'userEmail': this.get('bidderEmail')
         });
-        if (this.get('owner') === false) {
+        if (!this.get('owner')) {
           this.get('bidHttp').createBid(data).then((result) => {
-            if (result === false) {
+            if (!result) {
               this.set('error', true);
             } else {
+              this.set('bidTry', true);
               this.get('client').sendMessage(this.get('session.data.email'), this.productId);
               this.get('productHttp').getProduct(this.product.id).then((result) => {
                 this.set('product', result);

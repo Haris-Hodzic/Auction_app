@@ -97,16 +97,17 @@ export default Controller.extend({
           set(this.get('filters'), 'endPrice', Math.trunc(this.get('highestPrice')));
           this.set('range', this.get('highestPrice') - this.get('lowestPrice'));
           this.set('oneBarRange', this.get('range') / 20);
-          var countedPrices = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ]
-          for (var i = 0; i < this.get('prices').length - 1; i++) {
-            this.set('sumOfPrices', this.get('sumOfPrices') + this.get('prices')[i])
+          var countedPrices = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+          const self = this;
+          this.get('prices').forEach(function(entry, index) {
+            self.set('sumOfPrices', self.get('sumOfPrices') + self.get('prices')[index]);
             for (var j = 0; j < 20; j++) {
-              if (this.get('prices')[i] < this.get('oneBarRange') * (j + 1)) {
+              if (self.get('prices')[index] < self.get('oneBarRange') * (j + 1)) {
                 countedPrices[j] = countedPrices[j] + 1;
                 break;
               }
             }
-          }
+          });
           this.set('averagePrice', Math.trunc(this.get('sumOfPrices') / this.get('prices').length));
           this.set('prices', countedPrices);
         });
@@ -176,7 +177,7 @@ export default Controller.extend({
           }
         },
         listSorting() {
-          if (this.get('isSortingButtonActive') === false) {
+          if (!this.get('isSortingButtonActive')) {
             this.set('isSortingButtonActive', true);
           } else {
             this.set('isSortingButtonActive', false);
@@ -237,12 +238,12 @@ export default Controller.extend({
           });
         },
         setView() {
-          if (this.get('isGridActive') === true) {
+          if (this.get('isGridActive')) {
             this.set('isGridActive', false);
             this.set('isListActive', true);
             this.set('gridActive', '');
             this.set('listActive', 'active');
-          } else if (this.get('isListActive') === true) {
+          } else if (this.get('isListActive')) {
             this.set('isListActive', false);
             this.set('isGridActive', true);
             this.set('listActive', '');
@@ -250,7 +251,7 @@ export default Controller.extend({
           }
         },
         listSubcategories(category) {
-          if (this.get('isActiveCategory')[category] === false) {
+          if (!this.get('isActiveCategory')[category]) {
             set(this.get('isActiveCategory'), category, true);
             set(this.get('categoryButtons'), category, '-');
             this.get('productHttp').getProductSubcategories(category).then((result) => {

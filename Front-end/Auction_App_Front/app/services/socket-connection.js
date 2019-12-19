@@ -1,5 +1,6 @@
 import Service from '@ember/service';
 import {inject as service} from '@ember/service';
+import Config from '../config/environment';
 
 export default Service.extend({
   stompClient: null,
@@ -13,7 +14,6 @@ export default Service.extend({
     this._super(...arguments);
     this.set('messages', []);
   },
-
   add(user, productId) {
     this.get('messages').pushObject({'user': user, 'productId': productId});
   },
@@ -23,9 +23,9 @@ export default Service.extend({
   connect(){
     this.clearFeedback();
     var comp = this;
-    var socket = new SockJS('http://localhost:8080/ws');
+    var socket = new SockJS(Config.APP.SERVER_URL + '/ws');
     this.stompClient = Stomp.over(socket);
-    this.stompClient.connect({}, function (/*frame*/) {
+    this.stompClient.connect({}, function () {
      comp.set('connected', true);
      comp.stompClient.subscribe('/topic/notifications', function (greeting) {
       comp.empty();
@@ -42,7 +42,6 @@ export default Service.extend({
           clearDuration: 4400
         });
       }
-
       comp.showMessage(user, productId);
     });
    });
@@ -60,7 +59,7 @@ export default Service.extend({
   sendMessage(user, productId){
     if (this.stompClient != null && this.get('connected')) {
       this.stompClient.send("/app/notification", {}, JSON.stringify({'user': user, 'productId': productId}));
-    }else{
+    } else{
       this.set('feedback', 'You are not connected!');
     }
   },

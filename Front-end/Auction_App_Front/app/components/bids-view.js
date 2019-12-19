@@ -14,21 +14,22 @@ export default Component.extend({
   },
   actions: {
     exploreMore(page) {
-      let today = new Date().toJSON().slice(0, 10);
+      const today = new Date().toJSON().slice(0, 10);
       this.get('bidHttp').getBidsByUserId(this.get('userInfo.id'), page).then((result) => {
         this.set('bids', result.content);
-        for (var i = 0; i < result.content.length; i++) {
-          let endDate = result.content[i].product.endDate.slice(0, 10);
-          let date1 = new Date(today);
-          let date2 = new Date(endDate);
-          let differenceTime = date2 - date1;
-          let differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
+        const self = this;
+        result.content.forEach(function(entry, index) {
+          const endDate = entry.product.endDate.slice(0, 10);
+          const date1 = new Date(today);
+          const date2 = new Date(endDate);
+          const differenceTime = date2 - date1;
+          const differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
           if (differenceDays >= 0) {
-            set(this.get('bids')[i], 'timeLeft', differenceDays);
+            set(self.get('bids')[index], 'timeLeft', differenceDays);
           } else {
-            set(this.get('bids')[i], 'timeLeft', 0);
+            set(self.get('bids')[index], 'timeLeft', 0);
           }
-        }
+        });
       });
     }
   }

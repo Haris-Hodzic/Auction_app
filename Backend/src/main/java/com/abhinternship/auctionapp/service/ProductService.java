@@ -51,9 +51,9 @@ public class ProductService implements BaseService<Product> {
     }
 
     @Override
-    public Boolean delete(Long productId) throws RepositoryException {
+    public Long delete(Long productId) throws RepositoryException {
         //TODO
-        return false;
+        return null;
     }
 
     public List<Product> findAllProductByStartDateDesc(Long pageNumber) throws RepositoryException {

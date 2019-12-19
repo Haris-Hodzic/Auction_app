@@ -87,9 +87,9 @@ public class BidService implements BaseService<Bid> {
     }
 
     @Override
-    public Boolean delete(Long bidId) throws RepositoryException {
+    public Long delete(Long bidId) throws RepositoryException {
         //TODO
-        return false;
+        return null;
     }
 
     public Page<Bid> getBidsByUser(Long userId, Long pageNumber) throws RepositoryException {

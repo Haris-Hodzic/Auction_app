@@ -8,11 +8,11 @@ module.exports = function(environment) {
     locationType: 'auto',
     firebase: {
       apiKey: "xyz",
-    authDomain: "YOUR-FIREBASE-APP.firebaseapp.com",
-    databaseURL: "https://YOUR-FIREBASE-APP.firebaseio.com",
-    projectId: "YOUR-FIREBASE-APP",
-    storageBucket: "YOUR-FIREBASE-APP.appspot.com",
-    messagingSenderId: "00000000000"
+      authDomain: "YOUR-FIREBASE-APP.firebaseapp.com",
+      databaseURL: "https://YOUR-FIREBASE-APP.firebaseio.com",
+      projectId: "YOUR-FIREBASE-APP",
+      storageBucket: "YOUR-FIREBASE-APP.appspot.com",
+      messagingSenderId: "00000000000"
     },
     EmberENV: {
       FEATURES: {
@@ -46,9 +46,9 @@ module.exports = function(environment) {
         //the intervals at which successive reconnect attempts
         //are made when the socket is disconnected
         reconnectDelaySteps: [1000, 2000, 5000, 10000, 30000, 60000]
-    },
+      },
 
-    APP: {
+      APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
     }
@@ -59,7 +59,7 @@ module.exports = function(environment) {
     authorizer: 'authorizer:token',
     crossOriginWhitelist: ['*']
   };
-ENV['ember-simple-auth-token'] = {
+  ENV['ember-simple-auth-token'] = {
   tokenDataPropertyName: 'tokenData', // Key in session to store token data
   refreshAccessTokens: true, // Enables access token refreshing
   tokenExpirationInvalidateSession: true,
@@ -72,7 +72,7 @@ ENV['ember-simple-auth-token'] = {
   tokenExpireName: 'exp', // Field containing token expiration
   refreshLeeway: 0 // Amount of time to send refresh request before token expiration
 };
-  if (environment === 'development') {
+if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;

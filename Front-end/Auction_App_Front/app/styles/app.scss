@@ -18,6 +18,7 @@ header{
   background: #252525;
   top: 0px;
   .headerLeft{
+    visibility: hidden;
     position: absolute;
     top: -5px;
     margin-left: 11.1%;
@@ -248,6 +249,7 @@ nav{
 /*--------Footer-------*/
 
 footer{
+  visibility: hidden;
   position: relative;
   flex-wrap: nowrap;
   bottom: 0px;
@@ -588,6 +590,7 @@ footer{
   background: #FAFAFA;
   margin-bottom: 56px;
   .categories{
+    visibility: hidden;
     width: 17.6%;
     height: 100%;
     margin-left: 11.1%;

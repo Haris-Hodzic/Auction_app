@@ -77,9 +77,9 @@ public class UserService implements BaseService<User>, UserDetailsService {
     }
 
     @Override
-    public Boolean delete(Long userId) throws RepositoryException {
+    public Long delete(Long userId) throws RepositoryException {
         //TODO
-        return false;
+        return null;
     }
 
     public User getUserByEmail(String email) throws RepositoryException {

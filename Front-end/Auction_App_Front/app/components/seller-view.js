@@ -12,7 +12,7 @@ export default Component.extend({
   },
   actions: {
     setSellerView() {
-      if (this.get('isSellerActiveButtonActive') === true) {
+      if (this.get('isSellerActiveButtonActive')) {
         this.set('isSellerActiveButtonActive', false);
         this.set('sellerActiveButtonClass', '');
         this.set('isSellerSoldButtonActive', true);

@@ -14,25 +14,25 @@ export default Component.extend({
   },
   actions: {
     exploreMore(page) {
-      let today = new Date().toJSON().slice(0, 10);
+      const today = new Date().toJSON().slice(0, 10);
       this.get('wishlistHttp').getWishlistByUserId(this.get('userInfo.id'), page).then((result) => {
         this.set('userWishlist', result.content);
-        for (var i = 0; i < result.content.length; i++) {
-          let endDate = result.content[i].product.endDate.slice(0, 10);
-          let date1 = new Date(today);
-          let date2 = new Date(endDate);
-          let differenceTime = date2 - date1;
-          let differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
+        result.content.forEach(function(entry, index) {
+          const endDate = entry.product.endDate.slice(0, 10);
+          const date1 = new Date(today);
+          const date2 = new Date(endDate);
+          const differenceTime = date2 - date1;
+          const differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
           if (differenceDays >= 0) {
-            set(this.get('userWishlist')[i], 'timeLeft', differenceDays);
-            set(this.get('userWishlist')[i], 'status', 'OPEN');
-            set(this.get('userWishlist')[i], 'statusClass', 'open')
+            set(this.get('userWishlist')[index], 'timeLeft', differenceDays);
+            set(this.get('userWishlist')[index], 'status', 'OPEN');
+            set(this.get('userWishlist')[index], 'statusClass', 'open')
           } else {
-            set(this.get('userWishlist')[i], 'timeLeft', 0);
-            set(this.get('userWishlist')[i], 'status', 'CLOSED');
-            set(this.get('userWishlist')[i], 'statusClass', 'closed')
+            set(this.get('userWishlist')[index], 'timeLeft', 0);
+            set(this.get('userWishlist')[index], 'status', 'CLOSED');
+            set(this.get('userWishlist')[index], 'statusClass', 'closed')
           }
-        }
+        });
       });
     }
   }

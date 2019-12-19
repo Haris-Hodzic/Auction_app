@@ -79,7 +79,6 @@ public class ProductController extends BaseController<Product> {
     @MessageMapping("/notification")
     @SendTo("/topic/notifications")
     public Notification getNotification(Notification message) throws Exception {
-        Thread.sleep(1000);
         return message;
     }
 }

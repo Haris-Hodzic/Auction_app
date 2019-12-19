@@ -142,7 +142,7 @@ public class DataLoader implements CommandLineRunner {
         listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/05"), false, "061123456", 110.00, listOfUsers.get(1)));
         listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/29"), false, "061123456", 110.00, listOfUsers.get(2)));
         listOfProducts.add(new Product("Shoes", "sport shoes", 110.00, new Date(), new Date("2019/12/21"), false, "061123456", 110.00, listOfUsers.get(3)));
-        listOfProducts.add(new Product("iPhone 11 Pro Max", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 520.00, new Date(), new Date("2019/12/15 19:55:12"), false, "061123456", 520.00, listOfUsers.get(3)));
+        listOfProducts.add(new Product("Shoes", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero. ", 520.00, new Date(), new Date("2019/12/16 13:55:12"), false, "061123456", 520.00, listOfUsers.get(3)));
         //listOfProducts.get(0).setCategories(setOfCategories);
 
         listOfProducts.get(0).setCategory(category7);
