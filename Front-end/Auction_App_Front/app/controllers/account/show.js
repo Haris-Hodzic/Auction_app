@@ -20,8 +20,12 @@ export default Controller.extend({
   session: service('session'),
   totalNumberOfWishlist: null,
   totalNumberOfBids: null,
+  wishlistButtonsList: null,
+  bidsButtonList: null,
   init() {
     this._super(...arguments);
+    this.set('wishlistButtonsList',[]);
+    this.set('bidsButtonsList',[]);
     const today = new Date().toJSON().slice(0, 10);
     this.set('activeProductList', []);
     this.set('soldProductList', []);
@@ -61,6 +65,9 @@ export default Controller.extend({
       this.get('bidHttp').getBidsByUserId(this.get('userInfo.id'), 0).then((result) => {
         this.set('userBids', result.content);
         this.set('totalNumberOfBids', result.totalElements);
+        for (var i = 0; i < result.totalElements/5; i++) {
+          this.get('bidsButtonsList').pushObject({page: i+1});
+        }
         const self = this;
         result.content.forEach(function(entry, index) {
           const endDate = entry.product.endDate.slice(0, 10);
@@ -77,7 +84,10 @@ export default Controller.extend({
       });
       this.get('wishlistHttp').getWishlistByUserId(this.get('userInfo.id'), 0).then((result) => {
         this.set('userWishlist', result.content);
-        this.set('totalNumberOfWishlist', result.totalElements);
+        this.set('totalNumberOfWishlist', );
+        for (var i = 0; i < result.totalElements/5; i++) {
+          this.get('wishlistButtonsList').pushObject({page: i+1});
+        }
         const self = this;
         result.content.forEach(function(entry, index) {
           const endDate = entry.product.endDate.slice(0, 10);
@@ -154,6 +164,47 @@ export default Controller.extend({
       this.set('wishlistActiveClass', 'active');
       this.transitionToRoute('account.show', "wishlist");
     },
+    exploreMore(view, page) {
+      const today = new Date().toJSON().slice(0, 10);
+      const self = this;
+      if (view === 'wishlist') {
+        this.get('wishlistHttp').getWishlistByUserId(this.get('userInfo.id'), page).then((result) => {
+          this.set('userWishlist', result.content);
+          result.content.forEach(function(entry, index) {
+            const endDate = entry.product.endDate.slice(0, 10);
+            const date1 = new Date(today);
+            const date2 = new Date(endDate);
+            const differenceTime = date2 - date1;
+            const differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
+            if (differenceDays >= 0) {
+              set(self.get('userWishlist')[index], 'timeLeft', differenceDays);
+              set(self.get('userWishlist')[index], 'status', 'OPEN');
+              set(self.get('userWishlist')[index], 'statusClass', 'open')
+            } else {
+              set(self.get('userWishlist')[index], 'timeLeft', 0);
+              set(self.get('userWishlist')[index], 'status', 'CLOSED');
+              set(self.get('userWishlist')[index], 'statusClass', 'closed')
+            }
+          });
+        });
+      } else if (view === 'bids') {
+        this.get('bidHttp').getBidsByUserId(this.get('userInfo.id'), page).then((result) => {
+          this.set('userBids', result.content);
+          result.content.forEach(function(entry, index) {
+            const endDate = entry.product.endDate.slice(0, 10);
+            const date1 = new Date(today);
+            const date2 = new Date(endDate);
+            const differenceTime = date2 - date1;
+            const differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
+            if (differenceDays >= 0) {
+              set(self.get('userBids')[index], 'timeLeft', differenceDays);
+            } else {
+              set(self.get('userBids')[index], 'timeLeft', 0);
+            }
+          });
+        });
+      }
+    }
   },
   valueObserver: observer('model', function() {
     if (this.get('model').option === 'profile') {

@@ -86,19 +86,19 @@
     <div class="optionalBody">
       <p class="addressTitle">Address</p>
       <p class="inputLabel">Street</p>
-      <Input @value={{userInfo.address.street}} @class="input" @type="email"></Input>
+      <Input @value={{userInfo.address.street}} @class="input" @type="text"></Input>
       <div class="middlePartLabels">
         <p class="inputLabel">City</p>
         <p class="inputLabel zipLabel">ZipCode</p>
       </div>
       <div class="middlePart">
-        <Input @value={{userInfo.address.city}} @class="input" @type="email"></Input>
-        <Input @value={{userInfo.address.zip}} @class="input zip" @type="email"></Input>
+        <Input @value={{userInfo.address.city}} @class="minput" @type="text"></Input>
+        <Input @value={{userInfo.address.zip}} @class="minput zip" @type="text"></Input>
       </div>
       <p class="inputLabel">State</p>
-      <Input @value={{userInfo.address.state}} @class="input" @type="email"></Input>
+      <Input @value={{userInfo.address.state}} @class="input" @type="text"></Input>
       <p class="inputLabel">Country</p>
-      <Input @value={{userInfo.address.country}} @class="input" @type="email"></Input>
+      <Input @value={{userInfo.address.country}} @class="input" @type="text"></Input>
     </div>
   </div>
   <button class="saveProfile" {{action "saveInfo" userInfo}}>SAVE INFO</button>

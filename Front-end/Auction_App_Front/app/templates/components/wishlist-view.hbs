@@ -9,20 +9,24 @@
     </div>
     {{#each userWishlist as |wishlist|}}
       <div class="products">
-        <img src={{get wishlist.product.photo "1"}} alt="" class="accountProductImg">
+        {{#if (gt wishlist.product.photo.length 0)}}
+          <img src={{get wishlist.product.photo "0"}} alt="" class="accountProductImg">
+        {{else}}
+          <img src="/assets/images/noImage.png" alt="" class="accountProductImg">
+        {{/if}}
         <p class="productName">{{wishlist.product.name}}</p>
         <p class="productTime">{{wishlist.timeLeft}} days</p>
         <p class="productPrice">${{wishlist.product.startPrice}}</p>
         <div class="status"><p class={{wishlist.statusClass}}>{{wishlist.status}}</p></div>
         {{#link-to "product.show" wishlist.product.id class="linkToClass"}}
-          <button class="viewBtn">BID</button>
+          {{#if (eq wishlist.status "OPEN")}}
+            <button class="viewBtn">BID</button>
+          {{/if}}
+          {{#if (eq wishlist.status "CLOSED")}}
+            <button class="viewBtn">VIEW</button>
+          {{/if}}
         {{/link-to}}
       </div>
-    {{/each}}
-  </div>
-  <div class="pagination">
-    {{#each buttonsList as |buttonNumber index|}}
-      <button class="moreBtn" {{action "exploreMore" index}}>{{buttonNumber.page}}</button>
     {{/each}}
   </div>
 </div>
