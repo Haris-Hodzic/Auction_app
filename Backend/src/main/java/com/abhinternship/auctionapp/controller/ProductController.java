@@ -8,6 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -25,6 +28,11 @@ public class ProductController extends BaseController<Product> {
     @ResponseBody
     public List<Product> getNewProducts(@PathVariable Long pageNumber) throws RepositoryException {
         return productService.findAllProductByStartDateDesc(pageNumber);
+    }
+
+    @GetMapping("/product/active")
+    public List<Product> getActiveProducts() {
+        return productService.getAllActiveProducts();
     }
 
     @GetMapping("/lastchance/{pageNumber}")
@@ -78,7 +86,8 @@ public class ProductController extends BaseController<Product> {
 
     @MessageMapping("/notification")
     @SendTo("/topic/notifications")
+    @Transactional
     public Notification getNotification(Notification message) throws Exception {
-        return message;
+        return productService.getBidNotification(message);
     }
 }

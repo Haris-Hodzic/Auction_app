@@ -26,4 +26,9 @@ public class UserController extends BaseController<User> {
     public User getUserByEmail(@RequestParam(value = "email") String email) throws RepositoryException  {
         return userService.getUserByEmail(email);
     }
+
+    @PostMapping("/rating")
+    public Double rateSeller(@RequestBody String email, @RequestParam(value = "newRate") Double newRate) throws RepositoryException  {
+        return userService.rateSeller(email, newRate);
+    }
 }

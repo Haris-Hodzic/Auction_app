@@ -1,0 +1,35 @@
+<div class="enterCard">
+  <form>
+    <div class="group">
+      <div class="cardFormRowOne">
+        <div class="cardName">
+          <p class="inputLabel">Name on card</p>
+          <Input @value={{cardName}} @class="nameOnCard" @type="text" placeholder="e.g. Adam Smith"></Input>
+        </div>
+        <label class="cardNumber">
+          <p class="inputLabel">Card number</p>
+          <div id="card-number-element" class="cardInput"></div>
+          <span class="brand"><i class="pf pf-credit-card" id="brand-icon"></i></span>
+        </label>
+      </div>
+      <div class="cardFormRowTwo">
+        <div class="expirationDate">
+          <label>
+            <p class="inputLabel">Exipartion Date</p>
+            <div id="card-expiry-element" class="cardInput"></div>
+          </label>
+        </div>
+        <div class="cvc">
+          <label>
+            <p class="inputLabel">CVC</p>
+            <div id="card-cvc-element" class="cardInput"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="cardButton">SAVE CARD</button>
+    <div class="outcome">
+      <div class="error"></div> 
+    </div>
+  </form>
+</div>

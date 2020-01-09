@@ -4,6 +4,7 @@ import RealtimeRouteMixin from 'emberfire/mixins/realtime-route';
 
 export default Route.extend(RealtimeRouteMixin, {
   store: service(),
+  stripe: service('stripev3'),
   session: service('session'),
   model(params) {
     return this.store.query('view', {
@@ -15,5 +16,6 @@ export default Route.extend(RealtimeRouteMixin, {
   beforeModel() {
     this.set('session.previousRouteName', location.href.slice(location.href.indexOf(location.pathname)));
     this.store.createRecord('view');
+    return this.get('stripe').load();
   }
 });

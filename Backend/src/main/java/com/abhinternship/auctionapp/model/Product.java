@@ -23,7 +23,10 @@ public class Product {
     private boolean shipping;
     private String phone;
     private Double highestBid;
+    private String highestBidder;
     private int numberOfBids;
+    private String status;
+
     @ElementCollection
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "photo_id")
@@ -32,7 +35,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnoreProperties({"password", "id", "firstName", "lastName", "gender", "dateOfBirth", "phoneNumber", "address", "wishlist", "hibernateLazyInitializer"})
+    @JsonIgnoreProperties({"password", "id", "gender", "dateOfBirth", "phoneNumber", "address", "wishlist", "hibernateLazyInitializer"})
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -56,7 +59,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(@NotBlank String name, String description, @NotBlank double startPrice, @NotBlank Date startDate, @NotBlank Date endDate, @NotBlank boolean shipping, String phone, Double highestBid, User user) {
+    public Product(@NotBlank String name, String description, @NotBlank double startPrice, @NotBlank Date startDate, @NotBlank Date endDate, @NotBlank boolean shipping, String phone, Double highestBid, String status, User user) {
         this.name = name;
         this.description = description;
         this.startPrice = startPrice;
@@ -65,8 +68,11 @@ public class Product {
         this.shipping = shipping;
         this.phone = phone;
         this.highestBid = highestBid;
+        this.status = status;
         this.user = user;
     }
+
+
 
     public Long getId() {
         return id;
@@ -186,5 +192,21 @@ public class Product {
 
     public void setNumberOfBids(int numberOfBids) {
         this.numberOfBids = numberOfBids;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getHighestBidder() {
+        return highestBidder;
+    }
+
+    public void setHighestBidder(String highestBidder) {
+        this.highestBidder = highestBidder;
     }
 }

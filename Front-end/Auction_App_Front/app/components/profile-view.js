@@ -6,6 +6,7 @@ export default Component.extend({
   userHttp: service(),
   session: service('session'),
   store: service(),
+  stripeHttp: service(),
   gender: 'Male',
   isGenderButtonActive: false,
   isMonthButtonActive: false,
@@ -21,14 +22,24 @@ export default Component.extend({
   isValidEmail: false,
   isValidPassword: false,
   isValid: true,
+  cardNumberPlaceholder: '',
+  isCardEntered: false,
+  userEmail: null,
   init() {
     this._super(...arguments);
     this.set('dateOfBirth', {date: '01', month: '', year: ''});
+    this.set('userEmail', this.get('session.data.email'));
     this.set('userProfile', this.get('store').createRecord('user'));
     this.set('dateOptions', ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']);
     this.set('monthOptions', ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
     this.get('userHttp').getUserInfo(this.get('session.data.email')).then((result) => {
       this.set('userInfo', result);
+      console.log(result)
+      if (result.userCard) {
+        this.set('isCardEntered', true);
+      } else {
+        this.set('isCardEntered', false);
+      }
       this.set('selectedDate', result.dateOfBirth.slice(8, 10));
       this.set('dateOfBirth.date', result.dateOfBirth.slice(8, 10));
       if (result.dateOfBirth.slice(5, 6) === '0') {
@@ -42,6 +53,9 @@ export default Component.extend({
     });
   },
   actions: {
+    changeCard() {
+      this.set('isCardEntered', false);
+    },
     setGender(gender) {
       this.set('userInfo.gender', gender);
       this.set('gender', gender);
@@ -66,7 +80,6 @@ export default Component.extend({
           this.set('isDateButtonActive', false);
         }
       }
-
     },
     setMonth(monthSelected, monthDisplayed) {
       this.set('dateOfBirth.month', monthSelected + 1);
@@ -115,7 +128,7 @@ export default Component.extend({
           const self = this;
           validations.errors.forEach(function(entry) {
             if (entry.type === 'username-available') {
-              if (account.email === self.get('session.data.email')) {
+              if (account.email === self.get('userEmail')) {
                 self.set('isValidEmail', true);
                 self.set('errors', false);
               } else {

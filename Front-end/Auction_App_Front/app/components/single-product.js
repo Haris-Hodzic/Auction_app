@@ -7,6 +7,8 @@ export default Component.extend(FindQuery, {
   client: service('socket-connection'),
   message: "",
   store: service(),
+  userHttp: service(),
+  stripeHttp: service(),
   notifications: service('notification-messages'),
   productHttp: service(),
   wishlistHttp: service(),
@@ -15,6 +17,7 @@ export default Component.extend(FindQuery, {
   isWatchListActive: false,
   watchListClass: 'wlInactive',
   currentPhoto: null,
+  user: null,
   owner: false,
   bidderEmail: '',
   currentProduct: null,
@@ -28,6 +31,8 @@ export default Component.extend(FindQuery, {
   product: null,
   currentPath: null,
   isCountdownTimerActive: false,
+  notification: false,
+  rating: 0,
   init() {
     this._super(...arguments);
     this.get('client').connect();
@@ -53,35 +58,43 @@ export default Component.extend(FindQuery, {
     }
     this.get('productHttp').getProduct(this.productId).then((result) => {
       this.set('product', result);
+      if (result.user.numberOfRatings) {
+        this.set('rating', Math.floor(result.user.rating / result.user.numberOfRatings))
+      }
+      if (result.status === 'pending') {
+        this.set('notification', true);
+      }
       if (result.photo.length > 0) {
         this.set('currentPhoto', result.photo[0]);
       } else {
         this.set('currentPhoto', 'assets/images/noImage.png');
       }
-      const today = new Date().toJSON().slice(0, 10);
-      const endDate = result.endDate.slice(0, 10);
       const ownerEmail = result.user.email;
-      const date1 = new Date(today);
-      const date2 = new Date(endDate);
-      const differenceTime = date2 - date1;
+      const today = new Date();
+      const endDate = new Date(result.endDate.slice(0, 23));
+      console.log('today ' + today)
+      console.log('endDate ' + endDate)
+      const differenceTime = endDate - today;
+      console.log(differenceTime)
       const differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
+      console.log('dayDifference ' + differenceDays)
+      const timeStart = today.getHours();
+      const timeEnd = endDate.getHours() + 1;
+      const hourDifference = timeEnd - timeStart;
+      console.log('hourDifference' + hourDifference)
 
-      const currentTime = new Date().toJSON().slice(11, 19);
-      const endTime = result.endDate.slice(11, 19);
-      const timeStart = new Date(today + ' ' + currentTime).getHours();
-      const timeEnd = new Date(endDate + ' ' + endTime).getHours();
-      const hourDifference = timeEnd - timeStart; 
-      if (differenceDays > 0) {
-        this.set('isCountdownTimerActive', false);
-        this.set('timeLeft', differenceDays + ' days');
-      } else if (differenceDays === 0 && hourDifference === 0) {
-        this.set('isCountdownTimerActive', true);
-      } else if (differenceDays === 0 && hourDifference > 0) {
-        this.set('timeLeft', hourDifference + ' hours');
+      if (result.status === 'active') {
+        if (differenceDays > 0) {
+          this.set('isCountdownTimerActive', false);
+          this.set('timeLeft', differenceDays + ' days');
+        } else if (differenceDays === 0 && hourDifference === 0) {
+          this.set('isCountdownTimerActive', true);
+        } else if (differenceDays === 0 && hourDifference > 0) {
+          this.set('timeLeft', hourDifference + ' hours');
+        }
       } else {
-        this.set('timeLeft', 'Sold')
+        this.set('timeLeft','sold');
       }
-
       this.set('bidderEmail', this.get('session.data.email'));
       this.get('wishlistHttp').existInWishlist(result.id).then((result)=> {
         this.set('isWatchListActive', result);
@@ -99,6 +112,9 @@ export default Component.extend(FindQuery, {
       } else {
         this.set('owner', false);
       }
+    });
+    this.get('userHttp').getUserInfo(this.get('session.data.email')).then((result) => {
+      this.set('user', result);
     });
   },
   willDestroyElement() {
@@ -134,7 +150,7 @@ export default Component.extend(FindQuery, {
     placeBid() {
       if (this.get('session.isAuthenticated')) {
         const price = this.get('price');
-        const date = new Date().toJSON().slice(0, 10);
+        const date = new Date().toJSON().slice(0, 19);
         const data = JSON.stringify({
           'price': price,
           'date': date,
@@ -147,7 +163,7 @@ export default Component.extend(FindQuery, {
               this.set('error', true);
             } else {
               this.set('bidTry', true);
-              this.get('client').sendMessage(this.get('session.data.email'), this.productId);
+              this.get('client').sendMessage(this.get('session.data.email'), this.productId, this.get('product.numberOfBids'), this.get('product.highestBid'));
               this.get('productHttp').getProduct(this.product.id).then((result) => {
                 this.set('product', result);
               });
@@ -156,6 +172,12 @@ export default Component.extend(FindQuery, {
           })
         }
       }
+    },
+    pay() {
+      this.get('router').transitionTo('product.bids', this.product.id);
+    },
+    closeNotification() {
+      this.set('notification', false);
     }
   }
 });

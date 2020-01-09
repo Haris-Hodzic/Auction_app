@@ -1,4 +1,9 @@
 <div class="bidsView">
+  {{#if notification}}
+    <div class="paymentNotification">
+      <p><strong>Congratulation!</strong> You outbid the competition.</p> <a {{action "closeNotification"}}>X</a>
+    </div>
+  {{/if}}
   <div class="accountTable">
     <div class="accountTableHeader">
       <p class="header labelItem">Item</p>
@@ -9,7 +14,7 @@
       <p class="header labelHiBids">Highest Bid</p>
     </div>
     {{#each bids as |bid|}}
-      <div class="products">
+      <div class="products {{bid.product.status}}">
         <img src={{get bid.product.photo "1"}} alt="" class="accountProductImg">
         <p class="productName">{{bid.product.name}}</p>
         <p class="productTime">{{bid.timeLeft}} days</p>
@@ -20,15 +25,21 @@
         {{/if}}
         <p class="productNoBids">{{bid.product.numberOfBids}}</p>
         <p class="productHighestBid">${{bid.product.highestBid}}</p>
+        {{#if (eq bid.product.status "active")}}
         {{#if (eq bid.price bid.product.highestBid)}}
           {{#link-to "product.show" bid.product.id class="linkToClass"}}
             <button class="viewBtn">VIEW</button>
           {{/link-to}}
         {{else}}
-          {{#link-to "product.show" bid.product.id class="linkToClass"}}
-            <button class="viewBtn">BID</button>
-          {{/link-to}}
+            {{#link-to "product.show" bid.product.id class="linkToClass"}}
+              <button class="viewBtn">BID</button>
+            {{/link-to}}
         {{/if}}
+        {{else}}
+        {{#link-to "product.show" bid.product.id class="linkToClass"}}
+          <button class="viewBtn">PAY</button>
+        {{/link-to}}
+      {{/if}}
       </div>
     {{/each}}
   </div>

@@ -46,17 +46,36 @@ public class BidService implements BaseService<Bid> {
             Date date = req.getDate();
             DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 
-            if (price > product.getHighestBid()) {
-                product.setHighestBid(price);
-                int numberOfBids = product.getNumberOfBids() + 1;
-                product.setNumberOfBids(numberOfBids);
-                product.setUser(creator);
-                productRepository.save(product);
-                Bid bid = new Bid(price, date, bidder, product);
-                bidRepository.save(bid);
-                return true;
+            if (bidRepository.existsByProduct(product) && bidRepository.existsByBidder(bidder)) {
+                if (price > product.getHighestBid()) {
+                    Bid bid = bidRepository.getBidByBidderAndProduct(bidder, product);
+                    product.setHighestBid(price);
+                    product.setHighestBidder(bidder.getEmail());
+                    int numberOfBids = product.getNumberOfBids() + 1;
+                    product.setNumberOfBids(numberOfBids);
+                    product.setUser(creator);
+                    productRepository.save(product);
+                    bid.setDate(date);
+                    bid.setPrice(price);
+                    bidRepository.save(bid);
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                if (price > product.getHighestBid()) {
+                    product.setHighestBid(price);
+                    product.setHighestBidder(bidder.getEmail());
+                    int numberOfBids = product.getNumberOfBids() + 1;
+                    product.setNumberOfBids(numberOfBids);
+                    product.setUser(creator);
+                    productRepository.save(product);
+                    Bid bid = new Bid(price, date, bidder, product);
+                    bidRepository.save(bid);
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } catch (Exception e) {
             throw new RepositoryException(e.getMessage());
@@ -94,7 +113,7 @@ public class BidService implements BaseService<Bid> {
     public Page<Bid> getBidsByUser(Long userId, Long pageNumber) throws RepositoryException {
         try{
             Pageable pageable = PageRequest.of(Math.toIntExact(pageNumber), 5);
-            return bidRepository.getAllByBidderId(userId, pageable);
+            return bidRepository.getAllByBidderIdOrderByDateDesc(userId, pageable);
         } catch (Exception e) {
             throw new RepositoryException("No bids found");
         }

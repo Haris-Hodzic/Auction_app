@@ -21,6 +21,7 @@ export default Controller.extend({
   totalNumberOfWishlist: null,
   totalNumberOfBids: null,
   wishlistButtonsList: null,
+  isPaymentNotificationActive: false,
   bidsButtonList: null,
   init() {
     this._super(...arguments);
@@ -70,6 +71,9 @@ export default Controller.extend({
         }
         const self = this;
         result.content.forEach(function(entry, index) {
+          if (entry.product.status === 'pending') {
+            self.set('isPaymentNotificationActive', true);
+          }
           const endDate = entry.product.endDate.slice(0, 10);
           const date1 = new Date(today);
           const date2 = new Date(endDate);

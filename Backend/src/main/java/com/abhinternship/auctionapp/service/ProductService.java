@@ -107,6 +107,11 @@ public class ProductService implements BaseService<Product> {
         }
     }
 
+    public List<Product> getAllActiveProducts() {
+        Date today = new Date(System.currentTimeMillis());
+        return repository.findByEndDateAfter(today);
+    }
+
     public List<SubcategoryDto> getDistinctSubcategories(String category) {
         return repository.getAllDistinctCountedGroupBySubcategory(category);
     }

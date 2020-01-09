@@ -36,5 +36,8 @@ export default Service.extend({
   },
   getActiveProductsByUserId(userId, pageNumber) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/active?userId=' + userId + '&pageNumber=' + pageNumber, '', 'GET');
+  },
+  getActiveProducts() {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/product/active', '', 'GET');
   }
 });

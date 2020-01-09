@@ -9,12 +9,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
     List<Product> getAllByOrderByStartDateDesc(Pageable pageable);
+    List<Product> findByEndDateAfter(Date date);
 
     @Query(value = "SELECT distinct new com.abhinternship.auctionapp.model.SubcategoryDto(d.name, count(d)) FROM Product e " +
             "JOIN Category d on  e.subcategory = d.id " +

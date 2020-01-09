@@ -45,6 +45,10 @@
     </ul>
   </div>
 </nav>
+{{#if (eq userEmail client.messages.lastObject.user)}}
+  {{notification-container position="top-right" zindex="9999"}}
+{{/if}}
+
 <div class="pageBody">
   {{outlet}}
 </div>

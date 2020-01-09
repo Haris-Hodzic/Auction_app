@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import "ember-modal-dialog/ember-modal-structure";
+@import "ember-modal-dialog/ember-modal-appearance";
 
 * {
   margin: 0;
@@ -23,7 +25,149 @@ button, input[type="submit"], input[type="reset"] {
   outline: inherit;
 }
 /*--------Footer-------*/
-
+.sellerRating{
+  width: 1000px;
+  border-radius: 0;
+  height: 600px;
+  border: none;
+  position: relative;
+  padding: 0;
+  .titleDiv{
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background: #FAFAFA;
+    .ratingTitle{
+      position: absolute;
+      left: 50%;
+      top: 17px;
+      font-family: Lato-Bold;
+      font-size: 20px;
+      color: #252525;
+      letter-spacing: 0.7px;
+      transform: translateX(-50%);
+    }
+  }
+  .ratingError{
+    position: absolute;
+      color: #8367D8;
+      font-family: Lato-Regular;
+      font-size: 16px;
+      letter-spacing: 0.63px;
+      top: 420px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  .sellerPhoto{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 120px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .text{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: Lato-Regular;
+    font-size: 20px;
+    color: #252525;
+    letter-spacing: 0.63px;
+  }
+  .sellerName{
+    top: 230px;
+  }
+  .ratingText{
+    top: 300px;
+    font-size: 22px;
+  }
+  .stars{
+    position: absolute;
+    top: 360px;
+    left: 51%;
+    transform: translateX(-50%);
+    .rate {
+      float: left;
+      height: 46px;
+      padding: 0 10px;
+    }
+    .rate:not(:checked) > input {
+      position:absolute;
+      top:-9999px;
+    }
+    .rate:not(:checked) > label {
+      float:right;
+      width: 1.2em;
+      margin-right: 10px;
+      overflow:hidden;
+      white-space:nowrap;
+      cursor:pointer;
+      font-size:35px;
+      color:#ccc;
+    }
+    .rate:not(:checked) > label:before {
+      content: '★ ';
+    }
+    .rate > input:checked ~ label {
+      color: #8367D8;
+    }
+    .rate:not(:checked) > label:hover,
+    .rate:not(:checked) > label:hover ~ label {
+      color: #8367D8;  
+    }
+    .rate > input:checked + label:hover,
+    .rate > input:checked + label:hover ~ label,
+    .rate > input:checked ~ label:hover,
+    .rate > input:checked ~ label:hover ~ label,
+    .rate > label:hover ~ input:checked ~ label {
+      color: #8367D8;
+    }
+  }
+  .ratingButtons{
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    top: 470px;
+    .doneBtn{
+      position: absolute;
+      left: 74%;
+      width: 185px;
+      height: 100%;
+      background: #8367D8;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.63px;
+    }
+    .skipBtn{
+      position: absolute;
+      left: 70px;
+      width: 185px;
+      height: 100%;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      background: #FFFFFF;
+      border: 3px solid #E3E3E3;
+      box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+    }
+    .skipBtn:hover{
+      border: 4px solid #E3E3E3;
+      box-shadow: 3px 4px 0 0 rgba(0,0,0,0.05);
+    }
+    .doneBtn:hover{
+      border: 5px solid #8367D8;
+      box-shadow: 5px 5px 0 0 rgba(131,103,216,0.31);
+    }
+  }
+  
+}
 /*-------Header-------*/
 header{
   position: relative;
@@ -776,71 +920,184 @@ footer{
         }   
       }
       .featureCollection:hover{
-       img{
-        margin-top: 45px;      
-        opacity: 0.5;
-      }
-      .imageOptions{
-        position: absolute;
-        z-index: 1000;
-        visibility: visible;
-        margin-left: 50px;
-        padding-top: 192px;
-        .watchListBtn{
-          width: 140px;
-          height: 36px;
-          font-family: Lato-Regular;
-          font-size: 15px;
-          color: #252525;
-          letter-spacing: 0.52px;
-          line-height: 22px;
-          i{
-            color: #ECECEC;
-            margin-left: 7px;
-          }
-          .active{
-            color: #8367D8;
-          }
+        img{
+          margin-top: 45px;      
+          opacity: 0.5;
         }
-        .bidBtn{
-          width: 100px;
-          height: 36px;
-          font-family: Lato-Regular;
-          font-size: 15px;
-          color: #252525;
-          letter-spacing: 0.52px;
-          line-height: 22px;
-          i{
-            margin-left: 6px;
+        .imageOptions{
+          position: absolute;
+          z-index: 1000;
+          visibility: visible;
+          margin-left: 50px;
+          padding-top: 192px;
+          .watchListBtn{
+            width: 140px;
+            height: 36px;
+            font-family: Lato-Regular;
+            font-size: 15px;
+            color: #252525;
+            letter-spacing: 0.52px;
+            line-height: 22px;
+            i{
+              color: #ECECEC;
+              margin-left: 7px;
+            }
+            .active{
+              color: #8367D8;
+            }
           }
-        }
-        .bidBtn:hover{
-          border: #8367D8 solid 2px;
-        }
-        .watchListBtn:hover{
-          border: #8367D8 solid 2px;
+          .bidBtn{
+            width: 100px;
+            height: 36px;
+            font-family: Lato-Regular;
+            font-size: 15px;
+            color: #252525;
+            letter-spacing: 0.52px;
+            line-height: 22px;
+            i{
+              margin-left: 6px;
+            }
+          }
+          .bidBtn:hover{
+            border: #8367D8 solid 2px;
+          }
+          .watchListBtn:hover{
+            border: #8367D8 solid 2px;
+          }
         }
       }
     }
   }
-}
-.featureProductBody{
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 100px;
-  height: auto;
-  .featureProductTitle{
-    @extend %middleProductTitle;
-  }
-  .featureProductImages{
+  .featureProductBody{
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    border-top: #ECECEC solid 4px;
+    margin-top: 100px;
+    height: auto;
+    .featureProductTitle{
+      @extend %middleProductTitle;
+    }
+    .featureProductImages{
+      display: flex;
+      flex-wrap: wrap;
+      border-top: #ECECEC solid 4px;
+      width: 100%;
+      justify-content: space-between;
+      align-content: center;
+      .featureProduct{
+        position: relative;
+        .imageOptions{
+          visibility: hidden;
+        }
+        .ownerTag{
+          position: absolute;
+          width: 98%;
+          top: 45px;
+          height: 40px;
+          line-height: 30px;
+          z-index: 1000;
+          color: white;
+          font-family: Lato;
+          font-size: small;
+          padding: 3px;
+          background-color: #6c757d;
+          text-align: center;
+          opacity: 0.8;
+        }
+        img{
+          margin-top: 25px;
+          width: 260px;
+          height: 300px;
+          object-fit: scale-down;
+        }
+      }
+      .featureProduct:hover{
+        img{
+          margin-top: 46px;
+          opacity: 0.5;
+        }
+        .imageOptions{
+          position: absolute;
+          z-index: 1000;
+          visibility: visible;
+          margin-left: 10px;
+          padding-top: 192px;
+          .watchListBtn{
+            width: 140px;
+            height: 36px;
+            font-family: Lato-Regular;
+            font-size: 15px;
+            color: #252525;
+            letter-spacing: 0.52px;
+            line-height: 22px;
+            i{
+              color: #ECECEC;
+              margin-left: 7px;
+            }
+            .active{
+              color: #8367D8;
+            }
+          }
+          .bidBtn{
+            width: 100px;
+            height: 36px;
+            font-family: Lato-Regular;
+            font-size: 15px;
+            color: #252525;
+            letter-spacing: 0.52px;
+            line-height: 22px;
+            i{
+              margin-left: 6px;
+            }
+          }
+          .bidBtn:hover{
+            border: #8367D8 solid 2px;
+          }
+          .watchListBtn:hover{
+            border: #8367D8 solid 2px;
+          }
+        }
+      }
+    }
+  }
+
+  .bottomPartButtons{
+    height: auto;
     width: 100%;
+    margin-top: 100px;
+    margin-bottom: 25px;
+    display: block;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    border-bottom: #ECECEC solid 4px;
+    .bottomPartBtn{
+      padding-bottom: 12px;
+      height: 48px;
+      margin-right: 68px;
+      height: 48px;
+      text-decoration: none;
+      font-family: Lato-Regular;
+      font-size: 1.94VW;
+      color: #252525;
+      letter-spacing: 0.98px;
+      &:hover{
+        border-bottom: #8367D8 solid 4px;
+      }
+    }
+    .active{
+      border-bottom: #8367D8 solid 4px;
+    }
+  }
+  /*------Bottom Part-------*/
+
+  .bottomPartBody{
     justify-content: space-between;
-    align-content: center;
-    .featureProduct{
+    display: flex;
+    height: auto;
+    margin-bottom: 80px;
+    flex-wrap: wrap;
+    .bottomPart {
+      margin-top: 20px;
       position: relative;
       .imageOptions{
         visibility: hidden;
@@ -848,7 +1105,7 @@ footer{
       .ownerTag{
         position: absolute;
         width: 98%;
-        top: 45px;
+        top: 20px;
         height: 40px;
         line-height: 30px;
         z-index: 1000;
@@ -861,24 +1118,24 @@ footer{
         opacity: 0.8;
       }
       img{
-        margin-top: 25px;
         width: 260px;
-        height: 300px;
-        object-fit: scale-down;
+        height: 260px;
+        object-fit: cover;
       }
     }
-    .featureProduct:hover{
+    .bottomPart:hover {
       img{
-        margin-top: 46px;
+        margin-top: 20px;
         opacity: 0.5;
       }
       .imageOptions{
         position: absolute;
         z-index: 1000;
         visibility: visible;
-        margin-left: 10px;
-        padding-top: 192px;
+        left: 10px;
+        top: 152px;
         .watchListBtn{
+
           width: 140px;
           height: 36px;
           font-family: Lato-Regular;
@@ -915,146 +1172,34 @@ footer{
       }
     }
   }
-}
-
-.bottomPartButtons{
-  height: auto;
-  width: 100%;
-  margin-top: 100px;
-  margin-bottom: 25px;
-  display: block;
-  flex-wrap: wrap;
-  padding-bottom: 12px;
-  border-bottom: #ECECEC solid 4px;
-  .bottomPartBtn{
-    padding-bottom: 12px;
-    height: 48px;
-    margin-right: 68px;
-    height: 48px;
-    text-decoration: none;
-    font-family: Lato-Regular;
-    font-size: 1.94VW;
-    color: #252525;
-    letter-spacing: 0.98px;
-    &:hover{
-      border-bottom: #8367D8 solid 4px;
+  @media (max-width: 1000px) {
+    .featureCollectionBody{
+      .featureCollectionImages{
+        justify-content: center;
+      }
     }
-  }
-  .active{
-    border-bottom: #8367D8 solid 4px;
-  }
-}
-/*------Bottom Part-------*/
-
-.bottomPartBody{
-  justify-content: space-between;
-  display: flex;
-  height: auto;
-  margin-bottom: 80px;
-  flex-wrap: wrap;
-  .bottomPart {
-    margin-top: 20px;
-    position: relative;
-    .imageOptions{
-      visibility: hidden;
-    }
-    .ownerTag{
-      position: absolute;
-      width: 98%;
-      top: 20px;
-      height: 40px;
-      line-height: 30px;
-      z-index: 1000;
-      color: white;
-      font-family: Lato;
-      font-size: small;
-      padding: 3px;
-      background-color: #6c757d;
+    .productName{
       text-align: center;
-      opacity: 0.8;
+      font-size: 3.2VW;
     }
-    img{
-      width: 260px;
-      height: 260px;
-      object-fit: cover;
+    .productPrice{
+      text-align: center;
     }
   }
-  .bottomPart:hover {
-    img{
-      margin-top: 20px;
-      opacity: 0.5;
-    }
-    .imageOptions{
-      position: absolute;
-      z-index: 1000;
-      visibility: visible;
-      left: 10px;
-      top: 152px;
-      .watchListBtn{
-
-        width: 140px;
-        height: 36px;
-        font-family: Lato-Regular;
-        font-size: 15px;
-        color: #252525;
-        letter-spacing: 0.52px;
-        line-height: 22px;
-        i{
-            color: #ECECEC;
-            margin-left: 7px;
-          }
-          .active{
-            color: #8367D8;
-          }
-      }
-      .bidBtn{
-        width: 100px;
-        height: 36px;
-        font-family: Lato-Regular;
-        font-size: 15px;
-        color: #252525;
-        letter-spacing: 0.52px;
-        line-height: 22px;
-        i{
-          margin-left: 6px;
-        }
-      }
-      .bidBtn:hover{
-        border: #8367D8 solid 2px;
-      }
-      .watchListBtn:hover{
-        border: #8367D8 solid 2px;
+  @media (max-width: 700px) {
+    .featureProductBody{
+      .featureProductImages{
+        justify-content: center;
       }
     }
-  }
-}
-@media (max-width: 1000px) {
-  .featureCollectionBody{
-    .featureCollectionImages{
+    .bottomPartBody{
       justify-content: center;
     }
-  }
-  .productName{
-    text-align: center;
-    font-size: 3.2VW;
-  }
-  .productPrice{
-    text-align: center;
-  }
-}
-@media (max-width: 700px) {
-  .featureProductBody{
-    .featureProductImages{
-      justify-content: center;
-    }
-  }
-  .bottomPartBody{
-    justify-content: center;
-  }
-  .bottomPartButtons{
-    .bottomPartBtn{
-      margin-top: 50px;
-      font-size: 2.23VW;
+    .bottomPartButtons{
+      .bottomPartBtn{
+        margin-top: 50px;
+        font-size: 2.23VW;
+      }
     }
   }
   .bottomPartBody{
@@ -1067,7 +1212,6 @@ footer{
     }
   }
 }
-
 .pagination{
   margin-bottom: 100px;
   height: 50px;
@@ -1196,14 +1340,115 @@ footer{
           object-fit: cover;
         }
         .smallImage img:hover{
-            opacity: 0.5;
-          }
+          opacity: 0.5;
+        }
       }
     }
     .spRightSide{
       position: absolute;
       width: 62%;
       left: 37%;
+      .rating{
+        position: relative;
+        top: 40px;
+        width: 100%;
+        height: 60px;
+        .ratingP{
+          position: relative;
+          line-height: 55px;
+          top: -15px;
+          height: 100%;
+          display: inline-block;
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #9B9B9B;
+          letter-spacing: 0.56px;
+        }
+        .sellerName{
+          position: relative;
+          line-height: 55px;
+          height: 100%;
+          margin-left: 10px;
+          top: -15px;
+          display: inline-block;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+        }
+        .sellerRate{
+          position: relative;
+          line-height: 55px;
+          height: 100%;
+          margin-left: 10px;
+          top: -15px;
+          display: inline-block;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+        }
+        i {
+          position: relative;
+          margin-left: 25px;
+          display: inline-block;
+          top: -16px;
+          color: #8367D8;
+          height: 100%;
+        }
+        img{
+          position: relative;
+          display: inline-block;
+          margin-left: 10px;
+          top: 2.5px;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+        }
+      }
+      .paymentNotification{
+        position: relative;
+        top: 20px;
+        width: 100%;
+        height: 50px;
+        background-color: #ececfd;
+        p{
+          font-family: Lato-Regular;
+          height: 100%;
+          line-height: 50px;
+          display: inline-block;
+          padding-left: 25px;
+          font-size: 18px;
+          color: #8367D8;
+          letter-spacing: 0.63px;
+        }
+        a{
+          position: absolute;
+          font-family: Lato-Regular;
+          height: 100%;
+          line-height: 50px;
+          font-size: 18px;
+          color: #8367D8;
+          letter-spacing: 0.63px;
+          left: 95%;
+        }
+        a:hover{
+          cursor: pointer;
+        }
+      }
+      .soldSeller{
+        background-color: #F0F3EE;
+        p, a{
+          color: #417505;
+        }
+      }
+      .sold{
+        background-color: #F6F2E5;
+        p, a{
+          color: #AB944E;
+        }
+      }
       .spName{
         font-family: Lato-Regular;
         font-size: 46px;
@@ -1285,6 +1530,23 @@ footer{
       }
       .watchListBtn:hover{
         border: 3px solid #8367D8;
+      }
+      .payBtn{
+        background: #FFFFFF;
+        border: 3px solid #8367D8;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+        width: 140px;
+        height: 36px;
+        font-family: Lato-Bold;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        margin-top: 45px;
+      }
+      .payBtn:hover{
+        border: 4px solid #8367D8;
+        box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
       }
       .bidDetails{
         font-family: Lato-Regular;
@@ -1406,7 +1668,7 @@ footer{
       }
     }
   }
-  
+
 }
 .bidsListBody{
   width: 78%;
@@ -2121,7 +2383,6 @@ footer{
     margin-bottom: 39px;
     .profileTitle{
       @extend %profileTitle;
-      border-right: 1px solid #D8D8D8; 
     }
     .profileRequiredForm{
       display: flex;
@@ -2180,244 +2441,372 @@ footer{
         margin-left: 52px;
         width: 690px;
         .inputLabel{
-         @extend %inLabel;
-         margin-top: 0px;
-         margin-left: 0px;
-         color: #252525;
-       }
-       .legend{
-        position: relative;
-        margin-top: 10px;
-        font-style: italic;
-        margin-left: 360px;
-      }
-      .input{
-        @extend %authInput;
-        margin-bottom: 19px;
-        margin-left: 0px;
-      }
-      .dateOfBirth{
-        display: flex;
-        margin-left: 54px;
-        .month{
-          .monthButton{
-            position: relative;
-            display: flex;
-            width: 180px;
-            height: 54px;
-            background: #FCFCFC;
-            border: 1px solid #D8D8D8;
-            padding-bottom: 9px;
-            cursor: pointer;
-            p{
-              position: absolute;
-              left: 15px;
-              top: 14px;
+          @extend %inLabel;
+          margin-top: 0px;
+          margin-left: 0px;
+          color: #252525;
+        }
+        .legend{
+          position: relative;
+          margin-top: 10px;
+          font-style: italic;
+          margin-left: 360px;
+        }
+        .input{
+          @extend %authInput;
+          margin-bottom: 19px;
+          margin-left: 0px;
+        }
+        .dateOfBirth{
+          display: flex;
+          margin-left: 54px;
+          .month{
+            .monthButton{
+              position: relative;
+              display: flex;
+              width: 180px;
+              height: 54px;
+              background: #FCFCFC;
+              border: 1px solid #D8D8D8;
+              padding-bottom: 9px;
+              cursor: pointer;
+              p{
+                position: absolute;
+                left: 15px;
+                top: 14px;
+                font-family: Lato-Regular;
+                font-size: 18px;
+                color: #252525;
+                letter-spacing: 0.63px;
+              }
+              img{
+                position: absolute;
+                left: 130px;
+                top: 14px;
+                width: 34px;
+                height: 24px;
+              }
+            }
+            .monthOptions{
+              @extend %dateOptions;
+              max-height: 150px;
+              overflow-y: auto;
+            }
+          }
+          .date{
+            margin-left: 20px;
+            .dateButton{
+              position: relative;
+              display: flex;
+              width: 100px;
+              height: 54px;
+              background: #FCFCFC;
+              border: 1px solid #D8D8D8;
+              padding-bottom: 9px;
+              cursor: pointer;
+              p{
+                position: absolute;
+                left: 15px;
+                top: 14px;
+                font-family: Lato-Regular;
+                font-size: 18px;
+                color: #252525;
+                letter-spacing: 0.63px;
+              }
+              img{
+                position: absolute;
+                left: 50px;
+                top: 14px;
+                width: 34px;
+                height: 24px;
+              }
+            }
+            .dateOptions{
+              @extend %dateOptions;
+              max-height: 150px;
+              overflow-y: auto;
+            }
+          }
+          .year{
+            margin-left: 20px;
+            input[type=number] {
+              width: 125px;
+              height: 53px;
+              background: #FCFCFC;
+              border: 1px solid #D8D8D8;
               font-family: Lato-Regular;
               font-size: 18px;
               color: #252525;
               letter-spacing: 0.63px;
-            }
-            img{
-              position: absolute;
-              left: 130px;
-              top: 14px;
-              width: 34px;
-              height: 24px;
+              padding-left: 15px;
             }
           }
-          .monthOptions{
-            @extend %dateOptions;
-            max-height: 150px;
-            overflow-y: auto;
-          }
         }
-        .date{
-          margin-left: 20px;
-          .dateButton{
-            position: relative;
-            display: flex;
-            width: 100px;
-            height: 54px;
-            background: #FCFCFC;
-            border: 1px solid #D8D8D8;
-            padding-bottom: 9px;
-            cursor: pointer;
-            p{
-              position: absolute;
-              left: 15px;
-              top: 14px;
-              font-family: Lato-Regular;
-              font-size: 18px;
-              color: #252525;
-              letter-spacing: 0.63px;
-            }
-            img{
-              position: absolute;
-              left: 50px;
-              top: 14px;
-              width: 34px;
-              height: 24px;
-            }
-          }
-          .dateOptions{
-            @extend %dateOptions;
-            max-height: 150px;
-            overflow-y: auto;
-          }
+        .phoneLabel{
+          margin-top: 19px;
         }
-        .year{
-          margin-left: 20px;
-          input[type=number] {
-            width: 125px;
-            height: 53px;
-            background: #FCFCFC;
-            border: 1px solid #D8D8D8;
-            font-family: Lato-Regular;
-            font-size: 18px;
-            color: #252525;
-            letter-spacing: 0.63px;
-            padding-left: 15px;
-          }
-        }
-      }
-      .phoneLabel{
-        margin-top: 19px;
-      }
-      ::placeholder{
-        font-family: Lato-Regular;
-        font-size: 18px;
-        color: #252525;
-        letter-spacing: 0.63px;
-      }
-      .profileGender{
-        position: relative;
-        width: 290px;
-        height: 54px;
-        background: #FCFCFC;
-        border: 1px solid #D8D8D8;
-        font-family: Lato-Regular;
-        font-size: 18px;
-        color: #252525;
-        letter-spacing: 0.63px;
-        padding-left: 15px;
-        padding-top: 15px;
-        display: flex;
-        cursor: pointer;
-        margin-left: 54px;
-        .genderDropdownImg{
-          position: absolute;
-          left: 210px;
-          width: 34px;
-          height: 24px;
-        }
-      }
-      .genderOptions{
-        position: relative;
-        margin-left: 54px;
-        width: 290px;
-        height: auto;
-        background: #FCFCFC;
-        border: 1px solid #D8D8D8;
-        list-style-type: none;
-        padding: 0;
-        margin-bottom: 19px;
-        padding-left: 15px;
-        overflow: hidden;
-        padding-bottom: 19px;
-        li{
+        ::placeholder{
           font-family: Lato-Regular;
           font-size: 18px;
           color: #252525;
           letter-spacing: 0.63px;
-          padding-top: 19px;
+        }
+        .profileGender{
+          position: relative;
+          width: 290px;
+          height: 54px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+          padding-top: 15px;
+          display: flex;
           cursor: pointer;
+          margin-left: 54px;
+          .genderDropdownImg{
+            position: absolute;
+            left: 210px;
+            width: 34px;
+            height: 24px;
+          }
+        }
+        .genderOptions{
+          position: relative;
+          margin-left: 54px;
+          width: 290px;
+          height: auto;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          list-style-type: none;
+          padding: 0;
+          margin-bottom: 19px;
+          padding-left: 15px;
+          overflow: hidden;
+          padding-bottom: 19px;
+          li{
+            font-family: Lato-Regular;
+            font-size: 18px;
+            color: #252525;
+            letter-spacing: 0.63px;
+            padding-top: 19px;
+            cursor: pointer;
+          }
         }
       }
     }
-  }
 
-}
-
-.optional{
-  position: relative;
-  width: 100%;
-  height: auto;
-  background: #FFFFFF;
-  border: 1px solid #D8D8D8;
-  padding-bottom: 40px;
-  .profileTitle{
-    @extend %profileTitle;
-    border-right: 1px solid #D8D8D8; 
   }
-  .inputLabel{
-    font-family: Lato-Regular;
+  .cardInfo{
+    position: relative;
+    width: 100%;
+    height: 480px;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    margin-bottom: 39px;
+    .profileTitle{
+      @extend %profileTitle;
+    }
+    .cardTop{
+      position: absolute;
+      width: 604px;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      .acceptedCards{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        line-height: 26px;
+        margin-bottom: 10px;
+      }
+      .acceptedCardsImages{
+        position: relative;
+        display: inline-block;
+
+        .cardImage{
+          background: #26337A;
+          border-radius: 2px;
+          object-fit: cover;
+          background-position: center;
+          width: 50px;
+          height: 30px;
+        }
+      }
+    }
+    .enterCard{
+      position: absolute;
+      left: 50%;
+      top: 190px;
+      transform: translateX(-50%);
+      .group {
+        width: 604px;
+        .inputLabel{
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #252525;
+          letter-spacing: 0.56px;
+          margin-bottom: 8px;
+        }
+        .cardInput{
+          width: 290px;
+          height: 46px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+          padding-top: 11px;
+        }
+        .nameOnCard{
+          width: 290px;
+          height: 46px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+        }
+        ::placeholder{
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #9B9B9B;
+          letter-spacing: 0.56px;
+        }
+        .cardFormRowOne{
+          position: relative;
+          margin-bottom: 39px;
+          .cardNumber{
+            display: inline-block;
+            position: absolute;
+            left: 310px;
+          } 
+          .cardName{
+            display: inline-block;
+          }
+        }
+        .cardFormRowTwo{
+          position: relative;
+          .expirationDate{
+            display: inline-block;
+          }
+          .cvc{
+            position: absolute;
+            display: inline-block;
+            left: 310px;
+          }
+        }
+      }
+    }
+    .cardButton{
+      position: absolute;
+      background: #FFFFFF;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      font-family: Lato-Bold;
+      font-size: 15px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      left: 50%;
+      width: 140px;
+      height: 46px;
+      margin-top: 30px;
+      transform: translateX(-50%);
+    }
+    .cardButton:hover{
+      border: 4px solid #8367D8;
+      box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+    }
+  }
+  .optional{
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    padding-bottom: 40px;
+    .profileTitle{
+      @extend %profileTitle;
+    }
+    .inputLabel{
+      font-family: Lato-Regular;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      position: relative;
+      margin-top: 0px;
+      margin-bottom: 8px;
+      color: #252525;
+    }
+    .input{
+      @extend %authInput;
+      width: 100%;
+      margin-bottom: 19px;
+      margin-left: 0px;
+    }
+    .middlePartLabels{
+      display: flex;
+      .zipLabel{
+        margin-left: 278px;
+      }
+    }
+    .middlePart{
+      position: relative;
+      width: 100%;
+      margin-bottom: 19px;
+      .minput{
+        width: 48%;
+        background: #FCFCFC;
+        border: 1px solid #D8D8D8;
+        height: 54px;
+        padding-left: 15px;
+        @extend %inputFont;
+      }
+      .zip{
+        margin-left: 20px;
+      }
+    }
+    .optionalBody{
+      width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 39px;
+      height: auto;
+      .addressTitle{
+        font-family: Lato-Regular;
+        font-size: 28px;
+        color: #252525;
+        letter-spacing: 0.98px;
+        margin-bottom: 19px;
+      }
+    }
+  }
+  .saveProfile{
+    position: absolute;
+    background: #FFFFFF;
+    border: 3px solid #8367D8;
+    box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+    width: 243px;
+    height: 57px;
+    font-family: Lato-Bold;
     font-size: 18px;
     color: #252525;
     letter-spacing: 0.63px;
-    position: relative;
-    margin-top: 0px;
-    margin-bottom: 8px;
-    color: #252525;
-  }
-  .input{
-    @extend %authInput;
-    width: 100%;
-    margin-bottom: 19px;
-    margin-left: 0px;
-  }
-  .middlePartLabels{
-    display: flex;
-    .zipLabel{
-      margin-left: 278px;
-    }
-  }
-  .middlePart{
-    position: relative;
-    width: 100%;
-    margin-bottom: 19px;
-    .minput{
-      width: 48%;
-      background: #FCFCFC;
-      border: 1px solid #D8D8D8;
-      height: 54px;
-      padding-left: 15px;
-      @extend %inputFont;
-    }
-    .zip{
-      margin-left: 20px;
-    }
-  }
-  .optionalBody{
-    width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    left: 89%;
+    transform: translateX(-50%);
     margin-top: 39px;
-    height: auto;
-    .addressTitle{
-      font-family: Lato-Regular;
-      font-size: 28px;
-      color: #252525;
-      letter-spacing: 0.98px;
-      margin-bottom: 19px;
-    }
   }
-}
-.saveProfile{
-  position: absolute;
-  background: #FFFFFF;
-  border: 3px solid #8367D8;
-  box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
-  width: 243px;
-  height: 57px;
-  font-family: Lato-Bold;
-  font-size: 18px;
-  color: #252525;
-  letter-spacing: 0.63px;
-  left: 89%;
-  transform: translateX(-50%);
-  margin-top: 39px;
-}
+  .saveProfile:hover{
+    border: 4px solid #8367D8;
+    box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+  }
 }
 
 /*--------Seller View-------*/
@@ -2513,15 +2902,18 @@ footer{
       left: 77.1%;
     }
   }
+  .pending{
+    background-color: #ececfd;
+  }
   .products{
     position: relative;
     display: flex;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    height: 80px;
+    margin-bottom: 3px;
+    height: 100px;
     .accountProductImg{
       position: absolute;
       left: 2.8%;
+      top: 10px;
       width: 80px;
       max-height: 80px;
     }
@@ -2540,6 +2932,7 @@ footer{
       position: absolute;
       padding-top: 28px;
       left: 39.9%;
+      top: 10px;
       width: 100px;
     }
     .productPrice{
@@ -2547,6 +2940,7 @@ footer{
       position: absolute;
       padding-top: 28px;
       left: 53.9%;
+      top: 10px;
       width: 110px;
     }
     .productPriceHighest{
@@ -2554,6 +2948,7 @@ footer{
       position: absolute;
       padding-top: 28px;
       left: 53.9%;
+      top: 10px;
       width: 110px;
       color: #6CC047;
     }
@@ -2561,6 +2956,7 @@ footer{
       @extend %sellerActiveFont;
       position: absolute;
       padding-top: 28px;
+      top: 10px;
       left: 67%;
       width: 90px;
     }
@@ -2570,12 +2966,14 @@ footer{
       position: absolute;
       padding-top: 28px;
       left: 78.6%;
+      top: 10px;
       width: 90px;
     }
     .viewBtn{
       color: black;
       position: absolute;
       left: 89%;
+      top: 10px;
       width: 103px;
       margin-top: 13px;
       height: 49px;
@@ -2654,12 +3052,43 @@ footer{
   }
 }
 .moreBtn{
-    @extend %moreButton;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+  @extend %moreButton;
+  position: relative;
+  margin-top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 .bidsView{
+  .paymentNotification{
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    height: 50px;
+    background-color: #ececfd;
+    p{
+      font-family: Lato-Regular;
+      height: 100%;
+      line-height: 50px;
+      display: inline-block;
+      padding-left: 25px;
+      font-size: 18px;
+      color: #8367D8;
+      letter-spacing: 0.63px;
+    }
+    a{
+      position: absolute;
+      font-family: Lato-Regular;
+      height: 100%;
+      line-height: 50px;
+      font-size: 18px;
+      color: #8367D8;
+      letter-spacing: 0.63px;
+      left: 95%;
+    }
+    a:hover{
+      cursor: pointer;
+    }
+  }
   margin-top: 94px;
   .moreBtn{
     @extend %moreButton;
@@ -2684,5 +3113,4 @@ footer{
   .moreBtn{
     @extend %moreButton;
   }
-}
 }

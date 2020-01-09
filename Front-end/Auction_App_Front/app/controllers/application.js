@@ -4,10 +4,12 @@ import { getOwner } from '@ember/application';
 import { set } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { inject } from '@ember/controller';
+import { later } from '@ember/runloop';
 
 export default Controller.extend({
   session: service('session'),
   productHttp: service(),
+  client: service('socket-connection'),
   search: '',
   shopController: inject('shop'),
   shopModel: alias('shopController.model'),
@@ -21,6 +23,41 @@ export default Controller.extend({
   sellerActiveClass: '',
   bidsActiveClass: '',
   wishlistActiveClass: '',
+  userEmail: null,
+  init() {
+    this._super(...arguments);
+    var now = new Date();
+    this.set('userEmail', this.get('session.data.email'));
+    //this.get('client').connectAuction();
+    this.get('productHttp').getActiveProducts().then((result) => {
+      var _this = this;
+      result.forEach(function(entry) {
+        let year = entry.endDate.slice(0, 4);
+        let month = parseInt(entry.endDate.slice(5, 7)) - 1;
+        let date = entry.endDate.slice(8, 10);
+        let hour = parseInt(entry.endDate.slice(11, 13)) + 1;
+        let minute = entry.endDate.slice(14, 16);
+        let second = entry.endDate.slice(17, 19);
+        let milisecond = entry.endDate.slice(20, 23);
+        if (hour === 24) {
+          hour = 0;
+        }
+        let ccdate = new Date(year, month, date, hour, minute, second, milisecond)
+        var millisTill10 = ccdate - now;
+        if (millisTill10 < 0) {
+          millisTill10 += 86400000; // it's after 10am, try 10am tomorrow.
+        }
+        later(function() {
+          if (entry.highestBidder) {
+            console.log(entry)
+            //_this.get('client').sendMessage(entry.highestBidder, entry.id);
+            console.log(_this.get('client').messages)
+          }
+
+        }, millisTill10);
+      })
+    });
+  },
   actions: {
     logout() {
       this.get('session').set('data.email', '');
