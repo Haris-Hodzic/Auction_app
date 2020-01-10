@@ -30,8 +30,8 @@ public class ProductSpecification implements Specification<Product> {
                     root.get("subcategory").get("name"), subcategory));
         }
         if (!searchString.isEmpty()) {
-            predicates.add(builder.equal(
-                    root.get("name"), searchString));
+            predicates.add(builder.like(
+                    builder.lower(root.get("name")), "%" + searchString.toLowerCase() + "%"));
         }
         if (!startPrice.isEmpty() && !endPrice.isEmpty()) {
             predicates.add(builder.between(

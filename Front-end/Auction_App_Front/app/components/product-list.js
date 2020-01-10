@@ -7,12 +7,18 @@ export default Component.extend({
   watchListClass: '',
   userEmail: '',
   isWatchListActive: false,
+  photo: null,
   init() {
     this._super(...arguments);
     this.set('userEmail', this.get('session.data.email'));
+    if (this.product.photo.length > 0) {
+      this.set('photo', this.product.photo[0]);
+    } else {
+      this.set('photo', 'assets/images/noImage.png');
+    }
     this.get('wishlistHttp').existInWishlist(this.product.id).then((result) => {
       this.set('isWatchListActive', result);
-      if (this.get('isWatchListActive') != false) {
+      if (this.get('isWatchListActive')) {
         this.set('watchListClass', 'active');
       } else {
         this.set('watchListClass', '');
@@ -25,7 +31,7 @@ export default Component.extend({
         'product': this.product,
         'userEmail': this.get('userEmail')
       });
-      if (this.get('isWatchListActive') != false) {
+      if (this.get('isWatchListActive')) {
         this.set('watchListClass', '');
         this.set('isWatchListActive', false);
         this.get('wishlistHttp').deleteProductFromWishlist(this.product.id);

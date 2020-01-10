@@ -42,8 +42,9 @@ export default Component.extend({
     });
   },
   actions: {
-    setProfileGender() {
-
+    setGender(gender) {
+      this.set('userInfo.gender', gender);
+      this.set('gender', gender);
     },
     setDropdownButtonsActive(button) {
       if (button === 'gender') {
@@ -111,18 +112,19 @@ export default Component.extend({
           this.set('errors', false);
           this.get('userHttp').updateUser(userInfo);
         } else {
-          for (var i = 0; i < validations.errors.length; i++) {
-            if (validations.errors[i].type === 'username-available') {
-              if (account.email === this.get('session.data.email')) {
-                this.set('isValidEmail', true);
-                this.set('errors', false);
+          const self = this;
+          validations.errors.forEach(function(entry) {
+            if (entry.type === 'username-available') {
+              if (account.email === self.get('session.data.email')) {
+                self.set('isValidEmail', true);
+                self.set('errors', false);
               } else {
-                this.set('isValidEmail', false);
+                self.set('isValidEmail', false);
               }
-            } else if (validations.errors[i].attribute === 'password') {
-              this.set('isValidPassword', true);
+            } else if (entry.attribute === 'password') {
+              self.set('isValidPassword', true);
             }
-          }
+          });
           if (validations.errors.length > 2) {
             this.set('isValid', false);
           }

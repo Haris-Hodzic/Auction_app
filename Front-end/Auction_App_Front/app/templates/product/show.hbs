@@ -1,3 +1,8 @@
 <PageBar @title="SINGLE PRODUCT">
 </PageBar>
-<SingleProduct @product={{model}} @products={{products}}></SingleProduct>
+{{#if (eq model.length 0)}}
+  <SingleProduct @productId={{model.query.filter.productId}} @numberOfViews={{nv.numberOfViews}} @products={{products}} @previousUrl={{previousPath}}></SingleProduct>
+{{/if}}
+{{#each model as |nv|}}
+  <SingleProduct @productId={{model.query.filter.productId}} @numberOfViews={{nv.numberOfViews}} @products={{products}}></SingleProduct>
+{{/each}}

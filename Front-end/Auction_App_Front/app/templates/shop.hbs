@@ -110,8 +110,8 @@
           <li class={{sortingByPopularityActiveClass}} {{action "setSorting" "popularity"}} role="button"><p>Sort by Popularity</p></li>
         </ul>
       {{/if}}
-      <button class="displayBtn gridBtn {{gridActive}}" {{action "setView"}}><i class="fa fa-th fa-2x"></i><p>Grid</p></button>
-      <button class="displayBtn listBtn {{listActive}}" {{action "setView"}}><i class="fa fa-th-list fa-2x"></i><p>List</p></button>
+      <button class="displayBtn gridBtn {{gridActive}}" {{action "setView"}}><i class="fa fa-th fa-lg"></i><p>Grid</p></button>
+      <button class="displayBtn listBtn {{listActive}}" {{action "setView"}}><i class="fa fa-th-list fa-lg"></i><p>List</p></button>
     </div>
     {{#if isGridActive}}
       <ShopGridView @products={{this.model.content}}></ShopGridView>

@@ -16,7 +16,7 @@ export default Service.extend({
   deleteProductFromWishlist(productId) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/wishlist?id=' + productId, productId, 'DELETE');
   },
-  getAllWishlist(){
+  getAllWishlist() {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/wishlist', '', 'GET');
   }
 });

@@ -13,18 +13,23 @@
         <img src={{get bid.product.photo "1"}} alt="" class="accountProductImg">
         <p class="productName">{{bid.product.name}}</p>
         <p class="productTime">{{bid.timeLeft}} days</p>
-        <p class="productPrice">${{bid.price}}</p>
+        {{#if (eq bid.price bid.product.highestBid)}}
+          <p class="productPriceHighest">${{bid.price}}</p>
+        {{else}}
+          <p class="productPrice">${{bid.price}}</p>
+        {{/if}}
         <p class="productNoBids">{{bid.product.numberOfBids}}</p>
         <p class="productHighestBid">${{bid.product.highestBid}}</p>
-        {{#link-to "product.show" bid.product.id class="linkToClass"}}
-          <button class="viewBtn">VIEW</button>
-        {{/link-to}}
+        {{#if (eq bid.price bid.product.highestBid)}}
+          {{#link-to "product.show" bid.product.id class="linkToClass"}}
+            <button class="viewBtn">VIEW</button>
+          {{/link-to}}
+        {{else}}
+          {{#link-to "product.show" bid.product.id class="linkToClass"}}
+            <button class="viewBtn">BID</button>
+          {{/link-to}}
+        {{/if}}
       </div>
-    {{/each}}
-  </div>
-  <div class="pagination">
-    {{#each buttonsList as |buttonNumber index|}}
-      <button class="moreBtn" {{action "exploreMore" index}}>{{buttonNumber.page}}</button>
     {{/each}}
   </div>
 </div>

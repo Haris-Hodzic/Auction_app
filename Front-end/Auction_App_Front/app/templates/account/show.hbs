@@ -16,9 +16,19 @@
     {{/if}}
     {{#if isBidsButtonActive}}
       <BidsView @bids={{userBids}} @userInfo={{userInfo}} @totalNumberOfBids={{totalNumberOfBids}}></BidsView>
+      {{#if (gt bidsButtonsList.length 1)}}
+        {{#each bidsButtonsList as |buttonNumber index|}}
+          <button class="moreBtn" {{action "exploreMore" "bids" index}}>{{buttonNumber.page}}</button>
+        {{/each}}
+      {{/if}}
     {{/if}}
     {{#if isWishlistButtonActive}}
       <WishlistView @userWishlist={{userWishlist}} @totalNumberOfWishlist={{totalNumberOfWishlist}} @userInfo={{userInfo}}></WishlistView>
+      {{#if (gt wishlistButtonsList.length 1)}}
+        {{#each wishlistButtonsList as |buttonNumber index|}}
+          <button class="moreBtn" {{action "exploreMore" "wishlist" index}}>{{buttonNumber.page}}</button>
+        {{/each}}
+      {{/if}}
     {{/if}}
   </div>
 </div>

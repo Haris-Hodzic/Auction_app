@@ -41,7 +41,7 @@ export default Controller.extend({
         this.set('isAccountActive', true);
       }
     },
-    setProfileView(){
+    setProfileView() {
       this.set('isProfileButtonActive', true);
       this.set('profileActiveClass', 'active');
       this.set('isSellerButtonActive', false);
@@ -53,7 +53,7 @@ export default Controller.extend({
       this.set('isAccountActive', false);
       this.transitionToRoute('account.show', "profile");
     },
-    setSellerView(){
+    setSellerView() {
       this.set('isProfileButtonActive', false);
       this.set('profileActiveClass', '');
       this.set('isSellerButtonActive', true);
@@ -65,7 +65,7 @@ export default Controller.extend({
       this.set('isAccountActive', false);
       this.transitionToRoute('account.show', "seller");
     },
-    setBidsView(){
+    setBidsView() {
       this.set('isProfileButtonActive', false);
       this.set('profileActiveClass', '');
       this.set('isSellerButtonActive', false);
@@ -77,7 +77,7 @@ export default Controller.extend({
       this.set('isAccountActive', false);
       this.transitionToRoute('account.show', "bids");
     },
-    setWishlistView(){
+    setWishlistView() {
       this.set('isProfileButtonActive', false);
       this.set('profileActiveClass', '');
       this.set('isSellerButtonActive', false);

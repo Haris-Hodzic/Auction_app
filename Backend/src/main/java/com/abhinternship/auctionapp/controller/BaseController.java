@@ -46,7 +46,7 @@ abstract public class BaseController<T> {
     @ResponseBody
     @Transactional
     @CrossOrigin
-    public Boolean delete(@RequestParam(value = "id") Long id) throws RepositoryException{
-        return implementedService.delete(id);
+    public void delete(@RequestParam(value = "id") Long id) throws RepositoryException{
+        implementedService.delete(id);
     }
 }

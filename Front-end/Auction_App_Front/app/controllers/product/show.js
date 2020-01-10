@@ -8,6 +8,6 @@ export default Controller.extend({
     this._super(...arguments);
     this.get('productHttp').getAllProducts().then((result) => {
       this.set('products', result.slice(0, 3));
-    })
+    });
   }
 });
