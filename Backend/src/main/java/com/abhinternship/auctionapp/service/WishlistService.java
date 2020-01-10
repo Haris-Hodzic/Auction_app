@@ -39,7 +39,7 @@ public class WishlistService implements BaseService<Wishlist> {
         String userEmail = req.getUserEmail();
         User user = userRepository.getOneByEmail(userEmail);
         Product product = req.getProduct();
-        if (wishlistRepository.existsByProductId(product.getId())){
+        if (wishlistRepository.existsByProductId(product.getId())) {
             return false;
         } else {
             Wishlist wishlist = new Wishlist(user, product);
@@ -64,8 +64,12 @@ public class WishlistService implements BaseService<Wishlist> {
     }
 
     @Override
-    public Long delete(Long productId) throws RepositoryException {
-        return wishlistRepository.deleteByProductId(productId);
+    public void delete(Long productId) throws RepositoryException {
+        try {
+            wishlistRepository.deleteByProductId(productId);
+        } catch (Exception e) {
+            throw new RepositoryException("This product can't be deleted from wishlist");
+        }
     }
 
     public Page<Wishlist> getAllByUser(Long userId, Long pageNumber) throws RepositoryException {

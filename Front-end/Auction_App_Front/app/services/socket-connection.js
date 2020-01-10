@@ -53,17 +53,17 @@ export default Service.extend({
     }
     this.set('connected', false);
   },
-  showMessage(user, productId){
+  showMessage(user, productId) {
     this.add(user, productId);
   },
-  sendMessage(user, productId){
+  sendMessage(user, productId) {
     if (this.stompClient != null && this.get('connected')) {
       this.stompClient.send("/app/notification", {}, JSON.stringify({'user': user, 'productId': productId}));
-    } else{
+    } else {
       this.set('feedback', 'You are not connected!');
     }
   },
-  clearFeedback(){
+  clearFeedback() {
     this.set('feedback','');
   }
 });
