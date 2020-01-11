@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class BidRequest {
     private Double price;
-    private Product product;
+    private Long productId;
     private String userEmail;
     private Date date;
 
     public BidRequest() {
     }
 
-    public BidRequest(Double price, Date date, Product product, String userEmail) {
+    public BidRequest(Double price, Date date, Long product, String userEmail) {
         this.price = price;
-        this.product = product;
+        this.productId = product;
         this.userEmail = userEmail;
         this.date = date;
     }
@@ -26,12 +26,12 @@ public class BidRequest {
         this.price = price;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct(Long productId) {
+        this.productId = productId;
     }
 
     public String getUserEmail() {

@@ -1,7 +1,7 @@
 <div class="bidsView">
   {{#if notification}}
     <div class="paymentNotification">
-      <p><strong>Congratulation!</strong> You outbid the competition.</p> <a {{action "closeNotification"}}>X</a>
+      <p><strong>Congratulation!</strong> You outbid the competition.</p> <a role="button" {{action "closeNotification"}}>X</a>
     </div>
   {{/if}}
   <div class="accountTable">
@@ -26,20 +26,20 @@
         <p class="productNoBids">{{bid.product.numberOfBids}}</p>
         <p class="productHighestBid">${{bid.product.highestBid}}</p>
         {{#if (eq bid.product.status "active")}}
-        {{#if (eq bid.price bid.product.highestBid)}}
-          {{#link-to "product.show" bid.product.id class="linkToClass"}}
-            <button class="viewBtn">VIEW</button>
-          {{/link-to}}
-        {{else}}
+          {{#if (eq bid.price bid.product.highestBid)}}
+            {{#link-to "product.show" bid.product.id class="linkToClass"}}
+              <button class="viewBtn">VIEW</button>
+            {{/link-to}}
+          {{else}}
             {{#link-to "product.show" bid.product.id class="linkToClass"}}
               <button class="viewBtn">BID</button>
             {{/link-to}}
-        {{/if}}
+          {{/if}}
         {{else}}
-        {{#link-to "product.show" bid.product.id class="linkToClass"}}
-          <button class="viewBtn">PAY</button>
-        {{/link-to}}
-      {{/if}}
+          {{#link-to "product.show" bid.product.id class="linkToClass"}}
+            <button class="viewBtn">PAY</button>
+          {{/link-to}}
+        {{/if}}
       </div>
     {{/each}}
   </div>

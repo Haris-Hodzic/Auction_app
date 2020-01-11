@@ -1,10 +1,10 @@
-import { inject as service } from '@ember/service';
+import {inject as service} from '@ember/service';
 import Controller from '@ember/controller';
-import { getOwner } from '@ember/application';
-import { set } from '@ember/object';
-import { alias } from '@ember/object/computed';
-import { inject } from '@ember/controller';
-import { later } from '@ember/runloop';
+import {getOwner} from '@ember/application';
+import {set} from '@ember/object';
+import {alias} from '@ember/object/computed';
+import {inject} from '@ember/controller';
+import {later} from '@ember/runloop';
 
 export default Controller.extend({
   session: service('session'),
@@ -28,7 +28,7 @@ export default Controller.extend({
     this._super(...arguments);
     var now = new Date();
     this.set('userEmail', this.get('session.data.email'));
-    //this.get('client').connectAuction();
+    this.get('client').connectAuction();
     this.get('productHttp').getActiveProducts().then((result) => {
       var _this = this;
       result.forEach(function(entry) {
@@ -39,22 +39,17 @@ export default Controller.extend({
         let minute = entry.endDate.slice(14, 16);
         let second = entry.endDate.slice(17, 19);
         let milisecond = entry.endDate.slice(20, 23);
+        let endDate = new Date(year, month, date, hour, minute, second, milisecond)
+        var millisecondTillAuctionFinish = endDate - now;
         if (hour === 24) {
           hour = 0;
         }
-        let ccdate = new Date(year, month, date, hour, minute, second, milisecond)
-        var millisTill10 = ccdate - now;
-        if (millisTill10 < 0) {
-          millisTill10 += 86400000; // it's after 10am, try 10am tomorrow.
+        if (millisecondTillAuctionFinish < 0) {
+          millisecondTillAuctionFinish += 86400000;
         }
         later(function() {
-          if (entry.highestBidder) {
-            console.log(entry)
-            //_this.get('client').sendMessage(entry.highestBidder, entry.id);
-            console.log(_this.get('client').messages)
-          }
-
-        }, millisTill10);
+          _this.get('client').sendAuctionMessage(entry.highestBidder, entry.name, entry.id);
+        }, millisecondTillAuctionFinish);
       })
     });
   },

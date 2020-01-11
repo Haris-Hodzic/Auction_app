@@ -1,37 +1,37 @@
 <div class="paymantForm">
   {{#if showRating}}
-      {{#modal-dialog
+    {{#modal-dialog
       containerClass="sellerRating"
       targetAttachment="center"
       translucentOverlay=true
-  }}
-    <div class="titleDiv"><p class="ratingTitle">SELLER RATING</p></div>
-    <img src={{this.product.user.profilePhoto}} class="sellerPhoto">
-    <p class="text sellerName">{{this.product.user.firstName}} {{this.product.user.lastName}}</p>
-    <p class="text ratingText"><strong>Please, rate a seller!</strong></p>
-    <div class="stars">
-      <div class="rate">
-        <input type="radio" id="star5" name="rate" value="5" onchange={{action "setRating" 5}} />
-        <label for="star5" title="text">5 stars</label>
-        <input type="radio" id="star4" name="rate" onchange={{action "setRating" 4}} value="4"/>
-        <label for="star4" title="text">4 stars</label>
-        <input type="radio" id="star3" name="rate" onchange={{action "setRating" 3}} value="3"/>
-        <label for="star3" title="text">3 stars</label>
-        <input type="radio" id="star2" name="rate" onchange={{action "setRating" 2}} value="2"/>
-        <label for="star2" title="text">2 stars</label>
-        <input type="radio" id="star1" name="rate" onchange={{action "setRating" 1}} value="1"/>
-        <label for="star1" title="text">1 star</label>
+    }}
+      <div class="titleDiv"><p class="ratingTitle">SELLER RATING</p></div>
+      <img src={{this.product.user.profilePhoto}} class="sellerPhoto" alt="SELLER">
+      <p class="text sellerName">{{this.product.user.firstName}} {{this.product.user.lastName}}</p>
+      <p class="text ratingText"><strong>Please, rate a seller!</strong></p>
+      <div class="stars">
+        <div class="rate">
+          <Input type="radio" id="star5" name="rate" value="5" onchange={{action "setRating" 5}}></Input>
+          <label for="star5" title="text">5 stars</label>
+          <Input type="radio" id="star4" name="rate" onchange={{action "setRating" 4}} value="4"></Input>
+          <label for="star4" title="text">4 stars</label>
+          <Input type="radio" id="star3" name="rate" onchange={{action "setRating" 3}} value="3"></Input>
+          <label for="star3" title="text">3 stars</label>
+          <Input type="radio" id="star2" name="rate" onchange={{action "setRating" 2}} value="2"></Input>
+          <label for="star2" title="text">2 stars</label>
+          <Input type="radio" id="star1" name="rate" onchange={{action "setRating" 1}} value="1"></Input>
+          <label for="star1" title="text">1 star</label>
+        </div>
       </div>
-    </div>
-    {{#if ratingError}}
-      <p class="ratingError">Please rate seller first or skip this step!</p>
-    {{/if}}
-    <div class="ratingButtons">
-      <button class="skipBtn" {{action "skipRating"}}>SKIP</button>
-      <button class="doneBtn" {{action "doneRating"}}>DONE</button>
-    </div>
-  {{/modal-dialog}}
+      {{#if ratingError}}
+        <p class="ratingError">Please rate seller first or skip this step!</p>
       {{/if}}
+      <div class="ratingButtons">
+        <button class="skipBtn" {{action "skipRating"}}>SKIP</button>
+        <button class="doneBtn" {{action "doneRating"}}>DONE</button>
+      </div>
+    {{/modal-dialog}}
+  {{/if}}
   <div class="paymantTitle"><p>PAYMENT</p></div>
   <p class="inputLabel">Address</p>
   <Input @value={{street}} @class="input" @type="text" placeholder="e.g.678 Berge Tunnel Apt. 278"></Input>
@@ -67,81 +67,80 @@
   </div>
   <div class="paymentCard">
     {{#if isProfileCard}}
-    {{#if userInfo.userCard}}
-      <div class="enterCard">
-        <div class="group">
-          <div class="cardFormRowOne">
-            <div class="cardName">
-              <p class="inputLabel">Name on card</p>
-              <div class="cardInput">{{userInfo.userCard.cardName}}</div>
-            </div>
-            <label class="cardNumber">
-              <p class="inputLabel">Card number</p>
-              <div class="cardInput">{{userInfo.userCard.cardNumber}}</div>
-            </label>
-          </div>
-          <div class="cardFormRowTwo">
-            <div class="expirationDate">
-              <label>
-                <p class="inputLabel">Exipartion Date</p>
-                <div class="cardInput">{{userInfo.userCard.expireDate}}</div>
+      {{#if userInfo.userCard}}
+        <div class="enterCard">
+          <div class="group">
+            <div class="cardFormRowOne">
+              <div class="cardName">
+                <p class="inputLabel">Name on card</p>
+                <div class="cardInput">{{userInfo.userCard.cardName}}</div>
+              </div>
+              <label class="cardNumber">
+                <p class="inputLabel">Card number</p>
+                <div class="cardInput">{{userInfo.userCard.cardNumber}}</div>
               </label>
             </div>
-            <div class="cvc">
-              <label>
-                <p class="inputLabel">CVC</p>
-                <div class="cardInput">{{userInfo.userCard.cvc}}</div>
-              </label>
+            <div class="cardFormRowTwo">
+              <div class="expirationDate">
+                <label>
+                  <p class="inputLabel">Exipartion Date</p>
+                  <div class="cardInput">{{userInfo.userCard.expireDate}}</div>
+                </label>
+              </div>
+              <div class="cvc">
+                <label>
+                  <p class="inputLabel">CVC</p>
+                  <div class="cardInput">{{userInfo.userCard.cvc}}</div>
+                </label>
+              </div>
             </div>
           </div>
+          <button class="payButton" {{action "pay"}}>DONE</button>
         </div>
-        <button class="payButton" {{action "pay"}}>DONE</button>
-      </div>
+      {{else}}
+        <div class="noCardNotification">
+          <p>You have no saved cards!</p>
+          {{#link-to "account.show" "profile" class="linkToClass"}}
+            <a>Go to your profile</a>
+          {{/link-to}}
+        </div>
+      {{/if}}
     {{else}}
-      <div class="noCardNotification">
-        <p>You have no saved cards!</p>
-        {{#link-to "account.show" "profile" class="linkToClass"}}
-          <a>Go to your profile</a>
-        {{/link-to}}
+      <div class="enterCard">
+        <form>
+          <div class="group">
+            <div class="cardFormRowOne">
+              <div class="cardName">
+                <p class="inputLabel">Name on card</p>
+                <Input @value={{cardName}} @class="nameOnCard" @type="text" placeholder="e.g. Adam Smith"></Input>
+              </div>
+              <label class="cardNumber">
+                <p class="inputLabel">Card number</p>
+                <div id="card-number-element" class="cardInput"></div>
+                <span class="brand"><i class="pf pf-credit-card" id="brand-icon"></i></span>
+              </label>
+            </div>
+            <div class="cardFormRowTwo">
+              <div class="expirationDate">
+                <label>
+                  <p class="inputLabel">Expiration Date</p>
+                  <div id="card-expiry-element" class="cardInput"></div>
+                </label>
+              </div>
+              <div class="cvc">
+                <label>
+                  <p class="inputLabel">CVC</p>
+                  <div id="card-cvc-element" class="cardInput"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="outcome">
+            <div class="error"></div> 
+          </div>
+          <button type="submit" class="payButton">DONE</button>
+        </form>
       </div>
     {{/if}}
-  {{else}}
-    <div class="enterCard">
-      <form>
-        <div class="group">
-          <div class="cardFormRowOne">
-            <div class="cardName">
-              <p class="inputLabel">Name on card</p>
-              <Input @value={{cardName}} @class="nameOnCard" @type="text" placeholder="e.g. Adam Smith"></Input>
-            </div>
-            <label class="cardNumber">
-              <p class="inputLabel">Card number</p>
-              <div id="card-number-element" class="cardInput"></div>
-              <span class="brand"><i class="pf pf-credit-card" id="brand-icon"></i></span>
-            </label>
-          </div>
-          <div class="cardFormRowTwo">
-            <div class="expirationDate">
-              <label>
-                <p class="inputLabel">Expiration Date</p>
-                <div id="card-expiry-element" class="cardInput"></div>
-              </label>
-            </div>
-            <div class="cvc">
-              <label>
-                <p class="inputLabel">CVC</p>
-                <div id="card-cvc-element" class="cardInput"></div>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="outcome">
-          <div class="error"></div> 
-        </div>
-        <button type="submit" class="payButton">DONE</button>
-      </form>
-    </div>
-  {{/if}}
   </div>
-  
 </div>

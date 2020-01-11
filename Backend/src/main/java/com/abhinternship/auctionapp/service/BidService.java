@@ -40,7 +40,7 @@ public class BidService implements BaseService<Bid> {
             });
             String userEmail = req.getUserEmail();
             User bidder = userRepository.getOneByEmail(userEmail);
-            Product product = req.getProduct();
+            Product product = productRepository.getOne(req.getProductId());
             User creator = userRepository.getOneByEmail(product.getUser().getEmail());
             Double price = req.getPrice();
             Date date = req.getDate();
@@ -51,6 +51,7 @@ public class BidService implements BaseService<Bid> {
                     Bid bid = bidRepository.getBidByBidderAndProduct(bidder, product);
                     product.setHighestBid(price);
                     product.setHighestBidder(bidder.getEmail());
+
                     int numberOfBids = product.getNumberOfBids() + 1;
                     product.setNumberOfBids(numberOfBids);
                     product.setUser(creator);

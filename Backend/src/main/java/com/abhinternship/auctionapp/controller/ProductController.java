@@ -1,5 +1,6 @@
 package com.abhinternship.auctionapp.controller;
 
+import com.abhinternship.auctionapp.AuctionappApplication;
 import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.*;
 import com.abhinternship.auctionapp.service.ProductService;
@@ -10,7 +11,6 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -84,10 +84,10 @@ public class ProductController extends BaseController<Product> {
         return productService.getAllSoldProductsByUserId(userId, pageNumber);
     }
 
-    @MessageMapping("/notification")
-    @SendTo("/topic/notifications")
+    @MessageMapping("/bid/notification")
+    @SendTo("/topic/bid/notification")
     @Transactional
-    public Notification getNotification(Notification message) throws Exception {
+    public BidNotification getBidNotification(BidNotification message) throws RepositoryException {
         return productService.getBidNotification(message);
     }
 }

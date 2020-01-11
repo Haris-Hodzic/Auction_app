@@ -50,14 +50,14 @@ button, input[type="submit"], input[type="reset"] {
   }
   .ratingError{
     position: absolute;
-      color: #8367D8;
-      font-family: Lato-Regular;
-      font-size: 16px;
-      letter-spacing: 0.63px;
-      top: 420px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+    color: #8367D8;
+    font-family: Lato-Regular;
+    font-size: 16px;
+    letter-spacing: 0.63px;
+    top: 420px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
   .sellerPhoto{
     position: absolute;
     left: 50%;
@@ -1466,6 +1466,7 @@ footer{
         margin-top: 46px;
         display: flex;
         .bidInput{
+          padding-left: 15px;
           background: #ECECEC;
           border: 1px solid #D8D8D8;
           height:54px;
@@ -2121,17 +2122,16 @@ footer{
     position: relative;
     width: 283px;
     padding-left: 18px;
-    padding-bottom: 5px;
     font-size: 16px;
     border: 3px solid #ECECEC;
     height: 46px;
-    display: flex;
+    display: inline-block;
     cursor: pointer;
     .dropdownText{
       position: absolute;
-      top: 8px;
+      top: 10px;
       font-family: Lato-Regular;
-      font-size: 16px;
+      font-size: 12pt;
       color: #252525;
       letter-spacing: 0.56px;
     }
@@ -2194,22 +2194,21 @@ footer{
     position: absolute;
     background: #FFFFFF;
     border: none;
-    display: flex;
     height: 46px;
     width: 100px;
     i{
-      position: absolute;
-      margin-left: 15px;
-      margin-top: 3px;
+      position: relative;
+      display: inline-block;
     }
     p{
       margin: 0;
-      position: relative;
-      left: 48px;
+      position: relative; 
+      display: inline-block;
       font-family: Lato-Bold;
       font-size: 16px;
       color: #252525;
       letter-spacing: 0.56px;
+      margin-left: 10px;
     }
   }
   .active{

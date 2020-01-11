@@ -1,5 +1,5 @@
 import Service from '@ember/service';
-import {inject as service} from '@ember/service';
+import { inject as service} from '@ember/service';
 import Config from '../config/environment';
 
 export default Service.extend({
@@ -15,56 +15,63 @@ export default Service.extend({
     this.set('messages', []);
   },
   add(user, productId, numberOfBids, highestBid) {
-    this.get('messages').pushObject({'user': user, 'productId': productId, 'numberOfBids': numberOfBids, 'highestBid': highestBid});
+    this.get('messages').pushObject({
+      'user': user,
+      'productId': productId,
+      'numberOfBids': numberOfBids,
+      'highestBid': highestBid
+    });
   },
   empty() {
     this.get('messages').clear();
   },
   connect() {
     this.clearFeedback();
-    var comp = this;
-    var socket = new SockJS(Config.APP.SERVER_URL + '/ws');
+    const comp = this;
+    const socket = new SockJS(Config.APP.SERVER_URL + '/ws');
     this.stompClient = Stomp.over(socket);
-    this.stompClient.connect({}, function () {
-     comp.set('connected', true);
-     comp.stompClient.subscribe('/topic/notifications', function (message) {
-      comp.empty();
-      var productId = JSON.parse(message.body).productId;
-      var user = JSON.parse(message.body).user;
-      var numberOfBids = JSON.parse(message.body).numberOfBids;
-      var highestBid = JSON.parse(message.body).highestBid;
-      if (comp.get('session.data.email') === user) {
-        comp.get('notifications').clearAll().success('You are the highest bidder', {
-          autoClear: true,
-          clearDuration: 4400
-        });
-      } else {
-        comp.get('notifications').clearAll().warning(user + ' is now the highest bidder for this product', {
-          autoClear: true,
-          clearDuration: 4400
-        });
-      }
-      comp.showMessage(user, productId, numberOfBids, highestBid);
+    this.stompClient.connect({}, function() {
+      comp.set('connected', true);
+      comp.stompClient.subscribe('/topic/bid/notification', function(message) {
+        comp.empty();
+        const productId = JSON.parse(message.body).productId;
+        const user = JSON.parse(message.body).user;
+        const numberOfBids = JSON.parse(message.body).numberOfBids;
+        const highestBid = JSON.parse(message.body).highestBid;
+        if (comp.get('session.data.email') === user) {
+          comp.get('notifications').clearAll().success('You are the highest bidder', {
+            autoClear: true,
+            clearDuration: 4400
+          });
+        }
+        if (comp.get('session.data.email') !== user) {
+          comp.get('notifications').clearAll().warning(user + ' is now the highest bidder for this product', {
+            autoClear: true,
+            clearDuration: 4400
+          });
+        }
+        comp.showMessage(user, productId, numberOfBids, highestBid);
+      });
     });
-   });
   },
   connectAuction() {
     this.clearFeedback();
-    var comp = this;
-    var socket = new SockJS(Config.APP.SERVER_URL + '/ws');
+    const comp = this;
+    const socket = new SockJS(Config.APP.SERVER_URL + '/ws');
     this.stompClient = Stomp.over(socket);
-    this.stompClient.connect({}, function () {
-     comp.set('connected', true);
-     comp.stompClient.subscribe('/topic/notifications', function (message) {
-      comp.empty();
-      var productId = JSON.parse(message.body).productId;
-      var user = JSON.parse(message.body).user;
-        comp.get('notifications').clearAll().success('The auction for product ' + productId + ' has been finished. Congratulation! You outbid the competition.', {
+    this.stompClient.connect({}, function() {
+      comp.set('connected', true);
+      comp.stompClient.subscribe('/topic/auction/notification', function(message) {
+        comp.empty();
+        const productId = JSON.parse(message.body).productId;
+        const productName = JSON.parse(message.body).productName;
+        const user = JSON.parse(message.body).user;
+        comp.get('notifications').clearAll().success('The auction for product ' + productName + ' has been finished. Congratulation! You outbid the competition.', {
           cssClasses: 'auctionFinishedNotification',
         });
-      comp.showMessage(user, productId);
+        comp.showMessage(user, productName, productId);
+      });
     });
-   });
   },
   disconnect() {
     this.clearFeedback();
@@ -84,6 +91,6 @@ export default Service.extend({
     }
   },
   clearFeedback() {
-    this.set('feedback','');
+    this.set('feedback', '');
   }
 });

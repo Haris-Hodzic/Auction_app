@@ -5,10 +5,8 @@ import FindQuery from 'ember-emberfire-find-query/mixins/find-query';
 export default Component.extend(FindQuery, {
   bidHttp: service(),
   client: service('socket-connection'),
-  message: "",
   store: service(),
   userHttp: service(),
-  stripeHttp: service(),
   notifications: service('notification-messages'),
   productHttp: service(),
   wishlistHttp: service(),
@@ -19,7 +17,7 @@ export default Component.extend(FindQuery, {
   currentPhoto: null,
   user: null,
   owner: false,
-  bidderEmail: '',
+  bidderEmail: null,
   currentProduct: null,
   error: false,
   errorMessage: 'There are higher bids than yours. You could give a second try!',
@@ -44,7 +42,7 @@ export default Component.extend(FindQuery, {
         }
       }).then((result) => {
         if (result.length === 0) {
-          var view = this.store.createRecord('view',{
+          var view = this.store.createRecord('view', {
             productId: this.productId,
             numberOfViews: 1
           });
@@ -72,16 +70,12 @@ export default Component.extend(FindQuery, {
       const ownerEmail = result.user.email;
       const today = new Date();
       const endDate = new Date(result.endDate.slice(0, 23));
-      console.log('today ' + today)
-      console.log('endDate ' + endDate)
+      endDate.setHours(endDate.getHours() + 1);
       const differenceTime = endDate - today;
-      console.log(differenceTime)
-      const differenceDays = Math.ceil(differenceTime / (1000 * 60 * 60 * 24));
-      console.log('dayDifference ' + differenceDays)
+      const differenceDays = Math.floor(differenceTime / (1000 * 60 * 60 * 24));
       const timeStart = today.getHours();
-      const timeEnd = endDate.getHours() + 1;
+      const timeEnd = endDate.getHours();
       const hourDifference = timeEnd - timeStart;
-      console.log('hourDifference' + hourDifference)
 
       if (result.status === 'active') {
         if (differenceDays > 0) {
@@ -91,12 +85,14 @@ export default Component.extend(FindQuery, {
           this.set('isCountdownTimerActive', true);
         } else if (differenceDays === 0 && hourDifference > 0) {
           this.set('timeLeft', hourDifference + ' hours');
+        } else {
+          this.set('timeLeft', 'finished');
         }
       } else {
-        this.set('timeLeft','sold');
+        this.set('timeLeft', 'finished');
       }
       this.set('bidderEmail', this.get('session.data.email'));
-      this.get('wishlistHttp').existInWishlist(result.id).then((result)=> {
+      this.get('wishlistHttp').existInWishlist(result.id).then((result) => {
         this.set('isWatchListActive', result);
         if (this.get('isWatchListActive')) {
           this.set('watchListClass', 'wlActive');
@@ -107,13 +103,13 @@ export default Component.extend(FindQuery, {
       this.get('bidHttp').getSingleBid(result.id).then((result) => {
         this.set('singleProduct', result);
       });
-      if (this.get('session.data.email') === ownerEmail) {
+      if (this.get('bidderEmail') === ownerEmail) {
         this.set('owner', true);
       } else {
         this.set('owner', false);
       }
     });
-    this.get('userHttp').getUserInfo(this.get('session.data.email')).then((result) => {
+    this.get('userHttp').getUserInfo(this.get('bidderEmail')).then((result) => {
       this.set('user', result);
     });
   },
@@ -148,13 +144,14 @@ export default Component.extend(FindQuery, {
       this.set('currentPhoto', this.get('product.photo')[num]);
     },
     placeBid() {
+      this.set('bidTry', true);
       if (this.get('session.isAuthenticated')) {
         const price = this.get('price');
         const date = new Date().toJSON().slice(0, 19);
         const data = JSON.stringify({
           'price': price,
           'date': date,
-          'product': this.product,
+          'productId': this.productId,
           'userEmail': this.get('bidderEmail')
         });
         if (!this.get('owner')) {
@@ -162,11 +159,7 @@ export default Component.extend(FindQuery, {
             if (!result) {
               this.set('error', true);
             } else {
-              this.set('bidTry', true);
-              this.get('client').sendMessage(this.get('session.data.email'), this.productId, this.get('product.numberOfBids'), this.get('product.highestBid'));
-              this.get('productHttp').getProduct(this.product.id).then((result) => {
-                this.set('product', result);
-              });
+              this.get('client').sendBidMessage(this.get('bidderEmail'), this.productId, this.get('product.numberOfBids'), this.get('product.highestBid'));
               this.set('error', false);
             }
           })

@@ -7,14 +7,12 @@ module.exports = function(environment) {
     rootURL: '/',
     locationType: 'auto',
     firebase: {
-      apiKey: "AIzaSyCiA19GRqSvHj21uolTLCBJMV2wu0URW-A",
-      authDomain: "auctionapp-43a0c.firebaseapp.com",
-      databaseURL: "https://auctionapp-43a0c.firebaseio.com",
-      projectId: "auctionapp-43a0c",
-      storageBucket: "auctionapp-43a0c.appspot.com",
-      messagingSenderId: "987955105263",
-      appId: "1:987955105263:web:91dbcb13d4eb8a7adf3a1a",
-      measurementId: "G-V93MR1704G"
+      apiKey: "xyz",
+      authDomain: "YOUR-FIREBASE-APP.firebaseapp.com",
+      databaseURL: "https://YOUR-FIREBASE-APP.firebaseio.com",
+      projectId: "YOUR-FIREBASE-APP",
+      storageBucket: "YOUR-FIREBASE-APP.appspot.com",
+      messagingSenderId: "00000000000"
     },
     EmberENV: {
       FEATURES: {
@@ -82,7 +80,7 @@ if (environment === 'development') {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.APP.SERVER_URL = 'http://localhost:8080'
     ENV.stripe = {
-      publishableKey: 'pk_test_ZKJ462EIJXGrwgTSCfy2dzZF00A3kiYrAn',
+      publishableKey: 'key',
       lazyLoad: true
     };
   }

@@ -1,19 +1,19 @@
 package com.abhinternship.auctionapp.model;
 
-public class Notification {
+public class BidNotification {
     private String user;
     private Long productId;
     private int numberOfBids;
     private Double highestBid;
 
-    public Notification(String user, Long productId, int numberOfBids, Double highestBid) {
+    public BidNotification(String user, Long productId, int numberOfBids, Double highestBid) {
         this.user = user;
         this.productId = productId;
         this.numberOfBids = numberOfBids;
         this.highestBid = highestBid;
     }
 
-    public Notification() {
+    public BidNotification() {
     }
 
     public String getUser() {

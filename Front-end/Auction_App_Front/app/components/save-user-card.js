@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
+import {inject as service} from '@ember/service';
 
 export default Component.extend({
   session: service('session'),
@@ -12,16 +12,16 @@ export default Component.extend({
     this.set('userEmail', this.get('session.data.email'));
   },
   didInsertElement() {
-    var stripe = Stripe('pk_test_ZKJ462EIJXGrwgTSCfy2dzZF00A3kiYrAn');
-    var elements = stripe.elements();
+    const stripe = Stripe('key');
+    const elements = stripe.elements();
+    const errorElement = document.querySelector('.error');
     const self = this;
-    var style = {
+    const style = {
       base: {
         fontFamily: 'Lato-Regular',
         fontSize: '16px',
         color: '#252525',
         letterSpacing: '0.56px',
-
         '::placeholder': {
           fontFamily: 'Lato-Regular',
           fontSize: '18px',
@@ -30,22 +30,19 @@ export default Component.extend({
         },
       },
     };
-    var cardNumberElement = elements.create('cardNumber', {
+    const cardNumberElement = elements.create('cardNumber', {
       style: style
     });
     cardNumberElement.mount('#card-number-element');
-
-    var cardExpiryElement = elements.create('cardExpiry', {
+    const cardExpiryElement = elements.create('cardExpiry', {
       style: style
     });
     cardExpiryElement.mount('#card-expiry-element');
-
-    var cardCvcElement = elements.create('cardCvc', {
+    const cardCvcElement = elements.create('cardCvc', {
       style: style
     });
     cardCvcElement.mount('#card-cvc-element');
     cardNumberElement.on('change', function(event) {
-      var errorElement = document.querySelector('.error');
       errorElement.classList.remove('visible');
       if (event.error) {
         errorElement.textContent = event.error.message;
@@ -53,7 +50,6 @@ export default Component.extend({
       }
     });
     cardExpiryElement.on('change', function(event) {
-      var errorElement = document.querySelector('.error');
       errorElement.classList.remove('visible');
       if (event.error) {
         errorElement.textContent = event.error.message;
@@ -61,7 +57,6 @@ export default Component.extend({
       }
     });
     cardCvcElement.on('change', function(event) {
-      var errorElement = document.querySelector('.error');
       errorElement.classList.remove('visible');
       if (event.error) {
         errorElement.textContent = event.error.message;
@@ -70,13 +65,10 @@ export default Component.extend({
     });
     document.querySelector('form').addEventListener('submit', function(e) {
       e.preventDefault();
-      var options = {
-        name: self.get('cardName'),
-      };
-      stripe.createToken(cardNumberElement, {name: self.get('cardName')}).then((result) => {
-        var errorElement = document.querySelector('.error');
-        /**/
-        if (result.error){
+      stripe.createToken(cardNumberElement, {
+        name: self.get('cardName')
+      }).then((result) => {
+        if (result.error) {
           errorElement.textContent = result.error.message;
           errorElement.classList.add('visible');
         } else {
