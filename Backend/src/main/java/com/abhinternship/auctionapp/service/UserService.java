@@ -1,7 +1,6 @@
 package com.abhinternship.auctionapp.service;
 
 import com.abhinternship.auctionapp.exception.RepositoryException;
-import com.abhinternship.auctionapp.model.Address;
 import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;

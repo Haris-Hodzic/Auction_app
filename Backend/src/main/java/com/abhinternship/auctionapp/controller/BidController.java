@@ -2,7 +2,6 @@ package com.abhinternship.auctionapp.controller;
 
 import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.Bid;
-import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

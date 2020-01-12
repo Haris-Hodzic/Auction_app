@@ -29,7 +29,7 @@ export default Component.extend(FindQuery, {
   product: null,
   currentPath: null,
   isCountdownTimerActive: false,
-  notification: false,
+  notification: true,
   rating: 0,
   init() {
     this._super(...arguments);
@@ -58,9 +58,6 @@ export default Component.extend(FindQuery, {
       this.set('product', result);
       if (result.user.numberOfRatings) {
         this.set('rating', Math.floor(result.user.rating / result.user.numberOfRatings))
-      }
-      if (result.status === 'pending') {
-        this.set('notification', true);
       }
       if (result.photo.length > 0) {
         this.set('currentPhoto', result.photo[0]);

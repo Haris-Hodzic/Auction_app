@@ -1,15 +1,11 @@
 package com.abhinternship.auctionapp.controller;
 
 import com.abhinternship.auctionapp.exception.RepositoryException;
-import com.abhinternship.auctionapp.model.Product;
-import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.model.Wishlist;
 import com.abhinternship.auctionapp.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/wishlist")

@@ -22,7 +22,7 @@ public class StripeService {
 
     @Autowired
     public StripeService() {
-        Stripe.apiKey = "sk_test_3QHudnuEojx9XZs8PczLithZ00kjnAipPF";
+        Stripe.apiKey = "skey";
     }
 
     @Autowired

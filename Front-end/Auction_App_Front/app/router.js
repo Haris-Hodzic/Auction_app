@@ -14,7 +14,7 @@ Router.map(function() {
 
   this.route('product', function() {
     this.route('show', { path: '/:product_id' });
-    this.route('bids', { path: '/:productId/payment' });
+    this.route('bids', { path: '/:product_id/payment' });
   });
   this.route('account', function() {
     this.route('show', { path: '/:option' });

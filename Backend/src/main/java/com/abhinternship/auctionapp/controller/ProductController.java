@@ -1,6 +1,5 @@
 package com.abhinternship.auctionapp.controller;
 
-import com.abhinternship.auctionapp.AuctionappApplication;
 import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.*;
 import com.abhinternship.auctionapp.service.ProductService;
@@ -89,5 +88,12 @@ public class ProductController extends BaseController<Product> {
     @Transactional
     public BidNotification getBidNotification(BidNotification message) throws RepositoryException {
         return productService.getBidNotification(message);
+    }
+
+    @MessageMapping("/auction/notification")
+    @SendTo("/topic/auction/notification")
+    @Transactional
+    public AuctionNotification getAuctionNotification(AuctionNotification message) throws RepositoryException {
+        return message;
     }
 }

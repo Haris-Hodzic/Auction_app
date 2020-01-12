@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class BidService implements BaseService<Bid> {
@@ -44,7 +42,6 @@ public class BidService implements BaseService<Bid> {
             User creator = userRepository.getOneByEmail(product.getUser().getEmail());
             Double price = req.getPrice();
             Date date = req.getDate();
-            DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 
             if (bidRepository.existsByProduct(product) && bidRepository.existsByBidder(bidder)) {
                 if (price > product.getHighestBid()) {

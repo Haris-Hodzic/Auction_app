@@ -80,12 +80,19 @@ export default Service.extend({
     }
     this.set('connected', false);
   },
-  showMessage(user, productId) {
-    this.add(user, productId);
+  showMessage(user, productId, numberOfBids, highestBid) {
+    this.add(user, productId, numberOfBids, highestBid);
   },
-  sendMessage(user, productId) {
+  sendBidMessage(user, productId, numberOfBids, highestBid) {
     if (this.stompClient != null && this.get('connected')) {
-      this.stompClient.send("/app/notification", {}, JSON.stringify({'user': user, 'productId': productId}));
+      this.stompClient.send("/app/bid/notification", {}, JSON.stringify({'user': user, 'productId': productId, 'numberOfBids': numberOfBids, 'highestBid': highestBid}));
+    } else {
+      this.set('feedback', 'You are not connected!');
+    }
+  },
+  sendAuctionMessage(user, productName, productId) {
+    if (this.stompClient != null && this.get('connected')) {
+      this.stompClient.send("/app/auction/notification", {}, JSON.stringify({'user': user, 'productName': productName, 'productId': productId}));
     } else {
       this.set('feedback', 'You are not connected!');
     }

@@ -39,7 +39,7 @@ export default Controller.extend({
         let minute = entry.endDate.slice(14, 16);
         let second = entry.endDate.slice(17, 19);
         let milisecond = entry.endDate.slice(20, 23);
-        let endDate = new Date(year, month, date, hour, minute, second, milisecond)
+        let endDate = new Date(year, month, date, hour, minute, second, milisecond);
         var millisecondTillAuctionFinish = endDate - now;
         if (hour === 24) {
           hour = 0;

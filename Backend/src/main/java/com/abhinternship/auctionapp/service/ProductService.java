@@ -147,4 +147,11 @@ public class ProductService implements BaseService<Product> {
         }
         return soldProducts;
     }
+
+    public BidNotification getBidNotification(BidNotification bidNotification) throws RepositoryException {
+        Product product = repository.getOne(bidNotification.getProductId());
+        bidNotification.setHighestBid(product.getHighestBid());
+        bidNotification.setNumberOfBids(product.getNumberOfBids());
+        return bidNotification;
+    }
 }

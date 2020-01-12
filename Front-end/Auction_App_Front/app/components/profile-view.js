@@ -6,7 +6,6 @@ export default Component.extend({
   userHttp: service(),
   session: service('session'),
   store: service(),
-  stripeHttp: service(),
   gender: 'Male',
   isGenderButtonActive: false,
   isMonthButtonActive: false,

@@ -6,7 +6,7 @@ export default Route.extend({
   productHttp: service(),
   session: service(),
   model(params) {
-    return this.get('productHttp').getProduct(params.productId);
+    return this.get('productHttp').getProduct(params.product_id);
   },
   beforeModel() {
     return this.get('stripe').load();

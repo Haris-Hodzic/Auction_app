@@ -39,11 +39,40 @@
       {{else}}
         <p class="spStartPrice">Start from - ${{this.product.highestBid}}</p>
       {{/if}}
-      {{#if (eq this.product.status "pending")}}
-        {{#if (gt this.product.numberOfBids 0)}}
+      {{#if notification}}
+        {{#if (eq this.product.status "pending")}}
+          {{#if (gt this.product.numberOfBids 0)}}
+            {{#if (eq this.product.highestBidder this.bidderEmail)}}
+              <div class="paymentNotification">
+                <p><strong>Congratulation!</strong> You outbid the competition.</p> <a role="button" {{action "closeNotification"}}>X</a>
+              </div>
+            {{else}}
+              {{#if (eq this.product.user.email this.bidderEmail)}}
+                <div class="paymentNotification soldSeller">
+                  <p><strong>Congratulation!</strong> Your product has been sold.</p> <a role="button" {{action "closeNotification"}}>X</a>
+                </div>
+              {{else}}
+                <div class="paymentNotification sold">
+                  <p>This product has been sold.</p> <a role="button" {{action "closeNotification"}}>X</a>
+                </div>
+              {{/if}}
+            {{/if}}
+          {{else}}
+            {{#if (eq this.product.user.email this.bidderEmail)}}
+              <div class="paymentNotification soldSeller">
+                <p>Auction finished for this product with no bids.</p> <a role="button" {{action "closeNotification"}}>X</a>
+              </div>
+            {{else}}
+              <div class="paymentNotification sold">
+                <p>Auction finished for this product.</p> <a role="button" {{action "closeNotification"}}>X</a>
+              </div>
+            {{/if}}
+          {{/if}}
+        {{/if}}
+        {{#if (eq this.product.status "paid")}}
           {{#if (eq this.product.highestBidder this.bidderEmail)}}
             <div class="paymentNotification">
-              <p><strong>Congratulation!</strong> You outbid the competition.</p> <a role="button" {{action "closeNotification"}}>X</a>
+              <p><strong>Congratulation!</strong> You have successfully purchased this product.</p> <a role="button" {{action "closeNotification"}}>X</a>
             </div>
           {{else}}
             {{#if (eq this.product.user.email this.bidderEmail)}}
@@ -55,33 +84,6 @@
                 <p>This product has been sold.</p> <a role="button" {{action "closeNotification"}}>X</a>
               </div>
             {{/if}}
-          {{/if}}
-        {{else}}
-          {{#if (eq this.product.user.email this.bidderEmail)}}
-            <div class="paymentNotification soldSeller">
-              <p>Auction finished for this product with no bids.</p> <a role="button" {{action "closeNotification"}}>X</a>
-            </div>
-          {{else}}
-            <div class="paymentNotification sold">
-              <p>Auction finished for this product.</p> <a role="button" {{action "closeNotification"}}>X</a>
-            </div>
-          {{/if}}
-        {{/if}}
-      {{/if}}
-      {{#if (eq this.product.status "paid")}}
-        {{#if (eq this.product.highestBidder this.bidderEmail)}}
-          <div class="paymentNotification">
-            <p><strong>Congratulation!</strong> You have successfully purchased this product.</p> <a role="button" {{action "closeNotification"}}>X</a>
-          </div>
-        {{else}}
-          {{#if (eq this.product.user.email this.bidderEmail)}}
-            <div class="paymentNotification soldSeller">
-              <p><strong>Congratulation!</strong> Your product has been sold.</p> <a role="button" {{action "closeNotification"}}>X</a>
-            </div>
-          {{else}}
-            <div class="paymentNotification sold">
-              <p>This product has been sold.</p> <a role="button" {{action "closeNotification"}}>X</a>
-            </div>
           {{/if}}
         {{/if}}
       {{/if}}

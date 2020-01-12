@@ -3113,3 +3113,278 @@ footer{
     @extend %moreButton;
   }
 }
+/*--------Payment--------*/
+.paymantView{
+  position: relative;
+  width: 50%;
+  height: auto;
+  margin-bottom: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  .paymantForm{
+    width: 100%;
+    margin-top: 40px;
+    border: 1px solid #D8D8D8;
+    height: auto;
+    position: relative;
+    .paymantTitle{
+      background: #FAFAFA;
+      height: 50px;
+      width: 100%;
+      margin-bottom: 40px;
+      p{
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        line-height: 50px;
+        transform: translateX(-50%);
+        font-family: Lato-Bold;
+        font-size: 20px;
+        color: #252525;
+        letter-spacing: 0.7px;
+      }
+    }
+    .inputLabel{
+      position: relative;
+      width: 84.4%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: Lato-Regular;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+      color: #252525;
+    }
+    .input{
+      @extend %authInput;    
+    }
+    ::placeholder{
+      font-family: Lato-Regular;
+      font-size: 16px;
+      color: #9B9B9B;
+      letter-spacing: 0.56px;
+    }
+    .paymantMiddle{
+      position: relative;
+      width: 84.4%;
+      left: 50%;
+      margin-bottom: 40px;
+      transform: translateX(-50%);
+      justify-content: space-between;
+      .countryDropdown{
+        position: relative;
+        width: 47.5%;
+        display: inline-block;
+        .country{
+          height: 54px;
+          background: #FFFFFF;
+          border: 3px solid #ECECEC;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          line-height: 50px;
+          padding-left: 15px;
+          img{
+            position: absolute;
+            left: 80%;
+            top: 14px;
+            width: 34px;
+            height: 24px;
+          }
+        }
+        .countryOptions{
+          @extend %dateOptions;
+          max-height: 180px;
+          overflow-y: auto;
+        }
+      }
+
+      .city{
+        position: absolute;
+        width: 47.5%;
+        height: 54px;
+        background: #FFFFFF;
+        border: 3px solid #ECECEC;
+        margin-left: 5%;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 50px;
+        padding-left: 15px;
+      }
+    }
+    .cardDiv{
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 84.4%;
+      margin-bottom: 40px;
+      .checkB{
+        height: 20px;
+        width: 20px;
+      }
+      p{
+        display: inline-block;
+        margin-left: 8px;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 26px;
+      }
+    }
+    .payButton{
+      position: relative;
+      margin-left: 64vh;
+      margin-top: 70px;
+      background: #8367D8;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      width: 183px;
+      height: 57px;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.63px;
+      margin-bottom: 60px;
+    }
+    .cardTop{
+      position: relative;
+      width: 604px;
+      left: 43%;
+      transform: translateX(-50%);
+      margin-bottom: 60px;
+      .acceptedCards{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        line-height: 26px;
+        margin-bottom: 10px;
+      }
+      .acceptedCardsImages{
+        position: relative;
+        display: inline-block;
+
+        .cardImage{
+          background: #26337A;
+          border-radius: 2px;
+          object-fit: cover;
+          background-position: center;
+          width: 50px;
+          height: 30px;
+        }
+      }
+    }
+  }
+  .paymentCard{
+    
+    width: 100%;
+    .noCardNotification{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 84.4%;
+    margin-bottom: 60px;
+    p{
+      font-family: Lato-Regular;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      line-height: 26px;
+      margin-bottom: 20px;
+    }
+    a{
+      font-family: Lato-Regular;
+      font-size: 18px;
+      color: #8367D8;
+      letter-spacing: 0.63px;
+    }
+  }
+  }
+  
+
+  .enterCard{
+    margin-left: 50%;
+    transform: translateX(-84%);    
+    .group {
+      width: 100%;
+      .inputLabel{
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        margin-bottom: 8px;
+      }
+      .cardInput{
+        width: 41vh;
+        height: 46px;
+        background: #FCFCFC;
+        border: 1px solid #D8D8D8;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        padding-left: 15px;
+        padding-top: 11px;
+      }
+      .nameOnCard {
+        width: 41vh;
+        height: 46px;
+        background: #FCFCFC;
+        border: 1px solid #D8D8D8;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        padding-left: 15px;
+      }
+      ::placeholder{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+      }
+      .cardFormRowOne{
+        position: relative;
+        margin-bottom: 39px;
+        .cardNumber{
+          display: inline-block;
+          position: absolute;
+          margin-left: 26px;
+        } 
+        .cardName{
+          display: inline-block;
+        }
+      }
+      .cardFormRowTwo{
+        position: relative;
+        .expirationDate{
+          display: inline-block;
+        }
+        .cvc{
+          position: absolute;
+          display: inline-block;
+          margin-left: 26px;
+        }
+      }
+    }
+    .outcome{
+        .error{
+          width: 400px;
+          color: #8367D8;
+          margin-top: 20px;
+          margin-left: 55%;
+        }
+      }
+  }
+}
+.auctionFinishedNotification{
+  top: 30px;
+  left: 20px;
+  background-color: #8367D8;
+}
