@@ -1,0 +1,28 @@
+<div class="enterCard">
+  <div class="group">
+    <div class="cardFormRowOne">
+      <div class="cardName">
+        <p class="inputLabel">Name on card</p>
+        <div class="cardInput">{{userInfo.userCard.cardName}}</div>
+      </div>
+      <label class="cardNumber">
+        <p class="inputLabel">Card number</p>
+        <div class="cardInput">**** **** **** {{userInfo.userCard.cardNumber}}</div>
+      </label>
+    </div>
+    <div class="cardFormRowTwo">
+      <div class="expirationDate">
+        <label>
+          <p class="inputLabel">Exipartion Date</p>
+          <div class="cardInput">{{userInfo.userCard.expireDate}}</div>
+        </label>
+      </div>
+      <div class="cvc">
+        <label>
+          <p class="inputLabel">CVC</p>
+          <div class="cardInput">***</div>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

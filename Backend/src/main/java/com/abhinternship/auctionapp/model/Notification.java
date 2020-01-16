@@ -2,9 +2,9 @@ package com.abhinternship.auctionapp.model;
 
 public class Notification {
     private String user;
-    private String productId;
+    private Long productId;
 
-    public Notification(String user, String productId) {
+    public Notification(String user, Long productId) {
         this.user = user;
         this.productId = productId;
     }
@@ -20,11 +20,11 @@ public class Notification {
         this.user = user;
     }
 
-    public String getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 }

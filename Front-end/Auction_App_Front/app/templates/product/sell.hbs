@@ -1,0 +1,224 @@
+{{notification-container position="top-right" zindex="9999"}}
+<PageBar @title="BECOME SELLER">
+</PageBar>
+<div class="sellProductView">
+  {{#if isPartOneActive}}
+    <img class="progressBar" src="/assets/images/sell1.png" alt="">
+    <div class="productInfoView">
+      <div class="sellTitle"><p>DETAIL INFORMATION ABOUT PRODUCT</p></div>
+      <div class="name">
+        <p class="inputLabel">What do you sell?</p>
+        {{input value=product.name class="input" type="text"}}
+        {{#if errors}}
+          {{#if (v-get productPartOne "name" "isInvalid")}}
+            <div class="error">
+              {{v-get productPartOne "name" "message"}}
+            </div>
+          {{/if}}
+        {{/if}}
+        <p class="inputRequiredInfo">2-5 words (60 characters)</p>
+      </div>
+      <div class="categories">
+        <div class=" dropdown categoryDropdown" role="button" {{action "setDropdownActive" "category"}}>
+          {{#if categoryName}}
+            <p>{{categoryName}}</p>
+          {{else}}
+            <p>Select Category</p>
+          {{/if}}
+          <img src="/assets/images/profileDD.png" alt="">
+        </div>
+        <div class="dropdown subcategoryDropdown" role="button" {{action "setDropdownActive" "subcategory"}}>
+          {{#if subcategoryName}}
+            <p>{{subcategoryName}}</p>
+          {{else}}
+            <p>Select Subcategory</p>
+          {{/if}}
+          <img src="/assets/images/profileDD.png" alt="">
+        </div>
+      </div>
+      {{#if errors}}
+        {{#if (v-get productPartOne "category" "isInvalid")}}
+          <div class="categoryError">
+            {{v-get productPartOne "category" "message"}}
+          </div>
+        {{/if}}
+      {{/if}}
+      {{#if errors}}
+        {{#if (v-get productPartOne "subcategory" "isInvalid")}}
+          <div class="subcategoryError">
+            {{v-get productPartOne "subcategory" "message"}}
+          </div>
+        {{/if}}
+      {{/if}}
+      <div class="categoriesOptions">
+        {{#if isCategoryButtonActive}}
+          <ul>
+            <li role="button" {{action "setCategory" "Women"}}>Women</li>
+            <li role="button" {{action "setCategory" "Men"}}>Men</li>
+            <li role="button" {{action "setCategory" "Kids"}}>Kids</li>
+            <li role="button" {{action "setCategory" "Accesorise"}}>Accesorise</li>
+            <li role="button" {{action "setCategory" "Home"}}>Home</li>
+            <li role="button" {{action "setCategory" "Art"}}>Art</li>
+            <li role="button" {{action "setCategory" "Computer"}}>Computer</li>
+          </ul>
+        {{/if}}
+        {{#if isSubcategoryButtonActive}}
+          <ul class="subcategoryOptions">
+            {{#each (get subcategories categoryName) as |subcategory|}}
+              <li role="button" {{action "setSubcategory" subcategory.subcategory}}>{{subcategory.subcategory}}</li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      </div>
+      <div class="description">
+        <p class="inputLabel">Description</p>
+        {{textarea value=product.description class="input" focus-out=(action (mut showEmailError) true)}}
+        <p class="inputRequiredInfo">100 words (700 characters)</p>
+        {{#if errors}}
+          {{#if (v-get productPartOne "description" "isInvalid")}}
+            <div class="error">
+              {{v-get productPartOne "description" "message"}}
+            </div>
+          {{/if}}
+        {{/if}}
+      </div>
+      <div class="photoUpload">
+        {{#file-dropzone name="photos" class="dropzone" as |dropzone|}}
+          {{#if dropzone.active}}
+            {{#if dropzone.valid}}
+              Drop to upload
+            {{else}}
+              Invalid
+            {{/if}}
+          {{else}}
+            <p>
+              {{#file-upload name="photos"
+              for="upload-photo"
+              accept="image/*"
+              multiple=true
+              onfileadd=(action "uploadImage")}}
+                <a class="uploadButton">Upload Photos</a>
+              {{/file-upload}}
+              {{#if dropzone.supported}}
+                or just drag and drop
+              {{/if}}
+            </p>
+            <div class="images">
+              {{#each product.photo as |photo index|}}
+                <img src={{photo}} class="productImg" alt=""><a class="removePhoto" role="button" {{action "removePhoto" index}}>X</a>
+              {{/each}}
+            </div>
+            {{#if isPhotoErrorActive}}
+              <p class="photoError">You can't upload more than 4 photos!</p>
+            {{/if}}
+          {{/if}}
+        {{/file-dropzone}}
+        {{#if errors}}
+          {{#if photosError}}
+            <div class="error">
+              Add at least three photos
+            </div>
+          {{/if}}
+        {{/if}}
+      </div>
+      <button class="nextButton" {{action "next" "one"}}>NEXT<span class="gt">&gt;</span></button>
+    </div>
+  {{/if}}
+  {{#if isPartTwoActive}}
+    <img class="progressBar" src="/assets/images/sell2.png" alt="">
+    <div class="productPriceView">
+      <div class="sellTitle"><p>SET PRICES</p></div>
+      <div class="price">
+        <p class="inputLabel">Your start Price</p>
+        <div class="priceInput">
+          <p>$</p>{{input value=product.startPrice class="input" type="number"}}
+          {{#if errors}}
+            {{#if (v-get productPartTwo "startPrice" "isInvalid")}}
+              <div class="error">
+                {{v-get productPartTwo "startPrice" "message"}}
+              </div>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="date">
+        <div class="dateInput startDate">
+          <p class="inputLabel">Start date</p>
+          {{input value=product.startDate class="input" type="date" min=currentDate}}
+          {{#if dateError}}
+            <div class="error">
+              End date must be greater than start date!
+            </div>
+          {{/if}}
+          {{#if errors}}
+            {{#if (v-get productPartTwo "startDate" "isInvalid")}}
+              <div class="error">
+                {{v-get productPartTwo "startDate" "message"}}
+              </div>
+            {{/if}}
+          {{/if}}
+        </div>
+        <div class="dateInput endDate">
+          <p class="inputLabel">End date</p>
+          {{input value=product.endDate class="input" type="date" min=currentDate}}
+          {{#if errors}}
+            {{#if (v-get productPartTwo "endDate" "isInvalid")}}
+              <div class="error">
+                {{v-get productPartTwo "endDate" "message"}}
+              </div>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+      <p class="info">The auction will be automatically closed when the end time comes. The highest bid will win the auction.</p>
+      <div class="buttons">
+        <button class="priceBtn backBtn" {{action "back" "two"}}><span class="lt">&lt;</span>BACK</button>
+        <button class="priceBtn nextBtn" {{action "next" "two"}}>NEXT<span class="gt">&gt;</span></button>
+      </div>
+    </div>
+  {{/if}}
+  {{#if isPartThreeActive}}
+    <img class="progressBar" src="/assets/images/sell3.png" alt="">
+    <div class="locationView">
+      <div class="sellTitle"><p>LOCATION & SHIPPING</p></div>
+      <AddressForm @billingInformation={{billingInformation}} @errors={{errors}} @productPartThree={{productPartThree}}></AddressForm>
+      <div class="cardDiv">
+        {{input type="checkbox" class="checkB" change=(action "setShipping")}}
+        <p>Do you want to bear shipping cost?</p>
+      </div>
+      <p class="shippingInfo">The average priece of shipping cost is $10.00. You have to provide us Billing infromations.</p>
+      <div class="cardDiv">
+        {{input type="checkbox" class="checkB" change=(action "setCard") checked="true"}}
+        <p>Use your profile card</p>
+      </div>
+      <div class="cardTop">
+        <p class="acceptedCards">We accept the following credit cards</p>
+        <div class="acceptedCardsImages">
+          <img src="/assets/images/visa.jpg" class="cardImage" alt="Visa">
+          <img src="/assets/images/mastercard.jpeg" class="cardImage" alt="Mastercard">
+          <img src="/assets/images/maestro.png" class="cardImage" alt="Maestro">
+          <img src="/assets/images/amexpress.jpg" class="cardImage" alt="American Express">
+        </div>
+      </div>
+      <div class="paymentCard">
+        {{#if isProfileCard}}
+          {{#if userInfo.userCard}}
+            <DisplayUserCard @userInfo={{userInfo}}></DisplayUserCard>
+            <button class="payButtonCard doneBtn" {{action "startAuction"}}>DONE</button>
+          {{else}}
+            <div class="noCardNotification">
+              <p>You have no saved cards!</p>
+              {{#link-to "account.show" "profile" class="linkToClass"}}
+                <a>Go to your profile</a>
+              {{/link-to}}
+            </div>
+            <button class="payButtonCard doneBtn" {{action "startAuction"}}>DONE</button>
+          {{/if}}
+        {{else}}
+          {{card-form cardName=cardName buttonAction=(action "startAuction")}}
+        {{/if}}
+      </div>
+      <button class="locationButton backBtn" {{action "back" "three"}}><span class="lt">&lt;</span>BACK</button>
+    </div>
+  {{/if}}
+</div>

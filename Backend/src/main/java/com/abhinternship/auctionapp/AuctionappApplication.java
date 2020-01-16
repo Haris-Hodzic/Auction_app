@@ -1,5 +1,7 @@
 package com.abhinternship.auctionapp;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +18,14 @@ public class AuctionappApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AuctionappApplication.class, args);
+    }
+
+    @Bean
+    public Cloudinary cloudinaryConfig() {
+        return new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "name",
+                "api_key", "key",
+                "api_secret", "secret"));
     }
 
     @Bean

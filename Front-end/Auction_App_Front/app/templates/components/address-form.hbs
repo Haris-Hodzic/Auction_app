@@ -1,0 +1,58 @@
+<p class="inputLabel inputLabelAddress">Address</p>
+<Input @value={{billingInformation.street}} @class="input" @type="text" placeholder="e.g.678 Berge Tunnel Apt. 278"></Input>
+{{#if errors}}
+  {{#if (v-get productPartThree "address" "isInvalid")}}
+    <div class="error addressError">
+      {{v-get productPartThree "address" "message"}}
+    </div>
+  {{/if}}
+{{/if}}
+<div class="paymantMiddle">
+  <div class="countryDropdown">
+    {{#if billingInformation.country}}
+      <div class="country" role="button" {{action "setDropdownButtonsActive"}}>{{billingInformation.country}}<img src="/assets/images/profileDD.png" class="genderDropdownImg" alt=""></div>
+    {{else}}
+      <div class="country" role="button" {{action "setDropdownButtonsActive"}}>Select Country<img src="/assets/images/profileDD.png" class="genderDropdownImg" alt=""></div>
+    {{/if}}
+    {{#if errors}}
+      {{#if (v-get productPartThree "country" "isInvalid")}}
+        <div class="error">
+          {{v-get productPartThree "country" "message"}}
+        </div>
+      {{/if}}
+    {{/if}}
+    {{#if isCountryButtonActive}}
+      <ul class="countryOptions">
+        {{#each listOfCountries as |country|}}
+          <li role="button" {{action "setCountry" country.name}}>{{country.name}}</li>
+        {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+  <Input @value={{billingInformation.city}} @class="city" @type="text" placeholder="e.g.678 Berge Tunnel Apt. 278"></Input>
+  {{#if errors}}
+    {{#if (v-get productPartThree "city" "isInvalid")}}
+      <div class="error cityError">
+        {{v-get productPartThree "city" "message"}}
+      </div>
+    {{/if}}
+  {{/if}}
+</div>
+<p class="inputLabel inputLabelAddress">Zip Code</p>
+<Input @value={{billingInformation.zip}} @class="input" @type="text" placeholder="71000"></Input>
+{{#if errors}}
+  {{#if (v-get productPartThree "zip" "isInvalid")}}
+    <div class="error zipError">
+      {{v-get productPartThree "zip" "message"}}
+    </div>
+  {{/if}}
+{{/if}}
+<p class="inputLabel inputLabelAddress">Phone</p>
+<Input @value={{billingInformation.phone}} @class="input" @type="text" placeholder="061 123 123"></Input>
+{{#if errors}}
+  {{#if (v-get productPartThree "phone" "isInvalid")}}
+    <div class="error phoneError">
+      {{v-get productPartThree "phone" "message"}}
+    </div>
+  {{/if}}
+{{/if}}

@@ -1,0 +1,67 @@
+<div class="paymantForm">
+  {{#if showRating}}
+    {{#modal-dialog
+      containerClass="sellerRating"
+      targetAttachment="center"
+      translucentOverlay=true
+    }}
+      <div class="titleDiv"><p class="ratingTitle">SELLER RATING</p></div>
+      <img src={{this.product.user.profilePhoto}} class="sellerPhoto" alt="SELLER">
+      <p class="text sellerName">{{this.product.user.firstName}} {{this.product.user.lastName}}</p>
+      <p class="text ratingText"><strong>Please, rate a seller!</strong></p>
+      <div class="stars">
+        <div class="rate">
+          <Input type="radio" id="star5" name="rate" value="5" onchange={{action "setRating" 5}}></Input>
+          <label for="star5" title="text">5 stars</label>
+          <Input type="radio" id="star4" name="rate" onchange={{action "setRating" 4}} value="4"></Input>
+          <label for="star4" title="text">4 stars</label>
+          <Input type="radio" id="star3" name="rate" onchange={{action "setRating" 3}} value="3"></Input>
+          <label for="star3" title="text">3 stars</label>
+          <Input type="radio" id="star2" name="rate" onchange={{action "setRating" 2}} value="2"></Input>
+          <label for="star2" title="text">2 stars</label>
+          <Input type="radio" id="star1" name="rate" onchange={{action "setRating" 1}} value="1"></Input>
+          <label for="star1" title="text">1 star</label>
+        </div>
+      </div>
+      {{#if ratingError}}
+        <p class="ratingError">Please rate seller first or skip this step!</p>
+      {{/if}}
+      <div class="ratingButtons">
+        <button class="skipBtn" {{action "skipRating"}}>SKIP</button>
+        <button class="doneBtn" {{action "doneRating"}}>DONE</button>
+      </div>
+    {{/modal-dialog}}
+  {{/if}}
+  <div class="paymantTitle"><p>PAYMENT</p></div>
+  <AddressForm @billingInformation={{billingInformation}} @errors={{errors}} @productPartThree={{productThree}}></AddressForm>
+  <div class="cardDiv">
+    {{input type="checkbox" class="checkB" change=(action "setCard") checked="true"}}
+    <p>Use your profile card</p>
+  </div>
+  <div class="cardTop">
+    <p class="acceptedCards">We accept the following credit cards</p>
+    <div class="acceptedCardsImages">
+      <img src="/assets/images/visa.jpg" class="cardImage" alt="Visa">
+      <img src="/assets/images/mastercard.jpeg" class="cardImage" alt="Mastercard">
+      <img src="/assets/images/maestro.png" class="cardImage" alt="Maestro">
+      <img src="/assets/images/amexpress.jpg" class="cardImage" alt="American Express">
+    </div>
+  </div>
+  <div class="paymentCard">
+    {{#if isProfileCard}}
+      {{#if userInfo.userCard}}
+        <DisplayUserCard @userInfo={{userInfo}}></DisplayUserCard>
+        <button class="paymentPayButton" {{action "payWithCard"}}>DONE</button>
+      {{else}}
+        <div class="noCardNotification">
+          <p>You have no saved cards!</p>
+          {{#link-to "account.show" "profile" class="linkToClass"}}
+            <a>Go to your profile</a>
+          {{/link-to}}
+        </div>
+      {{/if}}
+    {{else}}
+      {{card-form cardName=cardName buttonAction=(action "payWithToken")}}
+    {{/if}}
+  </div>
+</div>

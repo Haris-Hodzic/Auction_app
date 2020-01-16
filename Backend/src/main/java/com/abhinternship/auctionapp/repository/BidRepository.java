@@ -10,5 +10,8 @@ import java.util.List;
 
 public interface BidRepository extends JpaRepository<Bid, Long> {
     List<Bid> findAllBidByProductId(Long productId);
-    Page<Bid> getAllByBidderId(Long bidderId, Pageable pageable);
+    Page<Bid> getAllByBidderIdOrderByDateDesc(Long bidderId, Pageable pageable);
+    Boolean existsByProduct(Product product);
+    Boolean existsByBidder(User bidder);
+    Bid getBidByBidderAndProduct(User bidder, Product product);
 }

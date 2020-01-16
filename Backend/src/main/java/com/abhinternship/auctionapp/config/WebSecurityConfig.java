@@ -1,6 +1,7 @@
 package com.abhinternship.auctionapp.config;
 
 import com.abhinternship.auctionapp.service.BidService;
+import com.abhinternship.auctionapp.service.CategoryService;
 import com.abhinternship.auctionapp.service.ProductService;
 import com.abhinternship.auctionapp.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return wishlistService;
     }
 
+    @Bean
+    public CategoryService categoryService() {
+        CategoryService categoryService = new CategoryService();
+        return categoryService;
+    }
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
@@ -76,6 +83,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api").permitAll()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/ws/**").permitAll()
+                .antMatchers("/stripe", "/stripe/**").permitAll()
+                .antMatchers("/category", "/category/**").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and().headers().and().
                 // make sure we use stateless session; session won't be used to

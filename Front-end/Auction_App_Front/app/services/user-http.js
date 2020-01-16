@@ -15,5 +15,8 @@ export default Service.extend({
   },
   updateUser(user) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/authentication/' + user.id, JSON.stringify(user), 'PUT');
+  },
+  rateSeller(email, rate) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/authentication/rating?newRate=' + rate, email, 'POST');
   }
 });

@@ -4,6 +4,9 @@ import Config from '../config/environment';
 
 export default Service.extend({
   httpBase: service(),
+  createProduct(data) {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api', data, 'POST');
+  },
   getAllProducts() {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api', '', 'GET');
   },
@@ -36,5 +39,8 @@ export default Service.extend({
   },
   getActiveProductsByUserId(userId, pageNumber) {
     return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/active?userId=' + userId + '&pageNumber=' + pageNumber, '', 'GET');
+  },
+  getActiveProducts() {
+    return this.get('httpBase').ajaxReq(Config.APP.SERVER_URL + '/api/product/active', '', 'GET');
   }
 });

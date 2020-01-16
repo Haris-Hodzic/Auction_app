@@ -25,15 +25,23 @@ public class User {
     private String password;
     @Column(length = 4095, columnDefinition = "text")
     private String profilePhoto;
+    private Double rating;
+    private Double numberOfRatings;
 
-    public User() {
-    }
+    @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "card_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private UserCard userCard;
 
     @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Address address;
+
+    public User() {
+    }
 
     public User(String firstName, String lastName, @NotBlank String email, String gender, Date dateOfBirth, String phoneNumber, @NotBlank String password, String profilePhoto) {
         this.firstName = firstName;
@@ -45,6 +53,7 @@ public class User {
         this.password = password;
         this.profilePhoto = profilePhoto;
     }
+
 
     public Long getId() {
         return id;
@@ -124,5 +133,29 @@ public class User {
 
     public void setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
+    }
+
+    public UserCard getUserCard() {
+        return userCard;
+    }
+
+    public void setUserCard(UserCard userCard) {
+        this.userCard = userCard;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Double getNumberOfRatings() {
+        return numberOfRatings;
+    }
+
+    public void setNumberOfRatings(Double numberOfRatings) {
+        this.numberOfRatings = numberOfRatings;
     }
 }

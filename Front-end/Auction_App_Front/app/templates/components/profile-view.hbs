@@ -81,6 +81,24 @@
       </div>
     </div>
   </div>
+  <div class="cardInfo">
+    <div class="profileTitle"><p>CARD INFORMATION</p></div>
+    <div class="cardTop">
+      <p class="acceptedCards">We accept the following credit cards</p>
+      <div class="acceptedCardsImages">
+        <img src="/assets/images/visa.jpg" class="cardImage" alt="Visa">
+        <img src="/assets/images/mastercard.jpeg" class="cardImage" alt="Mastercard">
+        <img src="/assets/images/maestro.png" class="cardImage" alt="Maestro">
+        <img src="/assets/images/amexpress.jpg" class="cardImage" alt="American Express">
+      </div>
+    </div>
+    {{#if isCardEntered}}
+      <DisplayUserCard @userInfo={{userInfo}}></DisplayUserCard>
+      <button class="changeCardButton" {{action "changeCard"}}>CHANGE CARD</button>
+    {{else}}
+      {{card-form cardName=cardName buttonAction=(action "create")}}
+    {{/if}}
+  </div>
   <div class="optional">
     <div class="profileTitle"><p>OPTIONAL</p></div>
     <div class="optionalBody">

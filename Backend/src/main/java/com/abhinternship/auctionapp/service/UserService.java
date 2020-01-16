@@ -1,7 +1,6 @@
 package com.abhinternship.auctionapp.service;
 
 import com.abhinternship.auctionapp.exception.RepositoryException;
-import com.abhinternship.auctionapp.model.Address;
 import com.abhinternship.auctionapp.model.User;
 import com.abhinternship.auctionapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -84,9 +83,27 @@ public class UserService implements BaseService<User>, UserDetailsService {
     public User getUserByEmail(String email) throws RepositoryException {
         try {
             return repository.getOneByEmail(email);
-        }catch (Exception e){
+        } catch (Exception e){
             throw new RepositoryException("No user found");
         }
+    }
+
+    public Double rateSeller(String email, Double newRate) throws RepositoryException {
+            User seller = repository.getOneByEmail(email);
+            Double sumOfSellerRatings = seller.getRating();
+            Double numberOfRatings = seller.getNumberOfRatings();
+            if (numberOfRatings != null) {
+                sumOfSellerRatings += newRate;
+                numberOfRatings += 1;
+            } else {
+                sumOfSellerRatings = newRate;
+                numberOfRatings = 1.0;
+            }
+            seller.setRating(sumOfSellerRatings);
+            seller.setNumberOfRatings(numberOfRatings);
+            repository.save(seller);
+            Double rating = sumOfSellerRatings / numberOfRatings;
+            return rating;
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

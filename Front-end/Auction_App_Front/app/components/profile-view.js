@@ -1,12 +1,16 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { set } from '@ember/object';
+import { set, get } from '@ember/object';
+import EmberObject from '@ember/object';
 
 export default Component.extend({
   userHttp: service(),
   session: service('session'),
   store: service(),
   gender: 'Male',
+  stripev3: service(),
+  stripeHttp: service(),
+  notifications: service('notification-messages'),
   isGenderButtonActive: false,
   isMonthButtonActive: false,
   isDateButtonActive: false,
@@ -16,19 +20,33 @@ export default Component.extend({
   dateOptions: null,
   errors: false,
   userInfo: null,
+  cardName: '',
   image: null,
   userProfile: null,
   isValidEmail: false,
   isValidPassword: false,
   isValid: true,
+  cardNumberPlaceholder: '',
+  isCardEntered: false,
+  userEmail: null,
   init() {
     this._super(...arguments);
-    this.set('dateOfBirth', {date: '01', month: '', year: ''});
+    this.set('dateOfBirth', {
+      date: '01',
+      month: '',
+      year: ''
+    });
+    this.set('userEmail', this.get('session.data.email'));
     this.set('userProfile', this.get('store').createRecord('user'));
     this.set('dateOptions', ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']);
     this.set('monthOptions', ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
     this.get('userHttp').getUserInfo(this.get('session.data.email')).then((result) => {
       this.set('userInfo', result);
+      if (result.userCard) {
+        this.set('isCardEntered', true);
+      } else {
+        this.set('isCardEntered', false);
+      }
       this.set('selectedDate', result.dateOfBirth.slice(8, 10));
       this.set('dateOfBirth.date', result.dateOfBirth.slice(8, 10));
       if (result.dateOfBirth.slice(5, 6) === '0') {
@@ -42,31 +60,21 @@ export default Component.extend({
     });
   },
   actions: {
+    changeCard() {
+      this.set('isCardEntered', false);
+    },
     setGender(gender) {
       this.set('userInfo.gender', gender);
       this.set('gender', gender);
     },
     setDropdownButtonsActive(button) {
       if (button === 'gender') {
-        if (this.get('isGenderButtonActive') === false) {
-          this.set('isGenderButtonActive', true);
-        } else {
-          this.set('isGenderButtonActive', false);
-        }
+        this.toggleProperty('isGenderButtonActive');
       } else if (button === 'month') {
-        if (this.get('isMonthButtonActive') === false) {
-          this.set('isMonthButtonActive', true);
-        } else {
-          this.set('isMonthButtonActive', false);
-        }
+        this.toggleProperty('isMonthButtonActive');
       } else if (button === 'date') {
-        if (this.get('isDateButtonActive') === false) {
-          this.set('isDateButtonActive', true);
-        } else {
-          this.set('isDateButtonActive', false);
-        }
+        this.toggleProperty('isDateButtonActive');
       }
-
     },
     setMonth(monthSelected, monthDisplayed) {
       this.set('dateOfBirth.month', monthSelected + 1);
@@ -89,7 +97,33 @@ export default Component.extend({
         reader.readAsDataURL(file);
       }
     },
-
+    create(stripeElement) {
+      let stripe = get(this, 'stripev3');
+      stripe.createToken(stripeElement, {
+        name: this.get('cardName')
+      }).then((result) => {
+        this.get('stripeHttp').createCard(result.token.id, this.get('userEmail'), this.get('cardName')).then((result) => {
+          if (result) {
+            if (this.get('userInfo.userCard')) {
+              this.get('notifications').success('You successfully updated your card.', {
+                autoClear: true,
+                clearDuration: 4400
+              });
+            } else {
+              this.get('notifications').success('You successfully saved your card.', {
+                autoClear: true,
+                clearDuration: 4400
+              });
+            }
+          }
+        }).catch(() => {
+          this.get('notifications').warning('This card already exists!', {
+            autoClear: true,
+            clearDuration: 4400
+          });
+        });
+      });
+    },
     saveInfo(userInfo) {
       if (this.get('dateOfBirth.month') > 9) {
         this.set('userInfo.dateOfBirth', this.get('dateOfBirth.year') + '-' + this.get('dateOfBirth.month') + '-' + this.get('dateOfBirth.date'));
@@ -105,37 +139,37 @@ export default Component.extend({
       set(account, 'email', userInfo.email);
       set(account, 'password', userInfo.password);
       account.validate()
-      .then(({
-        validations
-      }) => {
-        if (validations.get('isValid')) {
-          this.set('errors', false);
-          this.get('userHttp').updateUser(userInfo);
-        } else {
-          const self = this;
-          validations.errors.forEach(function(entry) {
-            if (entry.type === 'username-available') {
-              if (account.email === self.get('session.data.email')) {
-                self.set('isValidEmail', true);
-                self.set('errors', false);
-              } else {
-                self.set('isValidEmail', false);
-              }
-            } else if (entry.attribute === 'password') {
-              self.set('isValidPassword', true);
-            }
-          });
-          if (validations.errors.length > 2) {
-            this.set('isValid', false);
-          }
-          if (this.get('isValid') && this.get('isValidEmail') && this.get('isValidPassword')) {
+        .then(({
+          validations
+        }) => {
+          if (validations.get('isValid')) {
             this.set('errors', false);
             this.get('userHttp').updateUser(userInfo);
           } else {
-            this.set('errors', true);
+            const self = this;
+            validations.errors.forEach(function(entry) {
+              if (entry.type === 'username-available') {
+                if (account.email === self.get('userEmail')) {
+                  self.set('isValidEmail', true);
+                  self.set('errors', false);
+                } else {
+                  self.set('isValidEmail', false);
+                }
+              } else if (entry.attribute === 'password') {
+                self.set('isValidPassword', true);
+              }
+            });
+            if (validations.errors.length > 2) {
+              this.set('isValid', false);
+            }
+            if (this.get('isValid') && this.get('isValidEmail') && this.get('isValidPassword')) {
+              this.set('errors', false);
+              this.get('userHttp').updateUser(userInfo);
+            } else {
+              this.set('errors', true);
+            }
           }
-        }
-      });
+        });
     }
   }
 });

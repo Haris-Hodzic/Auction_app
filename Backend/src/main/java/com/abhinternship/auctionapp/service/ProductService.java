@@ -4,6 +4,11 @@ import com.abhinternship.auctionapp.exception.RepositoryException;
 import com.abhinternship.auctionapp.model.*;
 import com.abhinternship.auctionapp.model.filter.ProductSpecification;
 import com.abhinternship.auctionapp.repository.ProductRepository;
+import com.abhinternship.auctionapp.repository.UserRepository;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +19,12 @@ import java.util.*;
 public class ProductService implements BaseService<Product> {
     @Autowired
     ProductRepository repository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    private Cloudinary cloudinaryConfig;
 
     @Override
     public Product getById(Long requestId) throws RepositoryException {
@@ -30,9 +41,26 @@ public class ProductService implements BaseService<Product> {
     }
 
     @Override
-    public boolean create(LinkedHashMap request) {
-        //TODO
-        return false;
+    public boolean create(LinkedHashMap request) throws RepositoryException {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Product req = objectMapper.convertValue(request, new TypeReference<Product>() {
+            });
+            User seller = userRepository.getOneByEmail(req.getUser().getEmail());
+            for (int i = 0; i < req.getPhoto().size(); i++) {
+                Map uploadResult = cloudinaryConfig.uploader().upload(req.getPhoto().get(i), ObjectUtils.emptyMap());
+                uploadResult.get("url").toString();
+                req.getPhoto().set(i, uploadResult.get("url").toString());
+            }
+            req.setStatus("active");
+            req.setHighestBid(req.getStartPrice());
+            req.setNumberOfBids(0);
+            req.setUser(seller);
+            repository.save(req);
+            return true;
+        } catch (Exception e) {
+            throw new RepositoryException("Product can't be created!");
+        }
     }
 
     @Override
@@ -107,6 +135,11 @@ public class ProductService implements BaseService<Product> {
         }
     }
 
+    public List<Product> getAllActiveProducts() {
+        Date today = new Date(System.currentTimeMillis());
+        return repository.findByEndDateAfter(today);
+    }
+
     public List<SubcategoryDto> getDistinctSubcategories(String category) {
         return repository.getAllDistinctCountedGroupBySubcategory(category);
     }
@@ -141,5 +174,12 @@ public class ProductService implements BaseService<Product> {
             }
         }
         return soldProducts;
+    }
+
+    public BidNotification getBidNotification(BidNotification bidNotification) throws RepositoryException {
+        Product product = repository.getOne(bidNotification.getProductId());
+        bidNotification.setHighestBid(product.getHighestBid());
+        bidNotification.setNumberOfBids(product.getNumberOfBids());
+        return bidNotification;
     }
 }

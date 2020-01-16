@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class BidService implements BaseService<Bid> {
@@ -32,31 +30,46 @@ public class BidService implements BaseService<Bid> {
         return null;
     }
 
+    private void setBidAndProductInformation(Bid bid, Product product, Double price, User bidder, User creator) {
+        product.setHighestBid(price);
+        product.setHighestBidder(bidder.getEmail());
+        int numberOfBids = product.getNumberOfBids() + 1;
+        product.setNumberOfBids(numberOfBids);
+        product.setUser(creator);
+        productRepository.save(product);
+        bidRepository.save(bid);
+    }
+
     @Override
     public boolean create(LinkedHashMap request) throws RepositoryException {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             BidRequest req = objectMapper.convertValue(request, new TypeReference<BidRequest>() {
             });
-            String userEmail = req.getUserEmail();
-            User bidder = userRepository.getOneByEmail(userEmail);
-            Product product = req.getProduct();
+            Product product = productRepository.getOne(req.getProductId());
             User creator = userRepository.getOneByEmail(product.getUser().getEmail());
             Double price = req.getPrice();
+            String userEmail = req.getUserEmail();
+            User bidder = userRepository.getOneByEmail(userEmail);
             Date date = req.getDate();
-            DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
-
-            if (price > product.getHighestBid()) {
-                product.setHighestBid(price);
-                int numberOfBids = product.getNumberOfBids() + 1;
-                product.setNumberOfBids(numberOfBids);
-                product.setUser(creator);
-                productRepository.save(product);
-                Bid bid = new Bid(price, date, bidder, product);
-                bidRepository.save(bid);
-                return true;
+            if (bidRepository.existsByProduct(product) && bidRepository.existsByBidder(bidder)) {
+                if (price > product.getHighestBid()) {
+                    Bid bid = bidRepository.getBidByBidderAndProduct(bidder, product);
+                    bid.setDate(date);
+                    bid.setPrice(price);
+                    this.setBidAndProductInformation(bid, product, price, bidder, creator);
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                if (price > product.getHighestBid()) {
+                    Bid bid = new Bid(price, date, bidder, product);
+                    this.setBidAndProductInformation(bid, product, price, bidder, creator);
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } catch (Exception e) {
             throw new RepositoryException(e.getMessage());
@@ -94,7 +107,7 @@ public class BidService implements BaseService<Bid> {
     public Page<Bid> getBidsByUser(Long userId, Long pageNumber) throws RepositoryException {
         try{
             Pageable pageable = PageRequest.of(Math.toIntExact(pageNumber), 5);
-            return bidRepository.getAllByBidderId(userId, pageable);
+            return bidRepository.getAllByBidderIdOrderByDateDesc(userId, pageable);
         } catch (Exception e) {
             throw new RepositoryException("No bids found");
         }

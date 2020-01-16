@@ -1,5 +1,6 @@
 <PageBar @title="MY ACCOUNT">
 </PageBar>
+{{notification-container position="top-right" zindex="9999"}}
 <div class="accountBody">
   <div class="accountOptions">
     <button class="accountBtns profileBtn {{profileActiveClass}}" {{action "setProfileView"}}><i class="fa fa-user"></i>Profile</button>
@@ -15,7 +16,7 @@
       <SellerView  @activeProducts={{activeProductList}} @soldProducts={{soldProductList}} @userInfo={{userInfo}}></SellerView>
     {{/if}}
     {{#if isBidsButtonActive}}
-      <BidsView @bids={{userBids}} @userInfo={{userInfo}} @totalNumberOfBids={{totalNumberOfBids}}></BidsView>
+      <BidsView @bids={{userBids}} @userInfo={{userInfo}} @totalNumberOfBids={{totalNumberOfBids}} @notification={{isPaymentNotificationActive}}></BidsView>
       {{#if (gt bidsButtonsList.length 1)}}
         {{#each bidsButtonsList as |buttonNumber index|}}
           <button class="moreBtn" {{action "exploreMore" "bids" index}}>{{buttonNumber.page}}</button>

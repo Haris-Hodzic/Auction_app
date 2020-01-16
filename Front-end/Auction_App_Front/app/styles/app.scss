@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import "ember-modal-dialog/ember-modal-structure";
+@import "ember-modal-dialog/ember-modal-appearance";
 
 * {
   margin: 0;
@@ -23,7 +25,149 @@ button, input[type="submit"], input[type="reset"] {
   outline: inherit;
 }
 /*--------Footer-------*/
-
+.sellerRating{
+  width: 1000px;
+  border-radius: 0;
+  height: 600px;
+  border: none;
+  position: relative;
+  padding: 0;
+  .titleDiv{
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background: #FAFAFA;
+    .ratingTitle{
+      position: absolute;
+      left: 50%;
+      top: 17px;
+      font-family: Lato-Bold;
+      font-size: 20px;
+      color: #252525;
+      letter-spacing: 0.7px;
+      transform: translateX(-50%);
+    }
+  }
+  .ratingError{
+    position: absolute;
+    color: #8367D8;
+    font-family: Lato-Regular;
+    font-size: 16px;
+    letter-spacing: 0.63px;
+    top: 420px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .sellerPhoto{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 120px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .text{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: Lato-Regular;
+    font-size: 20px;
+    color: #252525;
+    letter-spacing: 0.63px;
+  }
+  .sellerName{
+    top: 230px;
+  }
+  .ratingText{
+    top: 300px;
+    font-size: 22px;
+  }
+  .stars{
+    position: absolute;
+    top: 360px;
+    left: 51%;
+    transform: translateX(-50%);
+    .rate {
+      float: left;
+      height: 46px;
+      padding: 0 10px;
+    }
+    .rate:not(:checked) > input {
+      position:absolute;
+      top:-9999px;
+    }
+    .rate:not(:checked) > label {
+      float:right;
+      width: 1.2em;
+      margin-right: 10px;
+      overflow:hidden;
+      white-space:nowrap;
+      cursor:pointer;
+      font-size:35px;
+      color:#ccc;
+    }
+    .rate:not(:checked) > label:before {
+      content: '★ ';
+    }
+    .rate > input:checked ~ label {
+      color: #8367D8;
+    }
+    .rate:not(:checked) > label:hover,
+    .rate:not(:checked) > label:hover ~ label {
+      color: #8367D8;  
+    }
+    .rate > input:checked + label:hover,
+    .rate > input:checked + label:hover ~ label,
+    .rate > input:checked ~ label:hover,
+    .rate > input:checked ~ label:hover ~ label,
+    .rate > label:hover ~ input:checked ~ label {
+      color: #8367D8;
+    }
+  }
+  .ratingButtons{
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    top: 470px;
+    .doneBtn{
+      position: absolute;
+      left: 74%;
+      width: 185px;
+      height: 100%;
+      background: #8367D8;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.63px;
+    }
+    .skipBtn{
+      position: absolute;
+      left: 70px;
+      width: 185px;
+      height: 100%;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      background: #FFFFFF;
+      border: 3px solid #E3E3E3;
+      box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+    }
+    .skipBtn:hover{
+      border: 4px solid #E3E3E3;
+      box-shadow: 3px 4px 0 0 rgba(0,0,0,0.05);
+    }
+    .doneBtn:hover{
+      border: 5px solid #8367D8;
+      box-shadow: 5px 5px 0 0 rgba(131,103,216,0.31);
+    }
+  }
+  
+}
 /*-------Header-------*/
 header{
   position: relative;
@@ -776,71 +920,184 @@ footer{
         }   
       }
       .featureCollection:hover{
-       img{
-        margin-top: 45px;      
-        opacity: 0.5;
-      }
-      .imageOptions{
-        position: absolute;
-        z-index: 1000;
-        visibility: visible;
-        margin-left: 50px;
-        padding-top: 192px;
-        .watchListBtn{
-          width: 140px;
-          height: 36px;
-          font-family: Lato-Regular;
-          font-size: 15px;
-          color: #252525;
-          letter-spacing: 0.52px;
-          line-height: 22px;
-          i{
-            color: #ECECEC;
-            margin-left: 7px;
-          }
-          .active{
-            color: #8367D8;
-          }
+        img{
+          margin-top: 45px;      
+          opacity: 0.5;
         }
-        .bidBtn{
-          width: 100px;
-          height: 36px;
-          font-family: Lato-Regular;
-          font-size: 15px;
-          color: #252525;
-          letter-spacing: 0.52px;
-          line-height: 22px;
-          i{
-            margin-left: 6px;
+        .imageOptions{
+          position: absolute;
+          z-index: 1000;
+          visibility: visible;
+          margin-left: 50px;
+          padding-top: 192px;
+          .watchListBtn{
+            width: 140px;
+            height: 36px;
+            font-family: Lato-Regular;
+            font-size: 15px;
+            color: #252525;
+            letter-spacing: 0.52px;
+            line-height: 22px;
+            i{
+              color: #ECECEC;
+              margin-left: 7px;
+            }
+            .active{
+              color: #8367D8;
+            }
           }
-        }
-        .bidBtn:hover{
-          border: #8367D8 solid 2px;
-        }
-        .watchListBtn:hover{
-          border: #8367D8 solid 2px;
+          .bidBtn{
+            width: 100px;
+            height: 36px;
+            font-family: Lato-Regular;
+            font-size: 15px;
+            color: #252525;
+            letter-spacing: 0.52px;
+            line-height: 22px;
+            i{
+              margin-left: 6px;
+            }
+          }
+          .bidBtn:hover{
+            border: #8367D8 solid 2px;
+          }
+          .watchListBtn:hover{
+            border: #8367D8 solid 2px;
+          }
         }
       }
     }
   }
-}
-.featureProductBody{
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 100px;
-  height: auto;
-  .featureProductTitle{
-    @extend %middleProductTitle;
-  }
-  .featureProductImages{
+  .featureProductBody{
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    border-top: #ECECEC solid 4px;
+    margin-top: 100px;
+    height: auto;
+    .featureProductTitle{
+      @extend %middleProductTitle;
+    }
+    .featureProductImages{
+      display: flex;
+      flex-wrap: wrap;
+      border-top: #ECECEC solid 4px;
+      width: 100%;
+      justify-content: space-between;
+      align-content: center;
+      .featureProduct{
+        position: relative;
+        .imageOptions{
+          visibility: hidden;
+        }
+        .ownerTag{
+          position: absolute;
+          width: 98%;
+          top: 45px;
+          height: 40px;
+          line-height: 30px;
+          z-index: 1000;
+          color: white;
+          font-family: Lato;
+          font-size: small;
+          padding: 3px;
+          background-color: #6c757d;
+          text-align: center;
+          opacity: 0.8;
+        }
+        img{
+          margin-top: 25px;
+          width: 260px;
+          height: 300px;
+          object-fit: scale-down;
+        }
+      }
+      .featureProduct:hover{
+        img{
+          margin-top: 46px;
+          opacity: 0.5;
+        }
+        .imageOptions{
+          position: absolute;
+          z-index: 1000;
+          visibility: visible;
+          margin-left: 10px;
+          padding-top: 192px;
+          .watchListBtn{
+            width: 140px;
+            height: 36px;
+            font-family: Lato-Regular;
+            font-size: 15px;
+            color: #252525;
+            letter-spacing: 0.52px;
+            line-height: 22px;
+            i{
+              color: #ECECEC;
+              margin-left: 7px;
+            }
+            .active{
+              color: #8367D8;
+            }
+          }
+          .bidBtn{
+            width: 100px;
+            height: 36px;
+            font-family: Lato-Regular;
+            font-size: 15px;
+            color: #252525;
+            letter-spacing: 0.52px;
+            line-height: 22px;
+            i{
+              margin-left: 6px;
+            }
+          }
+          .bidBtn:hover{
+            border: #8367D8 solid 2px;
+          }
+          .watchListBtn:hover{
+            border: #8367D8 solid 2px;
+          }
+        }
+      }
+    }
+  }
+
+  .bottomPartButtons{
+    height: auto;
     width: 100%;
+    margin-top: 100px;
+    margin-bottom: 25px;
+    display: block;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    border-bottom: #ECECEC solid 4px;
+    .bottomPartBtn{
+      padding-bottom: 12px;
+      height: 48px;
+      margin-right: 68px;
+      height: 48px;
+      text-decoration: none;
+      font-family: Lato-Regular;
+      font-size: 1.94VW;
+      color: #252525;
+      letter-spacing: 0.98px;
+      &:hover{
+        border-bottom: #8367D8 solid 4px;
+      }
+    }
+    .active{
+      border-bottom: #8367D8 solid 4px;
+    }
+  }
+  /*------Bottom Part-------*/
+
+  .bottomPartBody{
     justify-content: space-between;
-    align-content: center;
-    .featureProduct{
+    display: flex;
+    height: auto;
+    margin-bottom: 80px;
+    flex-wrap: wrap;
+    .bottomPart {
+      margin-top: 20px;
       position: relative;
       .imageOptions{
         visibility: hidden;
@@ -848,7 +1105,7 @@ footer{
       .ownerTag{
         position: absolute;
         width: 98%;
-        top: 45px;
+        top: 20px;
         height: 40px;
         line-height: 30px;
         z-index: 1000;
@@ -861,24 +1118,24 @@ footer{
         opacity: 0.8;
       }
       img{
-        margin-top: 25px;
         width: 260px;
-        height: 300px;
-        object-fit: scale-down;
+        height: 260px;
+        object-fit: cover;
       }
     }
-    .featureProduct:hover{
+    .bottomPart:hover {
       img{
-        margin-top: 46px;
+        margin-top: 20px;
         opacity: 0.5;
       }
       .imageOptions{
         position: absolute;
         z-index: 1000;
         visibility: visible;
-        margin-left: 10px;
-        padding-top: 192px;
+        left: 10px;
+        top: 152px;
         .watchListBtn{
+
           width: 140px;
           height: 36px;
           font-family: Lato-Regular;
@@ -915,137 +1172,34 @@ footer{
       }
     }
   }
-}
-
-.bottomPartButtons{
-  height: auto;
-  width: 100%;
-  margin-top: 100px;
-  margin-bottom: 25px;
-  display: block;
-  flex-wrap: wrap;
-  padding-bottom: 12px;
-  border-bottom: #ECECEC solid 4px;
-  .bottomPartBtn{
-    padding-bottom: 12px;
-    height: 48px;
-    margin-right: 68px;
-    height: 48px;
-    text-decoration: none;
-    font-family: Lato-Regular;
-    font-size: 1.94VW;
-    color: #252525;
-    letter-spacing: 0.98px;
-    &:hover{
-      border-bottom: #8367D8 solid 4px;
+  @media (max-width: 1000px) {
+    .featureCollectionBody{
+      .featureCollectionImages{
+        justify-content: center;
+      }
     }
-  }
-  .active{
-    border-bottom: #8367D8 solid 4px;
-  }
-}
-/*------Bottom Part-------*/
-
-.bottomPartBody{
-  justify-content: space-between;
-  display: flex;
-  height: auto;
-  margin-bottom: 80px;
-  flex-wrap: wrap;
-  .bottomPart {
-    margin-top: 20px;
-    position: relative;
-    .imageOptions{
-      visibility: hidden;
-    }
-    .ownerTag{
-      position: absolute;
-      width: 98%;
-      top: 20px;
-      height: 40px;
-      line-height: 30px;
-      z-index: 1000;
-      color: white;
-      font-family: Lato;
-      font-size: small;
-      padding: 3px;
-      background-color: #6c757d;
+    .productName{
       text-align: center;
-      opacity: 0.8;
+      font-size: 3.2VW;
     }
-    img{
-      width: 260px;
-      height: 260px;
-      object-fit: cover;
+    .productPrice{
+      text-align: center;
     }
   }
-  .bottomPart:hover {
-    img{
-      margin-top: 20px;
-      opacity: 0.5;
-    }
-    .imageOptions{
-      position: absolute;
-      z-index: 1000;
-      visibility: visible;
-      left: 10px;
-      top: 152px;
-      .watchListBtn{
-
-        width: 140px;
-        height: 36px;
-        font-family: Lato-Regular;
-        font-size: 15px;
-        color: #252525;
-        letter-spacing: 0.52px;
-        line-height: 22px;
-        i{
-            color: #ECECEC;
-            margin-left: 7px;
-          }
-          .active{
-            color: #8367D8;
-          }
-      }
-      .bidBtn{
-        width: 100px;
-        height: 36px;
-        font-family: Lato-Regular;
-        font-size: 15px;
-        color: #252525;
-        letter-spacing: 0.52px;
-        line-height: 22px;
-        i{
-          margin-left: 6px;
-        }
-      }
-      .bidBtn:hover{
-        border: #8367D8 solid 2px;
-      }
-      .watchListBtn:hover{
-        border: #8367D8 solid 2px;
+  @media (max-width: 700px) {
+    .featureProductBody{
+      .featureProductImages{
+        justify-content: center;
       }
     }
-  }
-}
-@media (max-width: 1000px) {
-  .featureCollectionBody{
-    .featureCollectionImages{
+    .bottomPartBody{
       justify-content: center;
     }
-  }
-  .productName{
-    text-align: center;
-    font-size: 3.2VW;
-  }
-  .productPrice{
-    text-align: center;
-  }
-}
-@media (max-width: 700px) {
-  .featureProductBody{
-    .featureProductImages{
-      justify-content: center;
+    .bottomPartButtons{
+      .bottomPartBtn{
+        margin-top: 50px;
+        font-size: 2.23VW;
+      }
     }
   }
   .bottomPartBody{
@@ -1057,7 +1211,6 @@ footer{
       font-size: 2.23VW;
     }
   }
-}
 }
 .pagination{
   margin-bottom: 100px;
@@ -1187,14 +1340,115 @@ footer{
           object-fit: cover;
         }
         .smallImage img:hover{
-            opacity: 0.5;
-          }
+          opacity: 0.5;
+        }
       }
     }
     .spRightSide{
       position: absolute;
       width: 62%;
       left: 37%;
+      .rating{
+        position: relative;
+        top: 40px;
+        width: 100%;
+        height: 60px;
+        .ratingP{
+          position: relative;
+          line-height: 55px;
+          top: -15px;
+          height: 100%;
+          display: inline-block;
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #9B9B9B;
+          letter-spacing: 0.56px;
+        }
+        .sellerName{
+          position: relative;
+          line-height: 55px;
+          height: 100%;
+          margin-left: 10px;
+          top: -15px;
+          display: inline-block;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+        }
+        .sellerRate{
+          position: relative;
+          line-height: 55px;
+          height: 100%;
+          margin-left: 10px;
+          top: -15px;
+          display: inline-block;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+        }
+        i {
+          position: relative;
+          margin-left: 25px;
+          display: inline-block;
+          top: -16px;
+          color: #8367D8;
+          height: 100%;
+        }
+        img{
+          position: relative;
+          display: inline-block;
+          margin-left: 10px;
+          top: 2.5px;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+        }
+      }
+      .paymentNotification{
+        position: relative;
+        top: 20px;
+        width: 100%;
+        height: 50px;
+        background-color: #ececfd;
+        p{
+          font-family: Lato-Regular;
+          height: 100%;
+          line-height: 50px;
+          display: inline-block;
+          padding-left: 25px;
+          font-size: 18px;
+          color: #8367D8;
+          letter-spacing: 0.63px;
+        }
+        a{
+          position: absolute;
+          font-family: Lato-Regular;
+          height: 100%;
+          line-height: 50px;
+          font-size: 18px;
+          color: #8367D8;
+          letter-spacing: 0.63px;
+          left: 95%;
+        }
+        a:hover{
+          cursor: pointer;
+        }
+      }
+      .soldSeller{
+        background-color: #F0F3EE;
+        p, a{
+          color: #417505;
+        }
+      }
+      .sold{
+        background-color: #F6F2E5;
+        p, a{
+          color: #AB944E;
+        }
+      }
       .spName{
         font-family: Lato-Regular;
         font-size: 46px;
@@ -1212,6 +1466,7 @@ footer{
         margin-top: 46px;
         display: flex;
         .bidInput{
+          padding-left: 15px;
           background: #ECECEC;
           border: 1px solid #D8D8D8;
           height:54px;
@@ -1276,6 +1531,23 @@ footer{
       }
       .watchListBtn:hover{
         border: 3px solid #8367D8;
+      }
+      .payBtn{
+        background: #FFFFFF;
+        border: 3px solid #8367D8;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+        width: 140px;
+        height: 36px;
+        font-family: Lato-Bold;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        margin-top: 45px;
+      }
+      .payBtn:hover{
+        border: 4px solid #8367D8;
+        box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
       }
       .bidDetails{
         font-family: Lato-Regular;
@@ -1397,7 +1669,7 @@ footer{
       }
     }
   }
-  
+
 }
 .bidsListBody{
   width: 78%;
@@ -1850,17 +2122,16 @@ footer{
     position: relative;
     width: 283px;
     padding-left: 18px;
-    padding-bottom: 5px;
     font-size: 16px;
     border: 3px solid #ECECEC;
     height: 46px;
-    display: flex;
+    display: inline-block;
     cursor: pointer;
     .dropdownText{
       position: absolute;
-      top: 8px;
+      top: 10px;
       font-family: Lato-Regular;
-      font-size: 16px;
+      font-size: 12pt;
       color: #252525;
       letter-spacing: 0.56px;
     }
@@ -1923,22 +2194,21 @@ footer{
     position: absolute;
     background: #FFFFFF;
     border: none;
-    display: flex;
     height: 46px;
     width: 100px;
     i{
-      position: absolute;
-      margin-left: 15px;
-      margin-top: 3px;
+      position: relative;
+      display: inline-block;
     }
     p{
       margin: 0;
-      position: relative;
-      left: 48px;
+      position: relative; 
+      display: inline-block;
       font-family: Lato-Bold;
       font-size: 16px;
       color: #252525;
       letter-spacing: 0.56px;
+      margin-left: 10px;
     }
   }
   .active{
@@ -2112,7 +2382,6 @@ footer{
     margin-bottom: 39px;
     .profileTitle{
       @extend %profileTitle;
-      border-right: 1px solid #D8D8D8; 
     }
     .profileRequiredForm{
       display: flex;
@@ -2171,244 +2440,407 @@ footer{
         margin-left: 52px;
         width: 690px;
         .inputLabel{
-         @extend %inLabel;
-         margin-top: 0px;
-         margin-left: 0px;
-         color: #252525;
-       }
-       .legend{
-        position: relative;
-        margin-top: 10px;
-        font-style: italic;
-        margin-left: 360px;
-      }
-      .input{
-        @extend %authInput;
-        margin-bottom: 19px;
-        margin-left: 0px;
-      }
-      .dateOfBirth{
-        display: flex;
-        margin-left: 54px;
-        .month{
-          .monthButton{
-            position: relative;
-            display: flex;
-            width: 180px;
-            height: 54px;
-            background: #FCFCFC;
-            border: 1px solid #D8D8D8;
-            padding-bottom: 9px;
-            cursor: pointer;
-            p{
-              position: absolute;
-              left: 15px;
-              top: 14px;
+          @extend %inLabel;
+          margin-top: 0px;
+          margin-left: 0px;
+          color: #252525;
+        }
+        .legend{
+          position: relative;
+          margin-top: 10px;
+          font-style: italic;
+          margin-left: 360px;
+        }
+        .input{
+          @extend %authInput;
+          margin-bottom: 19px;
+          margin-left: 0px;
+        }
+        .dateOfBirth{
+          display: flex;
+          margin-left: 54px;
+          .month{
+            .monthButton{
+              position: relative;
+              display: flex;
+              width: 180px;
+              height: 54px;
+              background: #FCFCFC;
+              border: 1px solid #D8D8D8;
+              padding-bottom: 9px;
+              cursor: pointer;
+              p{
+                position: absolute;
+                left: 15px;
+                top: 14px;
+                font-family: Lato-Regular;
+                font-size: 18px;
+                color: #252525;
+                letter-spacing: 0.63px;
+              }
+              img{
+                position: absolute;
+                left: 130px;
+                top: 14px;
+                width: 34px;
+                height: 24px;
+              }
+            }
+            .monthOptions{
+              @extend %dateOptions;
+              max-height: 150px;
+              overflow-y: auto;
+            }
+          }
+          .date{
+            margin-left: 20px;
+            .dateButton{
+              position: relative;
+              display: flex;
+              width: 100px;
+              height: 54px;
+              background: #FCFCFC;
+              border: 1px solid #D8D8D8;
+              padding-bottom: 9px;
+              cursor: pointer;
+              p{
+                position: absolute;
+                left: 15px;
+                top: 14px;
+                font-family: Lato-Regular;
+                font-size: 18px;
+                color: #252525;
+                letter-spacing: 0.63px;
+              }
+              img{
+                position: absolute;
+                left: 50px;
+                top: 14px;
+                width: 34px;
+                height: 24px;
+              }
+            }
+            .dateOptions{
+              @extend %dateOptions;
+              max-height: 150px;
+              overflow-y: auto;
+            }
+          }
+          .year{
+            margin-left: 20px;
+            input[type=number] {
+              width: 125px;
+              height: 53px;
+              background: #FCFCFC;
+              border: 1px solid #D8D8D8;
               font-family: Lato-Regular;
               font-size: 18px;
               color: #252525;
               letter-spacing: 0.63px;
-            }
-            img{
-              position: absolute;
-              left: 130px;
-              top: 14px;
-              width: 34px;
-              height: 24px;
+              padding-left: 15px;
             }
           }
-          .monthOptions{
-            @extend %dateOptions;
-            max-height: 150px;
-            overflow-y: auto;
-          }
         }
-        .date{
-          margin-left: 20px;
-          .dateButton{
-            position: relative;
-            display: flex;
-            width: 100px;
-            height: 54px;
-            background: #FCFCFC;
-            border: 1px solid #D8D8D8;
-            padding-bottom: 9px;
-            cursor: pointer;
-            p{
-              position: absolute;
-              left: 15px;
-              top: 14px;
-              font-family: Lato-Regular;
-              font-size: 18px;
-              color: #252525;
-              letter-spacing: 0.63px;
-            }
-            img{
-              position: absolute;
-              left: 50px;
-              top: 14px;
-              width: 34px;
-              height: 24px;
-            }
-          }
-          .dateOptions{
-            @extend %dateOptions;
-            max-height: 150px;
-            overflow-y: auto;
-          }
+        .phoneLabel{
+          margin-top: 19px;
         }
-        .year{
-          margin-left: 20px;
-          input[type=number] {
-            width: 125px;
-            height: 53px;
-            background: #FCFCFC;
-            border: 1px solid #D8D8D8;
-            font-family: Lato-Regular;
-            font-size: 18px;
-            color: #252525;
-            letter-spacing: 0.63px;
-            padding-left: 15px;
-          }
-        }
-      }
-      .phoneLabel{
-        margin-top: 19px;
-      }
-      ::placeholder{
-        font-family: Lato-Regular;
-        font-size: 18px;
-        color: #252525;
-        letter-spacing: 0.63px;
-      }
-      .profileGender{
-        position: relative;
-        width: 290px;
-        height: 54px;
-        background: #FCFCFC;
-        border: 1px solid #D8D8D8;
-        font-family: Lato-Regular;
-        font-size: 18px;
-        color: #252525;
-        letter-spacing: 0.63px;
-        padding-left: 15px;
-        padding-top: 15px;
-        display: flex;
-        cursor: pointer;
-        margin-left: 54px;
-        .genderDropdownImg{
-          position: absolute;
-          left: 210px;
-          width: 34px;
-          height: 24px;
-        }
-      }
-      .genderOptions{
-        position: relative;
-        margin-left: 54px;
-        width: 290px;
-        height: auto;
-        background: #FCFCFC;
-        border: 1px solid #D8D8D8;
-        list-style-type: none;
-        padding: 0;
-        margin-bottom: 19px;
-        padding-left: 15px;
-        overflow: hidden;
-        padding-bottom: 19px;
-        li{
+        ::placeholder{
           font-family: Lato-Regular;
           font-size: 18px;
           color: #252525;
           letter-spacing: 0.63px;
-          padding-top: 19px;
+        }
+        .profileGender{
+          position: relative;
+          width: 290px;
+          height: 54px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+          padding-top: 15px;
+          display: flex;
           cursor: pointer;
+          margin-left: 54px;
+          .genderDropdownImg{
+            position: absolute;
+            left: 210px;
+            width: 34px;
+            height: 24px;
+          }
+        }
+        .genderOptions{
+          position: relative;
+          margin-left: 54px;
+          width: 290px;
+          height: auto;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          list-style-type: none;
+          padding: 0;
+          margin-bottom: 19px;
+          padding-left: 15px;
+          overflow: hidden;
+          padding-bottom: 19px;
+          li{
+            font-family: Lato-Regular;
+            font-size: 18px;
+            color: #252525;
+            letter-spacing: 0.63px;
+            padding-top: 19px;
+            cursor: pointer;
+          }
         }
       }
     }
+
+  }
+  .cardInfo{
+    position: relative;
+    width: 100%;
+    height: 480px;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    margin-bottom: 39px;
+    .profileTitle{
+      @extend %profileTitle;
+    }
+    .cardTop{
+      position: absolute;
+      width: 604px;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      .acceptedCards{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        line-height: 26px;
+        margin-bottom: 10px;
+      }
+      .acceptedCardsImages{
+        position: relative;
+        display: inline-block;
+
+        .cardImage{
+          background: #26337A;
+          border-radius: 2px;
+          object-fit: cover;
+          background-position: center;
+          width: 50px;
+          height: 30px;
+        }
+      }
+    }
+    .enterCard{
+      position: absolute;
+      left: 50%;
+      top: 190px;
+      transform: translateX(-50%);
+      .group {
+        width: 604px;
+        .inputLabel{
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #252525;
+          letter-spacing: 0.56px;
+          margin-bottom: 8px;
+        }
+        .cardInput{
+          width: 290px;
+          height: 46px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+          padding-top: 11px;
+        }
+        .nameOnCard{
+          width: 290px;
+          height: 46px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+        }
+        ::placeholder{
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #9B9B9B;
+          letter-spacing: 0.56px;
+        }
+        .cardFormRowOne{
+          position: relative;
+          margin-bottom: 39px;
+          .cardNumber{
+            display: inline-block;
+            position: absolute;
+            left: 310px;
+          } 
+          .cardName{
+            display: inline-block;
+          }
+        }
+        .cardFormRowTwo{
+          position: relative;
+          .expirationDate{
+            display: inline-block;
+          }
+          .cvc{
+            position: absolute;
+            display: inline-block;
+            left: 310px;
+            .payButton{
+              position: absolute;
+              background: #FFFFFF;
+              border: 3px solid #8367D8;
+              box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+              font-family: Lato-Bold;
+              font-size: 15px;
+              color: #252525;
+              letter-spacing: 0.63px;
+              left: -10px;
+              width: 140px;
+              height: 46px;
+              top: 100px;
+              transform: translateX(-50%);
+            }
+            .payButton:hover{
+              border: 4px solid #8367D8;
+              box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+            }
+          }
+        }
+      }
+    }
+    .changeCardButton{
+      position: absolute;
+      background: #FFFFFF;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      font-family: Lato-Bold;
+      font-size: 15px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      left: 50%;
+      width: 140px;
+      height: 46px;
+      top: 410px;
+      transform: translateX(-50%);
+    }
+    .error{
+      font-family: Lato-Bold;
+      position: absolute;
+      width: 400px;
+      left: 2px;
+      color: #8367D8;
+      margin: 0;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    
+    .changeCardButton:hover{
+      border: 4px solid #8367D8;
+      box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+    }
+    .cardButton:hover{
+      border: 4px solid #8367D8;
+      box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+    }
   }
 
-}
-
-.optional{
-  position: relative;
-  width: 100%;
-  height: auto;
-  background: #FFFFFF;
-  border: 1px solid #D8D8D8;
-  padding-bottom: 40px;
-  .profileTitle{
-    @extend %profileTitle;
-    border-right: 1px solid #D8D8D8; 
+  .optional{
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    padding-bottom: 40px;
+    .profileTitle{
+      @extend %profileTitle;
+    }
+    .inputLabel{
+      font-family: Lato-Regular;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      position: relative;
+      margin-top: 0px;
+      margin-bottom: 8px;
+      color: #252525;
+    }
+    .input{
+      @extend %authInput;
+      width: 100%;
+      margin-bottom: 19px;
+      margin-left: 0px;
+    }
+    .middlePartLabels{
+      display: flex;
+      .zipLabel{
+        margin-left: 278px;
+      }
+    }
+    .middlePart{
+      position: relative;
+      width: 100%;
+      margin-bottom: 19px;
+      .minput{
+        width: 48%;
+        background: #FCFCFC;
+        border: 1px solid #D8D8D8;
+        height: 54px;
+        padding-left: 15px;
+        @extend %inputFont;
+      }
+      .zip{
+        margin-left: 20px;
+      }
+    }
+    .optionalBody{
+      width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 39px;
+      height: auto;
+      .addressTitle{
+        font-family: Lato-Regular;
+        font-size: 28px;
+        color: #252525;
+        letter-spacing: 0.98px;
+        margin-bottom: 19px;
+      }
+    }
   }
-  .inputLabel{
-    font-family: Lato-Regular;
+  .saveProfile{
+    position: absolute;
+    background: #FFFFFF;
+    border: 3px solid #8367D8;
+    box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+    width: 243px;
+    height: 57px;
+    font-family: Lato-Bold;
     font-size: 18px;
     color: #252525;
     letter-spacing: 0.63px;
-    position: relative;
-    margin-top: 0px;
-    margin-bottom: 8px;
-    color: #252525;
-  }
-  .input{
-    @extend %authInput;
-    width: 100%;
-    margin-bottom: 19px;
-    margin-left: 0px;
-  }
-  .middlePartLabels{
-    display: flex;
-    .zipLabel{
-      margin-left: 278px;
-    }
-  }
-  .middlePart{
-    position: relative;
-    width: 100%;
-    margin-bottom: 19px;
-    .minput{
-      width: 48%;
-      background: #FCFCFC;
-      border: 1px solid #D8D8D8;
-      height: 54px;
-      padding-left: 15px;
-      @extend %inputFont;
-    }
-    .zip{
-      margin-left: 20px;
-    }
-  }
-  .optionalBody{
-    width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    left: 89%;
+    transform: translateX(-50%);
     margin-top: 39px;
-    height: auto;
-    .addressTitle{
-      font-family: Lato-Regular;
-      font-size: 28px;
-      color: #252525;
-      letter-spacing: 0.98px;
-      margin-bottom: 19px;
-    }
   }
-}
-.saveProfile{
-  position: absolute;
-  background: #FFFFFF;
-  border: 3px solid #8367D8;
-  box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
-  width: 243px;
-  height: 57px;
-  font-family: Lato-Bold;
-  font-size: 18px;
-  color: #252525;
-  letter-spacing: 0.63px;
-  left: 89%;
-  transform: translateX(-50%);
-  margin-top: 39px;
-}
+  .saveProfile:hover{
+    border: 4px solid #8367D8;
+    box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+  }
 }
 
 /*--------Seller View-------*/
@@ -2504,15 +2936,18 @@ footer{
       left: 77.1%;
     }
   }
+  .pending{
+    background-color: #ececfd;
+  }
   .products{
     position: relative;
     display: flex;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    height: 80px;
+    margin-bottom: 3px;
+    height: 100px;
     .accountProductImg{
       position: absolute;
       left: 2.8%;
+      top: 10px;
       width: 80px;
       max-height: 80px;
     }
@@ -2531,6 +2966,7 @@ footer{
       position: absolute;
       padding-top: 28px;
       left: 39.9%;
+      top: 10px;
       width: 100px;
     }
     .productPrice{
@@ -2538,6 +2974,7 @@ footer{
       position: absolute;
       padding-top: 28px;
       left: 53.9%;
+      top: 10px;
       width: 110px;
     }
     .productPriceHighest{
@@ -2545,6 +2982,7 @@ footer{
       position: absolute;
       padding-top: 28px;
       left: 53.9%;
+      top: 10px;
       width: 110px;
       color: #6CC047;
     }
@@ -2552,6 +2990,7 @@ footer{
       @extend %sellerActiveFont;
       position: absolute;
       padding-top: 28px;
+      top: 10px;
       left: 67%;
       width: 90px;
     }
@@ -2561,12 +3000,14 @@ footer{
       position: absolute;
       padding-top: 28px;
       left: 78.6%;
+      top: 10px;
       width: 90px;
     }
     .viewBtn{
       color: black;
       position: absolute;
       left: 89%;
+      top: 10px;
       width: 103px;
       margin-top: 13px;
       height: 49px;
@@ -2645,12 +3086,43 @@ footer{
   }
 }
 .moreBtn{
-    @extend %moreButton;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+  @extend %moreButton;
+  position: relative;
+  margin-top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 .bidsView{
+  .paymentNotification{
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    height: 50px;
+    background-color: #ececfd;
+    p{
+      font-family: Lato-Regular;
+      height: 100%;
+      line-height: 50px;
+      display: inline-block;
+      padding-left: 25px;
+      font-size: 18px;
+      color: #8367D8;
+      letter-spacing: 0.63px;
+    }
+    a{
+      position: absolute;
+      font-family: Lato-Regular;
+      height: 100%;
+      line-height: 50px;
+      font-size: 18px;
+      color: #8367D8;
+      letter-spacing: 0.63px;
+      left: 95%;
+    }
+    a:hover{
+      cursor: pointer;
+    }
+  }
   margin-top: 94px;
   .moreBtn{
     @extend %moreButton;
@@ -2671,3 +3143,1163 @@ footer{
     @extend %moreButton;
   }
 }
+.sellerSold{
+  .moreBtn{
+    @extend %moreButton;
+  }
+}
+/*--------Payment--------*/
+.paymantView{
+  position: relative;
+  width: 50%;
+  height: auto;
+  margin-bottom: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  .paymantForm{
+    width: 100%;
+    margin-top: 40px;
+    border: 1px solid #D8D8D8;
+    height: 1200px;
+    position: relative;
+    .paymantTitle{
+      background: #FAFAFA;
+      height: 50px;
+      width: 100%;
+      margin-bottom: 40px;
+      p{
+        margin: 0;
+        position: absolute;
+        left: 50%;
+        line-height: 50px;
+        transform: translateX(-50%);
+        font-family: Lato-Bold;
+        font-size: 20px;
+        color: #252525;
+        letter-spacing: 0.7px;
+      }
+    }
+    .inputLabel{
+      position: relative;
+      width: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: Lato-Regular;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+      color: #252525;
+    }
+    .inputLabelAddress{
+      width: 84.4%;
+    }
+    .input{
+      @extend %authInput;    
+    }
+    ::placeholder{
+      font-family: Lato-Regular;
+      font-size: 16px;
+      color: #9B9B9B;
+      letter-spacing: 0.56px;
+    }
+    .error{
+      @extend %error;
+      margin-left: 0px;
+      margin-top: 3px;
+      z-index: -1; 
+    }
+    .addressError{
+      position: absolute;
+      left: 8%;
+      top: 173px;
+    }
+    .cityError{
+      position: absolute;
+      left: 52.5%;
+    }
+    .zipError{
+      position: absolute;
+      left: 8%;
+      top: 389px;
+    }
+    .phoneError{
+      position: absolute;
+      left: 8%;
+      top: 512px;
+    }
+    .paymantMiddle{
+      position: relative;
+      width: 84.4%;
+      left: 50%;
+      margin-bottom: 40px;
+      transform: translateX(-50%);
+      justify-content: space-between;
+      .countryDropdown{
+        position: relative;
+        width: 47.5%;
+        display: inline-block;
+        .country{
+          height: 54px;
+          background: #FFFFFF;
+          border: 3px solid #ECECEC;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          line-height: 50px;
+          padding-left: 15px;
+          img{
+            position: absolute;
+            left: 80%;
+            top: 14px;
+            width: 34px;
+            height: 24px;
+          }
+        }
+        .countryOptions{
+          @extend %dateOptions;
+          max-height: 180px;
+          overflow-y: auto;
+        }
+      }
+
+      .city{
+        position: absolute;
+        width: 47.5%;
+        height: 54px;
+        background: #FFFFFF;
+        border: 3px solid #ECECEC;
+        margin-left: 5%;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 50px;
+        padding-left: 15px;
+      }
+    }
+    .cardDiv{
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 84.4%;
+      margin-bottom: 40px;
+      .checkB{
+        height: 20px;
+        width: 20px;
+      }
+      p{
+        display: inline-block;
+        margin-left: 8px;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 26px;
+      }
+    }
+    .cardTop{
+      position: relative;
+      width: 604px;
+      left: 43%;
+      transform: translateX(-50%);
+      margin-bottom: 60px;
+      .acceptedCards{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        line-height: 26px;
+        margin-bottom: 10px;
+      }
+      .acceptedCardsImages{
+        position: relative;
+        display: inline-block;
+
+        .cardImage{
+          background: #26337A;
+          border-radius: 2px;
+          object-fit: cover;
+          background-position: center;
+          width: 50px;
+          height: 30px;
+        }
+      }
+    }
+  }
+  .paymentCard{
+    width: 100%;
+    .paymentPayButton{
+      position: relative;
+      padding-top: 1.7px;
+      margin-top: 82px;
+      background: #8367D8;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      left: 73.5vh;
+      width: 183px;
+      height: 57px;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.63px;
+      margin-bottom: 60px;
+    }
+    .noCardNotification{
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 84.4%;
+      margin-bottom: 60px;
+      p{
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 26px;
+        margin-bottom: 20px;
+      }
+      a{
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #8367D8;
+        letter-spacing: 0.63px;
+      }
+    }
+  }
+  
+
+  .enterCard{
+    margin-left: 50%;
+    transform: translateX(-84%);    
+    .group {
+      width: 100%;
+      .inputLabel{
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        margin-bottom: 8px;
+      }
+      .error{
+        font-family: Lato-Bold;
+        position: absolute;
+        width: 400px;
+        left: 2px;
+        color: #8367D8;
+        margin: 0;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+      .cardInput{
+        width: 41vh;
+        height: 46px;
+        background: #FCFCFC;
+        border: 1px solid #D8D8D8;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        padding-left: 15px;
+        padding-top: 11px;
+      }
+      .nameOnCard {
+        width: 41vh;
+        height: 46px;
+        background: #FCFCFC;
+        border: 1px solid #D8D8D8;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        padding-left: 15px;
+      }
+      ::placeholder{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+      }
+      .cardFormRowOne{
+        position: relative;
+        margin-bottom: 39px;
+        .cardNumber{
+          display: inline-block;
+          position: absolute;
+          margin-left: 26px;
+        } 
+        .cardName{
+          display: inline-block;
+        }
+      }
+      .cardFormRowTwo{
+        position: relative;
+        .expirationDate{
+          display: inline-block;
+        }
+        .cvc{
+          position: absolute;
+          display: inline-block;
+          margin-left: 26px;
+          .payButton{
+            position: relative;
+            margin-top: 100px;
+            background: #8367D8;
+            border: 3px solid #8367D8;
+            box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+            left: 190px;
+            width: 183px;
+            height: 57px;
+            font-family: Lato-Bold;
+            font-size: 18px;
+            color: #FFFFFF;
+            letter-spacing: 0.63px;
+            margin-bottom: 60px;
+          }
+        }
+      }
+    }
+  }
+}
+.auctionFinishedNotification{
+  top: 30px;
+  left: 20px;
+  background-color: #8367D8;
+}
+
+
+/*---------Sell----------*/
+%error{
+  position: absolute;
+  width: 84.4%;
+  font-family: Lato-Regular;
+  font-size: 16px;
+  color: #8367D8;
+  letter-spacing: 0.56px;
+}
+%sellTitle{
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  background: #FAFAFA;
+  font-family: Lato-Bold;
+  font-size: 20px;
+  color: #252525;
+  letter-spacing: 0.7px;
+  text-align: center;
+}
+.sellProductView{
+  position: relative;
+  width: 50%;
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  .progressBar{
+    position: absolute;
+    top: 30px;
+    width: 100%;
+  }
+  .productInfoView{
+    position: relative;
+    top: 110px;
+    width: 100%;
+    height: 1112px;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    border-top: 2px solid #D8D8D8;
+    .sellTitle{
+      @extend %sellTitle;
+    }
+    .name{
+      position: relative;
+      top: 41px;
+      .inputLabel{
+        @extend %inLabel;
+      }
+      .input{
+        @extend %authInput;
+        margin-bottom: 0px;
+      }
+      .inputRequiredInfo{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        text-align: right;
+        margin-top: 11px;
+        margin-right: 7.7%;
+      }
+      .error{
+        @extend %error;
+        position: absolute;
+        top: 90px;
+        left: 44.4%;
+        transform: translateX(-50%);
+      }
+    }
+    .description{
+      position: absolute;
+      width: 100%;
+      top: 370px;
+      .inputLabel{
+        @extend %inLabel;
+      }
+      .input{
+        @extend %authInput;
+        height: 162px;
+        margin-bottom: 0px;
+      }
+      .inputRequiredInfo{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        text-align: right;
+        margin-top: 11px;
+        margin-right: 7.7%;
+      }
+      .error{
+        @extend %error;
+        position: absolute;
+        top: 200px;
+        left: 2%;
+      }
+    }
+    .photoUpload{
+      position: absolute;
+      top: 655px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 84.4%;
+      height: 320px;
+      background: #FCFCFC;
+      border: 1px solid #D8D8D8;
+      .changePhoto{
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+      .dropzone{
+        height: 100%;
+        .uploadButton{
+          font-family: Lato-Bold;
+          font-size: 14px;
+          color: #8367D8;
+          letter-spacing: 0.49px;
+          cursor: pointer;
+          margin-right: 15px;
+        }
+        p{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: Lato-Regular;
+          font-size: 14px;
+          color: #252525;
+          letter-spacing: 0.49px;
+        }
+        .images{
+          position: absolute;
+          display: flex;
+          flex-wrap: nowrap;
+          width: auto;
+          left: 50%;
+          top: 30px;
+          transform: translateX(-50%);
+          .productImg{
+            position: relative;
+            margin-left: 10px;
+            width: 100px;
+            height: 100px;
+            border: none;
+            object-fit: cover;
+            background-position: top;
+          }
+          .removePhoto{
+            position: relative;
+            left: -20px;
+            top: 5px;
+            font-family: Lato-Bold;
+            color: #8367D8;
+            cursor: pointer;
+          }
+        }
+        .photoError{
+          font-family: Lato-Bold;
+          font-size: 14px;
+          color: #8367D8;
+          letter-spacing: 0.49px;
+          position: absolute;
+          top: 200px;
+        }
+        
+      }
+      .changePhotoLabel{
+        display: block;
+        width: 203px;
+        height: 51px;
+        padding-top: 12px;
+        background: #FFFFFF;
+        border: 3px solid #E3E3E3;
+        box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+        font-family: Lato-Bold;
+        font-size: 16px;
+        color: #252525;
+        letter-spacing: 0.56px;
+        text-align: center;
+      }
+      .error{
+        @extend %error;
+        width: 40%;
+        position: absolute;
+        top: 320px;
+        left: -6.7%;
+      }
+    }
+    .categories{
+      position: absolute;
+      width: 84.4%;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 54px;
+      top: 270px;
+      .dropdown{
+        position: relative;
+        display: inline-block;
+        width: 45%;
+        height: 100%;
+        background: #FFFFFF;
+        border: 3px solid #ECECEC;
+        p{
+          position: absolute;
+          top: 12px;
+          left: 18px;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          cursor: pointer;
+        }
+        img{
+          position: absolute;
+          top: 12px;
+          left: 83%;
+          width: 34px;
+          height: 24px;
+          cursor: pointer;
+        }
+      }
+      .subcategoryDropdown{
+        float: right;
+      }
+    }
+    .categoryError{
+      @extend %error;
+      position: absolute;
+      top: 325px;
+      left: 44.4%;
+      transform: translateX(-50%);
+    }
+    .subcategoryError{
+      @extend %error;
+      position: absolute;
+      top: 325px;
+      width: 45%;
+      left: 71%;
+      transform: translateX(-50%);
+    }
+    .categoriesOptions{
+      position: absolute;
+      z-index: 1000;
+      width: 84.4%;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 324px;
+      height: auto;
+      ul{
+        list-style-type: none;
+        margin: 0;
+        display: inline-block;
+        padding: 0;
+        width: 45%;
+        background: #FFFFFF;
+        border: 3px solid #ECECEC;
+        li{
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          padding-left: 20px;
+          cursor: pointer;
+        }
+        li:hover{
+          background: #8367D8;
+          color: #FFFFFF;
+        }
+      }
+      .subcategoryOptions{
+        float: right;
+      }
+    }
+
+    .nextButton{
+      position: absolute;
+      top: 1020px;
+      width: 183px;
+      height: 57px;
+      left: 72%;
+      cursor: pointer;
+      background: #FFFFFF;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      .gt{
+        position: absolute;
+        left: 124px;
+        top: 8px;
+        font-size: 26px;
+      }
+    }
+    .nextButton:hover{
+      border: 4px solid #8367D8;
+      box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+    }
+  }
+  .productPriceView{
+    position: relative;
+    top: 110px;
+    width: 100%;
+    height: 662px;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    border-top: 2px solid #D8D8D8;
+    .sellTitle{
+      @extend %sellTitle;
+    }
+    .price{
+      position: relative;
+      top: 41px;
+      .inputLabel{
+        @extend %inLabel;
+      }
+      .priceInput{
+        position: relative;
+        width: 84.4%;
+        left: 50%;
+        transform: translateX(-50%);
+        p{
+          position: absolute;
+          z-index: 1000;
+          margin: 0;
+          display: inline-block;
+          height: 54px;
+          width: 54px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          padding-left: 22px;
+          line-height: 54px;
+          font-weight: bold;
+          font-size: 18px;
+        }
+        .error{
+          @extend %error;
+          position: absolute;
+          margin-left: 0;
+          top: 60px;
+          width: 100%;
+        }
+        .input{
+          position: absolute;
+          width: 100%;
+          height: 54px;
+          background: #FFFFFF;
+          border: 1px solid #D8D8D8;
+          display: inline-block; 
+          padding-left: 70px;
+          @extend %inputFont;       }
+        }
+      }
+      .date{
+        position: relative;
+        top: 160px;
+        width: 84.4%;
+        height: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        .dateInput{
+          position: relative;
+          width: 48%;
+          display: inline-block;
+          .inputLabel{
+            @extend %inLabel;
+            left: 42.2%;
+          }
+          .error{
+            @extend %error;
+            position: absolute;
+            margin-left: 0;
+            top: 95px;
+            width: 100%;
+          }
+          .input{
+            height: 54px;
+            width: 100%;
+            border: 1px solid #D8D8D8;
+            padding-left: 15px;
+            @extend %inputFont;
+            background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  96% 50% no-repeat;
+          }
+          .input::-webkit-inner-spin-button {
+            display: none;
+          }
+          .input::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            cursor: pointer;
+          }
+          .input::-webkit-clear-button
+          {
+            display: none;
+            -webkit-appearance: none;
+          }
+        }
+        .startDate{
+        }
+        .endDate{
+          float: right;
+        }
+      }
+      .info{
+        position: absolute;
+        width: 84.4%;
+        left: 50%;
+        top: 390px;
+        transform: translateX(-50%);
+        font-family: Lato-Regular;
+        font-size: 17px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        line-height: 30px;
+      }
+      .buttons{
+        position: absolute;
+        top: 540px;
+        width: 84.4%;
+        left: 50%;
+        transform: translateX(-50%);
+        .priceBtn{
+          width: 183px;
+          height: 57px;
+          display: inline-block;
+          font-family: Lato-Bold;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+        }
+        .nextBtn{
+          position: relative;
+          background: #FFFFFF;
+          border: 3px solid #8367D8;
+          box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+          float: right;
+          .gt{
+            position: absolute;
+            left: 124px;
+            top: 8px;
+            font-size: 26px;
+          }
+        }
+        .nextBtn:hover{
+          border: 4px solid #8367D8;
+          box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+        }
+        .backBtn{
+          background: #FFFFFF;
+          border: 3px solid #E3E3E3;
+          box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+          .lt{
+            position: absolute;
+            left: 42px;
+            top: 10.9px;
+            font-size: 26px;
+          }
+        }
+        .backBtn:hover{
+          border: 4px solid #E3E3E3;
+          box-shadow: 3px 4px 0 0 rgba(0,0,0,0.05);
+        }
+      }
+    }
+    .locationView{
+      position: relative;
+      top: 110px;
+      width: 100%;
+      height: 1370px;
+      background: #FFFFFF;
+      border: 1px solid #D8D8D8;
+      border-top: 2px solid #D8D8D8;
+      .sellTitle{
+        @extend %sellTitle;
+        margin-bottom: 50px;
+      }
+      .error{
+        @extend %error;
+        margin-left: 0px;
+        margin-top: 3px;  
+      }
+      .addressError{
+        position: absolute;
+        left: 8%;
+        top: 193px;
+      }
+      .cityError{
+        position: absolute;
+        left: 52.5%;
+      }
+      .zipError{
+        position: absolute;
+        left: 8%;
+        top: 409px;
+      }
+      .phoneError{
+        position: absolute;
+        left: 8%;
+        top: 531px;
+      }
+      .inputLabel{
+        position: relative;
+        width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        margin-top: 0px;
+        margin-bottom: 8px;
+        color: #252525;
+      }
+      .inputLabelAddress{
+        width: 84.4%;
+      }
+      .input{
+        @extend %authInput;    
+      }
+      ::placeholder{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+      }
+      .paymantMiddle{
+        position: relative;
+        width: 84.4%;
+        left: 50%;
+        margin-bottom: 40px;
+        transform: translateX(-50%);
+        justify-content: space-between;
+        .countryDropdown{
+          position: relative;
+          width: 47.5%;
+          display: inline-block;
+          .country{
+            height: 54px;
+            background: #FFFFFF;
+            border: 3px solid #ECECEC;
+            font-family: Lato-Regular;
+            font-size: 18px;
+            color: #252525;
+            letter-spacing: 0.63px;
+            line-height: 50px;
+            padding-left: 15px;
+            img{
+              position: absolute;
+              left: 80%;
+              top: 14px;
+              width: 34px;
+              height: 24px;
+            }
+          }
+          .countryOptions{
+            @extend %dateOptions;
+            max-height: 180px;
+            overflow-y: auto;
+          }
+        }
+      }
+      .city{
+        position: absolute;
+        width: 47.5%;
+        height: 54px;
+        background: #FFFFFF;
+        border: 3px solid #ECECEC;
+        margin-left: 5%;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 50px;
+        padding-left: 15px;
+      }
+    }
+    .cardDiv{
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 84.4%;
+      margin-bottom: 40px;
+      .checkB{
+        height: 20px;
+        width: 20px;
+      }
+      p{
+        display: inline-block;
+        margin-left: 8px;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 26px;
+      }
+    }
+    .shippingInfo{
+      position: relative;
+      top: -20px;
+      width: 78%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: 40px;
+      font-family: Lato-Regular;
+      font-size: 18px;
+      color: #9B9B9B;
+      letter-spacing: 0.63px;
+      line-height: 26px;
+    }
+    .cardTop{
+      position: relative;
+      width: 604px;
+      left: 43%;
+      transform: translateX(-50%);
+      margin-bottom: 60px;
+      .acceptedCards{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        line-height: 26px;
+        margin-bottom: 10px;
+      }
+      .acceptedCardsImages{
+        position: relative;
+        display: inline-block;
+
+        .cardImage{
+          background: #26337A;
+          border-radius: 2px;
+          object-fit: cover;
+          background-position: center;
+          width: 50px;
+          height: 30px;
+        }
+      }
+    }
+    .paymentCard{
+
+      width: 100%;
+      .noCardNotification{
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 84.4%;
+        margin-bottom: 60px;
+        p{
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          line-height: 26px;
+          margin-bottom: 20px;
+        }
+        a{
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #8367D8;
+          letter-spacing: 0.63px;
+        }
+      }
+    }
+    .locationButton{
+      position: relative;
+      top: 100px;
+      left: 76px;
+      width: 183px;
+      height: 57px;
+      display: inline-block;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      padding-bottom: 7px;
+    }
+    .doneBtn{
+      background: #FFFFFF;
+      border: 3px solid #E3E3E3;
+      box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+      .gt{
+        position: relative;
+        z-index: 1000;
+        left: -6px;
+        top: 2px;
+        font-size: 26px;
+      }
+    }
+    .payButtonCard{
+      position: absolute;
+      margin-top: 100px;
+      background: #8367D8;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      margin-left: 65.8vh;
+      width: 180px;
+      height: 57px;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.63px;
+      margin-bottom: 60px;
+    }
+    .doneBtn{
+      left: 8%;
+    }
+    .enterCard{
+      margin-left: 50%;
+      transform: translateX(-84%);    
+      .group {
+        width: 100%;
+        .inputLabel{
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          margin-bottom: 8px;
+        }
+        .error{
+          font-family: Lato-Bold;
+          position: absolute;
+          width: 400px;
+          left: 2px;
+          color: #8367D8;
+          margin: 0;
+          margin-top: 20px;
+          font-size: 14px;
+        }
+        .cardInput{
+          width: 41vh;
+          height: 46px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+          padding-top: 11px;
+        }
+        .nameOnCard {
+          width: 41vh;
+          height: 46px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+        }
+        ::placeholder{
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #9B9B9B;
+          letter-spacing: 0.56px;
+        }
+        .cardFormRowOne{
+          position: relative;
+          margin-bottom: 39px;
+          .cardNumber{
+            display: inline-block;
+            position: absolute;
+            margin-left: 26px;
+          } 
+          .cardName{
+            display: inline-block;
+          }
+        }
+        .cardFormRowTwo{
+          position: relative;
+          .expirationDate{
+            display: inline-block;
+          }
+          .cvc{
+            position: absolute;
+            display: inline-block;
+            margin-left: 26px;
+            .payButton{
+              position: absolute;
+              margin-top: 118px;
+              background: #8367D8;
+              border: 3px solid #8367D8;
+              box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+              left: 22vh;
+              width: 180px;
+              height: 56px;
+              font-family: Lato-Bold;
+              font-size: 18px;
+              color: #FFFFFF;
+              letter-spacing: 0.63px;
+              margin-bottom: 60px;
+            }
+          }
+        }
+      }
+    }
+    .locationButton{
+      position: relative;
+      top: 100px;
+      left: 76px;
+      width: 183px;
+      height: 57px;
+      display: inline-block;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      padding-bottom: 7px;
+    }
+    .backBtn{
+      background: #FFFFFF;
+      border: 3px solid #E3E3E3;
+      box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+      .lt{
+        position: relative;
+        z-index: 1000;
+        left: -6px;
+        top: 2px;
+        font-size: 26px;
+      }
+    }
+    .backBtn:hover{
+      border: 4px solid #E3E3E3;
+      box-shadow: 3px 4px 0 0 rgba(0,0,0,0.05);
+    }
+  }

@@ -32,24 +32,112 @@
     </div>
     <div class="spRightSide">
       <p class="spName">{{this.product.name}}</p>
-      <p class="spStartPrice">Start from - ${{this.product.highestBid}}</p>
-      <div class="bidDiv">
-        {{input value=price class="bidInput" type="number"}}
-        <button class="bidBtn" {{action "placeBid"}}>PLACE BID</button>
+      {{#if client.messages}}
+        {{#each client.messages as |message|}}
+          <p class="spStartPrice">Start from - ${{message.highestBid}}</p>
+        {{/each}}
+      {{else}}
+        <p class="spStartPrice">Start from - ${{this.product.highestBid}}</p>
+      {{/if}}
+      {{#if notification}}
+        {{#if (eq this.product.status "pending")}}
+          {{#if (gt this.product.numberOfBids 0)}}
+            {{#if (eq this.product.highestBidder this.bidderEmail)}}
+              <div class="paymentNotification">
+                <p><strong>Congratulation!</strong> You outbid the competition.</p> <a role="button" {{action "closeNotification"}}>X</a>
+              </div>
+            {{else}}
+              {{#if (eq this.product.user.email this.bidderEmail)}}
+                <div class="paymentNotification soldSeller">
+                  <p><strong>Congratulation!</strong> Your product has been sold.</p> <a role="button" {{action "closeNotification"}}>X</a>
+                </div>
+              {{else}}
+                <div class="paymentNotification sold">
+                  <p>This product has been sold.</p> <a role="button" {{action "closeNotification"}}>X</a>
+                </div>
+              {{/if}}
+            {{/if}}
+          {{else}}
+            {{#if (eq this.product.user.email this.bidderEmail)}}
+              <div class="paymentNotification soldSeller">
+                <p>Auction finished for this product with no bids.</p> <a role="button" {{action "closeNotification"}}>X</a>
+              </div>
+            {{else}}
+              <div class="paymentNotification sold">
+                <p>Auction finished for this product.</p> <a role="button" {{action "closeNotification"}}>X</a>
+              </div>
+            {{/if}}
+          {{/if}}
+        {{/if}}
+        {{#if (eq this.product.status "paid")}}
+          {{#if (eq this.product.highestBidder this.bidderEmail)}}
+            <div class="paymentNotification">
+              <p><strong>Congratulation!</strong> You have successfully purchased this product.</p> <a role="button" {{action "closeNotification"}}>X</a>
+            </div>
+          {{else}}
+            {{#if (eq this.product.user.email this.bidderEmail)}}
+              <div class="paymentNotification soldSeller">
+                <p><strong>Congratulation!</strong> Your product has been sold.</p> <a role="button" {{action "closeNotification"}}>X</a>
+              </div>
+            {{else}}
+              <div class="paymentNotification sold">
+                <p>This product has been sold.</p> <a role="button" {{action "closeNotification"}}>X</a>
+              </div>
+            {{/if}}
+          {{/if}}
+        {{/if}}
+      {{/if}}
+      <div class="rating">
+        <p class="ratingP">Seller:</p>
+        <img src={{this.product.user.profilePhoto}} class="ratingPhoto" alt="Seller photo">
+        <p class="sellerName">{{this.product.user.firstName}} {{this.product.user.lastName}}</p>
+        <i class="fa fa-star fa-lg"></i>
+        <p class="sellerRate">{{rating}}/5</p>
       </div>
-      <p class="bidLabel">Enter ${{this.product.highestBid}} or more</p>
+      {{#if (eq this.product.status "active")}}
+        <div class="bidDiv">
+          {{input value=price class="bidInput" type="number"}}
+          <button class="bidBtn" {{action "placeBid"}}>PLACE BID</button>
+        </div>
+        {{#if client.messages}}
+          {{#each client.messages as |message|}}
+            <p class="bidLabel">Enter ${{message.highestBid}} or more</p>
+          {{/each}}
+        {{else}}
+          <p class="bidLabel">Enter ${{this.product.highestBid}} or more</p>
+        {{/if}}
+      {{/if}}
       <div class="bidInfo">
-        <p>Highest bid:  <span class="hpInfo">${{this.product.highestBid}}</span></p>
+        {{#if client.messages}}
+          {{#each client.messages as |message|}}
+            <p>Highest bid:  <span class="hpInfo">${{message.highestBid}}</span></p>
+          {{/each}}
+        {{else}}
+          <p>Highest bid:  <span class="hpInfo">${{this.product.highestBid}}</span></p>
+        {{/if}}
         <p>Views: {{numberOfViews}}</p>
-        <p>No bids: {{this.product.numberOfBids}}</p>
+        {{#if client.messages}}
+          {{#each client.messages as |message|}}
+            <p>No bids: {{message.numberOfBids}}</p>
+          {{/each}}
+        {{else}}
+          <p>No bids: {{this.product.numberOfBids}}</p>
+        {{/if}}
         {{#if isCountdownTimerActive}}
           <p>Time left: {{countdown-string startDate=this.product.endDate}}</p>
-        {{/if}}
-        {{#if (eq isCountdownTimerActive false)}}
+        {{else}}
           <p>Time left: {{timeLeft}}</p>
         {{/if}}
       </div>
-      <button class="watchListBtn" {{action "setWatchList"}}>Watchlist <i class="fa fa-heart {{watchListClass}}"></i></button>
+      {{#if (eq this.product.status "active")}}
+        <button class="watchListBtn" {{action "setWatchList"}}>Watchlist <i class="fa fa-heart {{watchListClass}}"></i></button>
+      {{else}}
+        {{#if (eq this.product.status "pending")}}
+          {{#if (eq this.product.highestBidder this.bidderEmail)}}
+            <button class="payBtn" {{action "pay"}}>PAY</button>
+          {{/if}}
+        {{/if}}
+      {{/if}}
       <p class="bidDetails">Details</p>
       <p class="bidDetailsText">{{this.product.description}}</p>
     </div>
