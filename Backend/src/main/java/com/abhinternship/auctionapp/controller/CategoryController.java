@@ -22,7 +22,7 @@ public class CategoryController extends BaseController<Category> {
     }
 
     @GetMapping("/get")
-    public Category getCategoryByName(@RequestParam(value = "categoryName") String categoryName) throws RepositoryException {
-        return categoryService.getCategoryByName(categoryName);
+    public Category getByName(@RequestParam(value = "categoryName") String categoryName) throws RepositoryException {
+        return categoryService.getByName(categoryName);
     }
 }

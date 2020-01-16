@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { set, get } from '@ember/object';
+import EmberObject from '@ember/object';
 
 export default Controller.extend({
   productHttp: service(),
@@ -91,19 +92,11 @@ export default Controller.extend({
     },
     setDropdownActive(dropdownButton) {
       if (dropdownButton === 'category') {
-        if (this.get('isCategoryButtonActive')) {
-          this.set('isCategoryButtonActive', false);
-        } else {
-          this.set('isCategoryButtonActive', true);
-        }
+        this.toggleProperty('isCategoryButtonActive');
       } else if (dropdownButton === 'subcategory') {
         this.get('productHttp').getProductSubcategories(this.get('categoryName')).then((result) => {
           set(this.get('subcategories'), this.get('categoryName'), result);
-          if (this.get('isSubcategoryButtonActive')) {
-            this.set('isSubcategoryButtonActive', false);
-          } else {
-            this.set('isSubcategoryButtonActive', true);
-          }
+          this.toggleProperty('isSubcategoryButtonActive');
         });
       }
     },
@@ -239,18 +232,10 @@ export default Controller.extend({
       }
     },
     setCard() {
-      if (this.get('isProfileCard')) {
-        this.set('isProfileCard', false);
-      } else {
-        this.set('isProfileCard', true);
-      }
+      this.toggleProperty('isProfileCard');
     },
     setShipping() {
-      if (this.get('product.shipping')) {
-        set(this.get('product'), 'shipping', false);
-      } else {
-        set(this.get('product'), 'shipping', true);
-      }
+      this.toggleProperty('product.shipping');
     },
     removePhoto(index) {
       set(this.get('product'), 'photo', this.get('product.photo').splice(0, index).concat(this.get('product.photo').slice(index + 1)));

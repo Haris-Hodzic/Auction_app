@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { set, get } from '@ember/object';
+import EmberObject from '@ember/object';
 
 export default Component.extend({
   userHttp: service(),
@@ -68,23 +69,11 @@ export default Component.extend({
     },
     setDropdownButtonsActive(button) {
       if (button === 'gender') {
-        if (this.get('isGenderButtonActive') === false) {
-          this.set('isGenderButtonActive', true);
-        } else {
-          this.set('isGenderButtonActive', false);
-        }
+        this.toggleProperty('isGenderButtonActive');
       } else if (button === 'month') {
-        if (this.get('isMonthButtonActive') === false) {
-          this.set('isMonthButtonActive', true);
-        } else {
-          this.set('isMonthButtonActive', false);
-        }
+        this.toggleProperty('isMonthButtonActive');
       } else if (button === 'date') {
-        if (this.get('isDateButtonActive') === false) {
-          this.set('isDateButtonActive', true);
-        } else {
-          this.set('isDateButtonActive', false);
-        }
+        this.toggleProperty('isDateButtonActive');
       }
     },
     setMonth(monthSelected, monthDisplayed) {

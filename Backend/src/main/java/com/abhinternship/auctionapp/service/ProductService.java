@@ -57,7 +57,6 @@ public class ProductService implements BaseService<Product> {
             req.setNumberOfBids(0);
             req.setUser(seller);
             repository.save(req);
-            System.out.println(req.getPhoto());
             return true;
         } catch (Exception e) {
             throw new RepositoryException("Product can't be created!");

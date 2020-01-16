@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { set } from '@ember/object';
+import EmberObject from '@ember/object';
 
 export default Controller.extend({
   productHttp: service(),
@@ -177,11 +178,7 @@ export default Controller.extend({
           }
         },
         listSorting() {
-          if (!this.get('isSortingButtonActive')) {
-            this.set('isSortingButtonActive', true);
-          } else {
-            this.set('isSortingButtonActive', false);
-          }
+          this.toggleProperty('isSortingButtonActive');
         },
         setSorting(sortingType) {
           if (sortingType === 'default') {

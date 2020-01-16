@@ -42,7 +42,7 @@ public class CategoryService implements BaseService<Category> {
         //TODO
     }
 
-    public Category getCategoryByName(String name) {
+    public Category getByName(String name) {
         return repository.getOneByName(name);
     }
 }

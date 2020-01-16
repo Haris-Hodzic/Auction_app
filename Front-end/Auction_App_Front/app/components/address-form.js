@@ -1,16 +1,13 @@
 import Component from '@ember/component';
 import emberCountries from 'ember-countries';
+import EmberObject from '@ember/object';
 
 export default Component.extend({
   isCountryButtonActive: false,
   listOfCountries: emberCountries.COUNTRIES_LIST,
   actions: {
     setDropdownButtonsActive() {
-      if (this.get('isCountryButtonActive') === false) {
-        this.set('isCountryButtonActive', true);
-      } else {
-        this.set('isCountryButtonActive', false);
-      }
+      this.toggleProperty('isCountryButtonActive');
     },
     setCountry(selectedCountry) {
       this.set('billingInformation.country', selectedCountry);

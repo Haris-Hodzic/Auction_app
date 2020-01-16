@@ -33,7 +33,7 @@
     {{/modal-dialog}}
   {{/if}}
   <div class="paymantTitle"><p>PAYMENT</p></div>
-  <AddressForm @billingInformation={{billingInformation}} @errors={{errors}} @productPartThree={{addressInfo}}></AddressForm>
+  <AddressForm @billingInformation={{billingInformation}} @errors={{errors}} @productPartThree={{productThree}}></AddressForm>
   <div class="cardDiv">
     {{input type="checkbox" class="checkB" change=(action "setCard") checked="true"}}
     <p>Use your profile card</p>
@@ -61,7 +61,7 @@
         </div>
       {{/if}}
     {{else}}
-      {{card-form cardName=cardName click=(action "payWithToken")}}
+      {{card-form cardName=cardName buttonAction=(action "payWithToken")}}
     {{/if}}
   </div>
 </div>

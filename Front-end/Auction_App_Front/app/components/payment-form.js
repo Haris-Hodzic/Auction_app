@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { set, get } from '@ember/object';
+import EmberObject from '@ember/object';
 
 export default Component.extend({
   stripeHttp: service(),
@@ -12,12 +13,12 @@ export default Component.extend({
   isProfileCard: true,
   showRating: false,
   rating: null,
-  addressInfo: null,
+  productThree: null,
   ratingError: false,
   errors: false,
   init() {
     this._super(...arguments);
-    this.set('addressInfo', this.get('store').createRecord('billingInformation'));
+    this.set('productThree', this.get('store').createRecord('billingInformation'));
     this.set('billingInformation', {
       'street': '',
       'country': null,
@@ -28,67 +29,66 @@ export default Component.extend({
   },
   actions: {
     setCard() {
-      if (this.get('isProfileCard')) {
-        this.set('isProfileCard', false);
-      } else {
-        this.set('isProfileCard', true);
-      }
+      this.toggleProperty('isProfileCard');
+    },
+    setAddress() {
+      set(this.get('productThree'), 'address', this.get('billingInformation.street'));
+      set(this.get('productThree'), 'country', this.get('billingInformation.country'));
+      set(this.get('productThree'), 'city', this.get('billingInformation.city'));
+      set(this.get('productThree'), 'zip', this.get('billingInformation.zip'));
+      set(this.get('productThree'), 'phone', this.get('billingInformation.phone'));
     },
     payWithCard() {
-      let productThree = this.get('addressInfo');
-      set(productThree, 'address', this.get('billingInformation.street'));
-      set(productThree, 'country', this.get('billingInformation.country'));
-      set(productThree, 'city', this.get('billingInformation.city'));
-      set(productThree, 'zip', this.get('billingInformation.zip'));
-      set(productThree, 'phone', this.get('billingInformation.phone'));
-      productThree.validate()
-        .then(({
-          validations
-        }) => {
-          if (validations.get('isValid')) {
-            let data = {
-              'street': this.get('billingInformation.street'),
-              'city': this.get('billingInformation.city'),
-              'zipCode': this.get('billingInformation.zip'),
-              'country': this.get('billingInformation.country')
-            };
-            this.get('stripeHttp').chargeCard(this.get('userInfo.userCard.customerId'), this.product.highestBid, this.product.id, data).then(() => {
-              this.set('showRating', true);
-            });
-          } else {
-            this.set('errors', true);
-          }
-        });
+      this.triggerAction({
+        action:'setAddress',
+        target: this
+      });
+      this.get('productThree').validate()
+      .then(({
+        validations
+      }) => {
+        if (validations.get('isValid')) {
+          let data = {
+            'street': this.get('billingInformation.street'),
+            'city': this.get('billingInformation.city'),
+            'zipCode': this.get('billingInformation.zip'),
+            'country': this.get('billingInformation.country')
+          };
+          this.get('stripeHttp').chargeCard(this.get('userInfo.userCard.customerId'), this.product.highestBid, this.product.id, data).then(() => {
+            this.set('showRating', true);
+          });
+        } else {
+          this.set('errors', true);
+        }
+      });
     },
     payWithToken(stripeElement) {
-      let productThree = this.get('addressInfo');
-      set(productThree, 'address', this.get('billingInformation.street'));
-      set(productThree, 'country', this.get('billingInformation.country'));
-      set(productThree, 'city', this.get('billingInformation.city'));
-      set(productThree, 'zip', this.get('billingInformation.zip'));
-      set(productThree, 'phone', this.get('billingInformation.phone'));
-      productThree.validate()
-        .then(({
-          validations
-        }) => {
-          if (validations.get('isValid')) {
-            let stripe = get(this, 'stripev3');
-            let data = {
-              name: this.get('cardName'),
-              address_line1: this.get('billingInformation.street'),
-              address_city: this.get('billingInformation.city'),
-              address_zip: this.get('billingInformation.zip'),
-              address_country: this.get('billingInformation.country')
-            };
-            stripe.createToken(stripeElement, data).then((result) => {
-              this.get('stripeHttp').chargeByToken(result.token.id, this.product.highestBid, this.product.id).then(() => {
-                this.set('showRating', true);
-              });
+      this.triggerAction({
+        action:'setAddress',
+        target: this
+      });
+      this.get('productThree').validate()
+      .then(({
+        validations
+      }) => {
+        if (validations.get('isValid')) {
+          let stripe = get(this, 'stripev3');
+          let data = {
+            name: this.get('cardName'),
+            address_line1: this.get('billingInformation.street'),
+            address_city: this.get('billingInformation.city'),
+            address_zip: this.get('billingInformation.zip'),
+            address_country: this.get('billingInformation.country')
+          };
+          stripe.createToken(stripeElement, data).then((result) => {
+            this.get('stripeHttp').chargeByToken(result.token.id, this.product.highestBid, this.product.id).then(() => {
+              this.set('showRating', true);
             });
-          } else {
-            this.set('errors', true);
-          }
-        });
+          });
+        } else {
+          this.set('errors', true);
+        }
+      });
     },
     setRating(rate) {
       this.set('rating', rate);
