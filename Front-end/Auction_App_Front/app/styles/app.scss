@@ -2700,11 +2700,30 @@ footer{
             position: absolute;
             display: inline-block;
             left: 310px;
+            .payButton{
+              position: absolute;
+              background: #FFFFFF;
+              border: 3px solid #8367D8;
+              box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+              font-family: Lato-Bold;
+              font-size: 15px;
+              color: #252525;
+              letter-spacing: 0.63px;
+              left: -10px;
+              width: 140px;
+              height: 46px;
+              top: 100px;
+              transform: translateX(-50%);
+            }
+            .payButton:hover{
+              border: 4px solid #8367D8;
+              box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+            }
           }
         }
       }
     }
-    .cardButton{
+    .changeCardButton{
       position: absolute;
       background: #FFFFFF;
       border: 3px solid #8367D8;
@@ -2716,14 +2735,30 @@ footer{
       left: 50%;
       width: 140px;
       height: 46px;
-      margin-top: 30px;
+      top: 410px;
       transform: translateX(-50%);
+    }
+    .error{
+      font-family: Lato-Bold;
+      position: absolute;
+      width: 400px;
+      left: 2px;
+      color: #8367D8;
+      margin: 0;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    
+    .changeCardButton:hover{
+      border: 4px solid #8367D8;
+      box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
     }
     .cardButton:hover{
       border: 4px solid #8367D8;
       box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
     }
   }
+
   .optional{
     position: relative;
     width: 100%;
@@ -3125,7 +3160,7 @@ footer{
     width: 100%;
     margin-top: 40px;
     border: 1px solid #D8D8D8;
-    height: auto;
+    height: 1200px;
     position: relative;
     .paymantTitle{
       background: #FAFAFA;
@@ -3146,7 +3181,7 @@ footer{
     }
     .inputLabel{
       position: relative;
-      width: 84.4%;
+      width: 100%;
       left: 50%;
       transform: translateX(-50%);
       font-family: Lato-Regular;
@@ -3157,6 +3192,9 @@ footer{
       margin-bottom: 8px;
       color: #252525;
     }
+    .inputLabelAddress{
+      width: 84.4%;
+    }
     .input{
       @extend %authInput;    
     }
@@ -3165,6 +3203,31 @@ footer{
       font-size: 16px;
       color: #9B9B9B;
       letter-spacing: 0.56px;
+    }
+    .error{
+      @extend %error;
+      margin-left: 0px;
+      margin-top: 3px;
+      z-index: -1; 
+    }
+    .addressError{
+      position: absolute;
+      left: 8%;
+      top: 173px;
+    }
+    .cityError{
+      position: absolute;
+      left: 52.5%;
+    }
+    .zipError{
+      position: absolute;
+      left: 8%;
+      top: 389px;
+    }
+    .phoneError{
+      position: absolute;
+      left: 8%;
+      top: 512px;
     }
     .paymantMiddle{
       position: relative;
@@ -3237,21 +3300,6 @@ footer{
         line-height: 26px;
       }
     }
-    .payButton{
-      position: relative;
-      margin-left: 64vh;
-      margin-top: 70px;
-      background: #8367D8;
-      border: 3px solid #8367D8;
-      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
-      width: 183px;
-      height: 57px;
-      font-family: Lato-Bold;
-      font-size: 18px;
-      color: #FFFFFF;
-      letter-spacing: 0.63px;
-      margin-bottom: 60px;
-    }
     .cardTop{
       position: relative;
       width: 604px;
@@ -3282,29 +3330,44 @@ footer{
     }
   }
   .paymentCard{
-    
     width: 100%;
+    .paymentPayButton{
+      position: relative;
+      padding-top: 1.7px;
+      margin-top: 82px;
+      background: #8367D8;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      left: 73.5vh;
+      width: 183px;
+      height: 57px;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.63px;
+      margin-bottom: 60px;
+    }
     .noCardNotification{
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 84.4%;
-    margin-bottom: 60px;
-    p{
-      font-family: Lato-Regular;
-      font-size: 18px;
-      color: #252525;
-      letter-spacing: 0.63px;
-      line-height: 26px;
-      margin-bottom: 20px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 84.4%;
+      margin-bottom: 60px;
+      p{
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 26px;
+        margin-bottom: 20px;
+      }
+      a{
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #8367D8;
+        letter-spacing: 0.63px;
+      }
     }
-    a{
-      font-family: Lato-Regular;
-      font-size: 18px;
-      color: #8367D8;
-      letter-spacing: 0.63px;
-    }
-  }
   }
   
 
@@ -3319,6 +3382,16 @@ footer{
         color: #252525;
         letter-spacing: 0.63px;
         margin-bottom: 8px;
+      }
+      .error{
+        font-family: Lato-Bold;
+        position: absolute;
+        width: 400px;
+        left: 2px;
+        color: #8367D8;
+        margin: 0;
+        margin-top: 20px;
+        font-size: 14px;
       }
       .cardInput{
         width: 41vh;
@@ -3370,17 +3443,24 @@ footer{
           position: absolute;
           display: inline-block;
           margin-left: 26px;
+          .payButton{
+            position: relative;
+            margin-top: 100px;
+            background: #8367D8;
+            border: 3px solid #8367D8;
+            box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+            left: 190px;
+            width: 183px;
+            height: 57px;
+            font-family: Lato-Bold;
+            font-size: 18px;
+            color: #FFFFFF;
+            letter-spacing: 0.63px;
+            margin-bottom: 60px;
+          }
         }
       }
     }
-    .outcome{
-        .error{
-          width: 400px;
-          color: #8367D8;
-          margin-top: 20px;
-          margin-left: 55%;
-        }
-      }
   }
 }
 .auctionFinishedNotification{
@@ -3388,3 +3468,838 @@ footer{
   left: 20px;
   background-color: #8367D8;
 }
+
+
+/*---------Sell----------*/
+%error{
+  position: absolute;
+  width: 84.4%;
+  font-family: Lato-Regular;
+  font-size: 16px;
+  color: #8367D8;
+  letter-spacing: 0.56px;
+}
+%sellTitle{
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  background: #FAFAFA;
+  font-family: Lato-Bold;
+  font-size: 20px;
+  color: #252525;
+  letter-spacing: 0.7px;
+  text-align: center;
+}
+.sellProductView{
+  position: relative;
+  width: 50%;
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  .progressBar{
+    position: absolute;
+    top: 30px;
+    width: 100%;
+  }
+  .productInfoView{
+    position: relative;
+    top: 110px;
+    width: 100%;
+    height: 1112px;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    border-top: 2px solid #D8D8D8;
+    .sellTitle{
+      @extend %sellTitle;
+    }
+    .name{
+      position: relative;
+      top: 41px;
+      .inputLabel{
+        @extend %inLabel;
+      }
+      .input{
+        @extend %authInput;
+        margin-bottom: 0px;
+      }
+      .inputRequiredInfo{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        text-align: right;
+        margin-top: 11px;
+        margin-right: 7.7%;
+      }
+      .error{
+        @extend %error;
+        position: absolute;
+        top: 90px;
+        left: 44.4%;
+        transform: translateX(-50%);
+      }
+    }
+    .description{
+      position: absolute;
+      width: 100%;
+      top: 370px;
+      .inputLabel{
+        @extend %inLabel;
+      }
+      .input{
+        @extend %authInput;
+        height: 162px;
+        margin-bottom: 0px;
+      }
+      .inputRequiredInfo{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        text-align: right;
+        margin-top: 11px;
+        margin-right: 7.7%;
+      }
+      .error{
+        @extend %error;
+        position: absolute;
+        top: 200px;
+        left: 2%;
+      }
+    }
+    .photoUpload{
+      position: absolute;
+      top: 655px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 84.4%;
+      height: 320px;
+      background: #FCFCFC;
+      border: 1px solid #D8D8D8;
+      .changePhoto{
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+      .dropzone{
+        height: 100%;
+        .uploadButton{
+          font-family: Lato-Bold;
+          font-size: 14px;
+          color: #8367D8;
+          letter-spacing: 0.49px;
+          cursor: pointer;
+          margin-right: 15px;
+        }
+        p{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: Lato-Regular;
+          font-size: 14px;
+          color: #252525;
+          letter-spacing: 0.49px;
+        }
+        .images{
+          position: absolute;
+          display: flex;
+          flex-wrap: nowrap;
+          width: auto;
+          left: 50%;
+          top: 30px;
+          transform: translateX(-50%);
+          .productImg{
+            position: relative;
+            margin-left: 10px;
+            width: 100px;
+            height: 100px;
+            border: none;
+            object-fit: cover;
+            background-position: top;
+          }
+          .removePhoto{
+            position: relative;
+            left: -20px;
+            top: 5px;
+            font-family: Lato-Bold;
+            color: #8367D8;
+            cursor: pointer;
+          }
+        }
+        .photoError{
+          font-family: Lato-Bold;
+          font-size: 14px;
+          color: #8367D8;
+          letter-spacing: 0.49px;
+          position: absolute;
+          top: 200px;
+        }
+        
+      }
+      .changePhotoLabel{
+        display: block;
+        width: 203px;
+        height: 51px;
+        padding-top: 12px;
+        background: #FFFFFF;
+        border: 3px solid #E3E3E3;
+        box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+        font-family: Lato-Bold;
+        font-size: 16px;
+        color: #252525;
+        letter-spacing: 0.56px;
+        text-align: center;
+      }
+      .error{
+        @extend %error;
+        width: 40%;
+        position: absolute;
+        top: 320px;
+        left: -6.7%;
+      }
+    }
+    .categories{
+      position: absolute;
+      width: 84.4%;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 54px;
+      top: 270px;
+      .dropdown{
+        position: relative;
+        display: inline-block;
+        width: 45%;
+        height: 100%;
+        background: #FFFFFF;
+        border: 3px solid #ECECEC;
+        p{
+          position: absolute;
+          top: 12px;
+          left: 18px;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          cursor: pointer;
+        }
+        img{
+          position: absolute;
+          top: 12px;
+          left: 83%;
+          width: 34px;
+          height: 24px;
+          cursor: pointer;
+        }
+      }
+      .subcategoryDropdown{
+        float: right;
+      }
+    }
+    .categoryError{
+      @extend %error;
+      position: absolute;
+      top: 325px;
+      left: 44.4%;
+      transform: translateX(-50%);
+    }
+    .subcategoryError{
+      @extend %error;
+      position: absolute;
+      top: 325px;
+      width: 45%;
+      left: 71%;
+      transform: translateX(-50%);
+    }
+    .categoriesOptions{
+      position: absolute;
+      z-index: 1000;
+      width: 84.4%;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 324px;
+      height: auto;
+      ul{
+        list-style-type: none;
+        margin: 0;
+        display: inline-block;
+        padding: 0;
+        width: 45%;
+        background: #FFFFFF;
+        border: 3px solid #ECECEC;
+        li{
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          padding-left: 20px;
+          cursor: pointer;
+        }
+        li:hover{
+          background: #8367D8;
+          color: #FFFFFF;
+        }
+      }
+      .subcategoryOptions{
+        float: right;
+      }
+    }
+
+    .nextButton{
+      position: absolute;
+      top: 1020px;
+      width: 183px;
+      height: 57px;
+      left: 72%;
+      cursor: pointer;
+      background: #FFFFFF;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      .gt{
+        position: absolute;
+        left: 124px;
+        top: 8px;
+        font-size: 26px;
+      }
+    }
+    .nextButton:hover{
+      border: 4px solid #8367D8;
+      box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+    }
+  }
+  .productPriceView{
+    position: relative;
+    top: 110px;
+    width: 100%;
+    height: 662px;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    border-top: 2px solid #D8D8D8;
+    .sellTitle{
+      @extend %sellTitle;
+    }
+    .price{
+      position: relative;
+      top: 41px;
+      .inputLabel{
+        @extend %inLabel;
+      }
+      .priceInput{
+        position: relative;
+        width: 84.4%;
+        left: 50%;
+        transform: translateX(-50%);
+        p{
+          position: absolute;
+          z-index: 1000;
+          margin: 0;
+          display: inline-block;
+          height: 54px;
+          width: 54px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          padding-left: 22px;
+          line-height: 54px;
+          font-weight: bold;
+          font-size: 18px;
+        }
+        .error{
+          @extend %error;
+          position: absolute;
+          margin-left: 0;
+          top: 60px;
+          width: 100%;
+        }
+        .input{
+          position: absolute;
+          width: 100%;
+          height: 54px;
+          background: #FFFFFF;
+          border: 1px solid #D8D8D8;
+          display: inline-block; 
+          padding-left: 70px;
+          @extend %inputFont;       }
+        }
+      }
+      .date{
+        position: relative;
+        top: 160px;
+        width: 84.4%;
+        height: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        .dateInput{
+          position: relative;
+          width: 48%;
+          display: inline-block;
+          .inputLabel{
+            @extend %inLabel;
+            left: 42.2%;
+          }
+          .error{
+            @extend %error;
+            position: absolute;
+            margin-left: 0;
+            top: 95px;
+            width: 100%;
+          }
+          .input{
+            height: 54px;
+            width: 100%;
+            border: 1px solid #D8D8D8;
+            padding-left: 15px;
+            @extend %inputFont;
+            background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  96% 50% no-repeat;
+          }
+          .input::-webkit-inner-spin-button {
+            display: none;
+          }
+          .input::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            cursor: pointer;
+          }
+          .input::-webkit-clear-button
+          {
+            display: none;
+            -webkit-appearance: none;
+          }
+        }
+        .startDate{
+        }
+        .endDate{
+          float: right;
+        }
+      }
+      .info{
+        position: absolute;
+        width: 84.4%;
+        left: 50%;
+        top: 390px;
+        transform: translateX(-50%);
+        font-family: Lato-Regular;
+        font-size: 17px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        line-height: 30px;
+      }
+      .buttons{
+        position: absolute;
+        top: 540px;
+        width: 84.4%;
+        left: 50%;
+        transform: translateX(-50%);
+        .priceBtn{
+          width: 183px;
+          height: 57px;
+          display: inline-block;
+          font-family: Lato-Bold;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+        }
+        .nextBtn{
+          position: relative;
+          background: #FFFFFF;
+          border: 3px solid #8367D8;
+          box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+          float: right;
+          .gt{
+            position: absolute;
+            left: 124px;
+            top: 8px;
+            font-size: 26px;
+          }
+        }
+        .nextBtn:hover{
+          border: 4px solid #8367D8;
+          box-shadow: 3px 4px 0 0 rgba(131,103,216,0.31);
+        }
+        .backBtn{
+          background: #FFFFFF;
+          border: 3px solid #E3E3E3;
+          box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+          .lt{
+            position: absolute;
+            left: 42px;
+            top: 10.9px;
+            font-size: 26px;
+          }
+        }
+        .backBtn:hover{
+          border: 4px solid #E3E3E3;
+          box-shadow: 3px 4px 0 0 rgba(0,0,0,0.05);
+        }
+      }
+    }
+    .locationView{
+      position: relative;
+      top: 110px;
+      width: 100%;
+      height: 1370px;
+      background: #FFFFFF;
+      border: 1px solid #D8D8D8;
+      border-top: 2px solid #D8D8D8;
+      .sellTitle{
+        @extend %sellTitle;
+        margin-bottom: 50px;
+      }
+      .error{
+        @extend %error;
+        margin-left: 0px;
+        margin-top: 3px;  
+      }
+      .addressError{
+        position: absolute;
+        left: 8%;
+        top: 193px;
+      }
+      .cityError{
+        position: absolute;
+        left: 52.5%;
+      }
+      .zipError{
+        position: absolute;
+        left: 8%;
+        top: 409px;
+      }
+      .phoneError{
+        position: absolute;
+        left: 8%;
+        top: 531px;
+      }
+      .inputLabel{
+        position: relative;
+        width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        margin-top: 0px;
+        margin-bottom: 8px;
+        color: #252525;
+      }
+      .inputLabelAddress{
+        width: 84.4%;
+      }
+      .input{
+        @extend %authInput;    
+      }
+      ::placeholder{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+      }
+      .paymantMiddle{
+        position: relative;
+        width: 84.4%;
+        left: 50%;
+        margin-bottom: 40px;
+        transform: translateX(-50%);
+        justify-content: space-between;
+        .countryDropdown{
+          position: relative;
+          width: 47.5%;
+          display: inline-block;
+          .country{
+            height: 54px;
+            background: #FFFFFF;
+            border: 3px solid #ECECEC;
+            font-family: Lato-Regular;
+            font-size: 18px;
+            color: #252525;
+            letter-spacing: 0.63px;
+            line-height: 50px;
+            padding-left: 15px;
+            img{
+              position: absolute;
+              left: 80%;
+              top: 14px;
+              width: 34px;
+              height: 24px;
+            }
+          }
+          .countryOptions{
+            @extend %dateOptions;
+            max-height: 180px;
+            overflow-y: auto;
+          }
+        }
+      }
+      .city{
+        position: absolute;
+        width: 47.5%;
+        height: 54px;
+        background: #FFFFFF;
+        border: 3px solid #ECECEC;
+        margin-left: 5%;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 50px;
+        padding-left: 15px;
+      }
+    }
+    .cardDiv{
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 84.4%;
+      margin-bottom: 40px;
+      .checkB{
+        height: 20px;
+        width: 20px;
+      }
+      p{
+        display: inline-block;
+        margin-left: 8px;
+        font-family: Lato-Regular;
+        font-size: 18px;
+        color: #252525;
+        letter-spacing: 0.63px;
+        line-height: 26px;
+      }
+    }
+    .shippingInfo{
+      position: relative;
+      top: -20px;
+      width: 78%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: 40px;
+      font-family: Lato-Regular;
+      font-size: 18px;
+      color: #9B9B9B;
+      letter-spacing: 0.63px;
+      line-height: 26px;
+    }
+    .cardTop{
+      position: relative;
+      width: 604px;
+      left: 43%;
+      transform: translateX(-50%);
+      margin-bottom: 60px;
+      .acceptedCards{
+        font-family: Lato-Regular;
+        font-size: 16px;
+        color: #9B9B9B;
+        letter-spacing: 0.56px;
+        line-height: 26px;
+        margin-bottom: 10px;
+      }
+      .acceptedCardsImages{
+        position: relative;
+        display: inline-block;
+
+        .cardImage{
+          background: #26337A;
+          border-radius: 2px;
+          object-fit: cover;
+          background-position: center;
+          width: 50px;
+          height: 30px;
+        }
+      }
+    }
+    .paymentCard{
+
+      width: 100%;
+      .noCardNotification{
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 84.4%;
+        margin-bottom: 60px;
+        p{
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          line-height: 26px;
+          margin-bottom: 20px;
+        }
+        a{
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #8367D8;
+          letter-spacing: 0.63px;
+        }
+      }
+    }
+    .locationButton{
+      position: relative;
+      top: 100px;
+      left: 76px;
+      width: 183px;
+      height: 57px;
+      display: inline-block;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      padding-bottom: 7px;
+    }
+    .doneBtn{
+      background: #FFFFFF;
+      border: 3px solid #E3E3E3;
+      box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+      .gt{
+        position: relative;
+        z-index: 1000;
+        left: -6px;
+        top: 2px;
+        font-size: 26px;
+      }
+    }
+    .payButtonCard{
+      position: absolute;
+      margin-top: 100px;
+      background: #8367D8;
+      border: 3px solid #8367D8;
+      box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+      margin-left: 65.8vh;
+      width: 180px;
+      height: 57px;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #FFFFFF;
+      letter-spacing: 0.63px;
+      margin-bottom: 60px;
+    }
+    .doneBtn{
+      left: 8%;
+    }
+    .enterCard{
+      margin-left: 50%;
+      transform: translateX(-84%);    
+      .group {
+        width: 100%;
+        .inputLabel{
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          margin-bottom: 8px;
+        }
+        .error{
+          font-family: Lato-Bold;
+          position: absolute;
+          width: 400px;
+          left: 2px;
+          color: #8367D8;
+          margin: 0;
+          margin-top: 20px;
+          font-size: 14px;
+        }
+        .cardInput{
+          width: 41vh;
+          height: 46px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+          padding-top: 11px;
+        }
+        .nameOnCard {
+          width: 41vh;
+          height: 46px;
+          background: #FCFCFC;
+          border: 1px solid #D8D8D8;
+          font-family: Lato-Regular;
+          font-size: 18px;
+          color: #252525;
+          letter-spacing: 0.63px;
+          padding-left: 15px;
+        }
+        ::placeholder{
+          font-family: Lato-Regular;
+          font-size: 16px;
+          color: #9B9B9B;
+          letter-spacing: 0.56px;
+        }
+        .cardFormRowOne{
+          position: relative;
+          margin-bottom: 39px;
+          .cardNumber{
+            display: inline-block;
+            position: absolute;
+            margin-left: 26px;
+          } 
+          .cardName{
+            display: inline-block;
+          }
+        }
+        .cardFormRowTwo{
+          position: relative;
+          .expirationDate{
+            display: inline-block;
+          }
+          .cvc{
+            position: absolute;
+            display: inline-block;
+            margin-left: 26px;
+            .payButton{
+              position: absolute;
+              margin-top: 118px;
+              background: #8367D8;
+              border: 3px solid #8367D8;
+              box-shadow: 3px 3px 0 0 rgba(131,103,216,0.31);
+              left: 22vh;
+              width: 180px;
+              height: 56px;
+              font-family: Lato-Bold;
+              font-size: 18px;
+              color: #FFFFFF;
+              letter-spacing: 0.63px;
+              margin-bottom: 60px;
+            }
+          }
+        }
+      }
+    }
+    .locationButton{
+      position: relative;
+      top: 100px;
+      left: 76px;
+      width: 183px;
+      height: 57px;
+      display: inline-block;
+      font-family: Lato-Bold;
+      font-size: 18px;
+      color: #252525;
+      letter-spacing: 0.63px;
+      padding-bottom: 7px;
+    }
+    .backBtn{
+      background: #FFFFFF;
+      border: 3px solid #E3E3E3;
+      box-shadow: 3px 3px 0 0 rgba(0,0,0,0.05);
+      .lt{
+        position: relative;
+        z-index: 1000;
+        left: -6px;
+        top: 2px;
+        font-size: 26px;
+      }
+    }
+    .backBtn:hover{
+      border: 4px solid #E3E3E3;
+      box-shadow: 3px 4px 0 0 rgba(0,0,0,0.05);
+    }
+  }

@@ -1,7 +1,6 @@
 package com.abhinternship.auctionapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,20 +13,16 @@ public class UserCard {
     private String email;
     private String cardName;
     private String customerId;
-    private String cardId;
     private String cardFingerprint;
-    private String cardNumber;
-    private String cvc;
+    private String lastFourDigits;
     private String expireDate;
 
-    public UserCard(String email, String cardName, String customerId, String cardId, String cardFingerprint, String cardNumber, String cvc, String expireDate) {
+    public UserCard(String email, String cardName, String customerId, String cardFingerprint, String lastFourDigits, String expireDate) {
         this.email = email;
         this.cardName = cardName;
         this.customerId = customerId;
-        this.cardId = cardId;
         this.cardFingerprint = cardFingerprint;
-        this.cardNumber = cardNumber;
-        this.cvc = cvc;
+        this.lastFourDigits = lastFourDigits;
         this.expireDate = expireDate;
     }
 
@@ -50,14 +45,6 @@ public class UserCard {
         this.customerId = customerId;
     }
 
-    public String getCardId() {
-        return cardId;
-    }
-
-    public void setCardId(String cardId) {
-        this.cardId = cardId;
-    }
-
     public String getCardFingerprint() {
         return cardFingerprint;
     }
@@ -67,19 +54,11 @@ public class UserCard {
     }
 
     public String getCardNumber() {
-        return cardNumber;
+        return lastFourDigits;
     }
 
     public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getCvc() {
-        return cvc;
-    }
-
-    public void setCvc(String cvc) {
-        this.cvc = cvc;
+        this.lastFourDigits = cardNumber;
     }
 
     public String getExpireDate() {

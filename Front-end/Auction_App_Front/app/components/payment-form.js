@@ -1,130 +1,94 @@
 import Component from '@ember/component';
-import emberCountries from 'ember-countries';
-import {later} from '@ember/runloop';
-import {inject as service} from '@ember/service';
+import { inject as service } from '@ember/service';
+import { set, get } from '@ember/object';
 
 export default Component.extend({
-  listOfCountries: emberCountries.COUNTRIES_LIST,
   stripeHttp: service(),
+  stripev3: service(),
   userHttp: service(),
-  isCityButtonActive: false,
-  isCountryButtonActive: false,
-  city: '',
-  country: 'Select Country',
-  street: '',
-  zip: '',
-  phone: '',
+  store: service(),
+  billingInformation: null,
   cardName: '',
   isProfileCard: true,
   showRating: false,
   rating: null,
+  addressInfo: null,
   ratingError: false,
+  errors: false,
+  init() {
+    this._super(...arguments);
+    this.set('addressInfo', this.get('store').createRecord('billingInformation'));
+    this.set('billingInformation', {
+      'street': '',
+      'country': null,
+      'city': '',
+      'zip': '',
+      'phone': ''
+    });
+  },
   actions: {
-    setDropdownButtonsActive(button) {
-      if (button === 'country') {
-        if (this.get('isCountryButtonActive') === false) {
-          this.set('isCountryButtonActive', true);
-        } else {
-          this.set('isCountryButtonActive', false);
-        }
-      }
-    },
-    setCountry(selectedCountry) {
-      this.set('country', selectedCountry);
-      this.set('isCountryButtonActive', false);
-    },
     setCard() {
       if (this.get('isProfileCard')) {
         this.set('isProfileCard', false);
-        const self = this;
-        later(function() {
-          const stripe = Stripe('key');
-          const elements = stripe.elements();
-          const errorElement = document.querySelector('.error');
-          const style = {
-            base: {
-              fontFamily: 'Lato-Regular',
-              fontSize: '16px',
-              color: '#252525',
-              letterSpacing: '0.56px',
-              '::placeholder': {
-                fontFamily: 'Lato-Regular',
-                fontSize: '18px',
-                color: '#9B9B9B',
-                letterSpacing: '0.63px',
-              },
-            },
-          };
-          const cardNumberElement = elements.create('cardNumber', {
-            style: style
-          });
-          cardNumberElement.mount('#card-number-element');
-
-          const cardExpiryElement = elements.create('cardExpiry', {
-            style: style
-          });
-          cardExpiryElement.mount('#card-expiry-element');
-
-          const cardCvcElement = elements.create('cardCvc', {
-            style: style
-          });
-          cardCvcElement.mount('#card-cvc-element');
-          cardNumberElement.on('change', function(event) {
-            errorElement.classList.remove('visible');
-            if (event.error) {
-              errorElement.textContent = event.error.message;
-              errorElement.classList.add('visible');
-            }
-          });
-          cardExpiryElement.on('change', function(event) {
-            errorElement.classList.remove('visible');
-            if (event.error) {
-              errorElement.textContent = event.error.message;
-              errorElement.classList.add('visible');
-            }
-          });
-          cardCvcElement.on('change', function(event) {
-            errorElement.classList.remove('visible');
-            if (event.error) {
-              errorElement.textContent = event.error.message;
-              errorElement.classList.add('visible');
-            }
-          });
-          document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            let data = {
-              name: self.get('cardName'),
-              address_line1: self.get('street'),
-              address_city: self.get('city'),
-              address_zip: self.get('zip'),
-              address_country: self.get('country')
-            };
-            stripe.createToken(cardNumberElement, data).then((result) => {
-              if (result.error) {
-                errorElement.textContent = result.error.message;
-                errorElement.classList.add('visible');
-              } else {
-                self.get('stripeHttp').chargeByToken(result.token.id, self.product.highestBid, self.product.id).then(() => {
-                  self.set('showRating', true);
-                });
-              }
-            })
-          });
-        }, 10);
       } else {
         this.set('isProfileCard', true);
       }
     },
-    pay() {
-      let data = {
-        'street': this.get('street'),
-        'city': this.get('city'),
-        'zipCode': this.get('zip'),
-        'country': this.get('country')
-      };
-      this.get('stripeHttp').chargeCard(this.get('userInfo.userCard.customerId'), this.product.highestBid, this.product.id, data).then(() => {
-        this.set('showRating', true);
-      });
+    payWithCard() {
+      let productThree = this.get('addressInfo');
+      set(productThree, 'address', this.get('billingInformation.street'));
+      set(productThree, 'country', this.get('billingInformation.country'));
+      set(productThree, 'city', this.get('billingInformation.city'));
+      set(productThree, 'zip', this.get('billingInformation.zip'));
+      set(productThree, 'phone', this.get('billingInformation.phone'));
+      productThree.validate()
+        .then(({
+          validations
+        }) => {
+          if (validations.get('isValid')) {
+            let data = {
+              'street': this.get('billingInformation.street'),
+              'city': this.get('billingInformation.city'),
+              'zipCode': this.get('billingInformation.zip'),
+              'country': this.get('billingInformation.country')
+            };
+            this.get('stripeHttp').chargeCard(this.get('userInfo.userCard.customerId'), this.product.highestBid, this.product.id, data).then(() => {
+              this.set('showRating', true);
+            });
+          } else {
+            this.set('errors', true);
+          }
+        });
+    },
+    payWithToken(stripeElement) {
+      let productThree = this.get('addressInfo');
+      set(productThree, 'address', this.get('billingInformation.street'));
+      set(productThree, 'country', this.get('billingInformation.country'));
+      set(productThree, 'city', this.get('billingInformation.city'));
+      set(productThree, 'zip', this.get('billingInformation.zip'));
+      set(productThree, 'phone', this.get('billingInformation.phone'));
+      productThree.validate()
+        .then(({
+          validations
+        }) => {
+          if (validations.get('isValid')) {
+            let stripe = get(this, 'stripev3');
+            let data = {
+              name: this.get('cardName'),
+              address_line1: this.get('billingInformation.street'),
+              address_city: this.get('billingInformation.city'),
+              address_zip: this.get('billingInformation.zip'),
+              address_country: this.get('billingInformation.country')
+            };
+            stripe.createToken(stripeElement, data).then((result) => {
+              this.get('stripeHttp').chargeByToken(result.token.id, this.product.highestBid, this.product.id).then(() => {
+                this.set('showRating', true);
+              });
+            });
+          } else {
+            this.set('errors', true);
+          }
+        });
     },
     setRating(rate) {
       this.set('rating', rate);

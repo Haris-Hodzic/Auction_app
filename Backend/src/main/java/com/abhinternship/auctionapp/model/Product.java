@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,6 @@ public class Product {
     private Date startDate;
     private Date endDate;
     private boolean shipping;
-    private String phone;
     private Double highestBid;
     private String highestBidder;
     private int numberOfBids;
@@ -30,7 +30,7 @@ public class Product {
     @ElementCollection
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "photo_id")
-    private Set<String> photo;
+    private List<String> photo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -38,13 +38,13 @@ public class Product {
     @JsonIgnoreProperties({"password", "id", "gender", "dateOfBirth", "phoneNumber", "address", "wishlist", "hibernateLazyInitializer"})
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "subcategory_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -59,14 +59,13 @@ public class Product {
     public Product() {
     }
 
-    public Product(@NotBlank String name, String description, @NotBlank double startPrice, @NotBlank Date startDate, @NotBlank Date endDate, @NotBlank boolean shipping, String phone, Double highestBid, String status, User user) {
+    public Product(@NotBlank String name, String description, @NotBlank double startPrice, @NotBlank Date startDate, @NotBlank Date endDate, @NotBlank boolean shipping, Double highestBid, String status, User user) {
         this.name = name;
         this.description = description;
         this.startPrice = startPrice;
         this.startDate = startDate;
         this.endDate = endDate;
         this.shipping = shipping;
-        this.phone = phone;
         this.highestBid = highestBid;
         this.status = status;
         this.user = user;
@@ -146,19 +145,11 @@ public class Product {
         this.shipping = shipping;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Set<String> getPhoto() {
+    public List<String> getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Set<String> photo) {
+    public void setPhoto(List<String> photo) {
         this.photo = photo;
     }
 

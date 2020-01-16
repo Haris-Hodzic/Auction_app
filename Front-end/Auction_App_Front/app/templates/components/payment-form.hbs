@@ -33,25 +33,7 @@
     {{/modal-dialog}}
   {{/if}}
   <div class="paymantTitle"><p>PAYMENT</p></div>
-  <p class="inputLabel">Address</p>
-  <Input @value={{street}} @class="input" @type="text" placeholder="e.g.678 Berge Tunnel Apt. 278"></Input>
-  <div class="paymantMiddle">
-    <div class="countryDropdown">
-      <div class="country" role="button" {{action "setDropdownButtonsActive" "country"}}>{{country}}<img src="/assets/images/profileDD.png" class="genderDropdownImg" alt=""></div>
-      {{#if isCountryButtonActive}}
-        <ul class="countryOptions">
-          {{#each listOfCountries as |country|}}
-            <li role="button" {{action "setCountry" country.name}}>{{country.name}}</li>
-          {{/each}}
-        </ul>
-      {{/if}}
-    </div>
-    <Input @value={{city}} @class="city" @type="text" placeholder="e.g.678 Berge Tunnel Apt. 278"></Input>
-  </div>
-  <p class="inputLabel">Zip Code</p>
-  <Input @value={{zip}} @class="input" @type="text" placeholder="71000"></Input>
-  <p class="inputLabel">Phone</p>
-  <Input @value={{phone}} @class="input" @type="text" placeholder="061 123 123"></Input>
+  <AddressForm @billingInformation={{billingInformation}} @errors={{errors}} @productPartThree={{addressInfo}}></AddressForm>
   <div class="cardDiv">
     {{input type="checkbox" class="checkB" change=(action "setCard") checked="true"}}
     <p>Use your profile card</p>
@@ -68,35 +50,8 @@
   <div class="paymentCard">
     {{#if isProfileCard}}
       {{#if userInfo.userCard}}
-        <div class="enterCard">
-          <div class="group">
-            <div class="cardFormRowOne">
-              <div class="cardName">
-                <p class="inputLabel">Name on card</p>
-                <div class="cardInput">{{userInfo.userCard.cardName}}</div>
-              </div>
-              <label class="cardNumber">
-                <p class="inputLabel">Card number</p>
-                <div class="cardInput">{{userInfo.userCard.cardNumber}}</div>
-              </label>
-            </div>
-            <div class="cardFormRowTwo">
-              <div class="expirationDate">
-                <label>
-                  <p class="inputLabel">Exipartion Date</p>
-                  <div class="cardInput">{{userInfo.userCard.expireDate}}</div>
-                </label>
-              </div>
-              <div class="cvc">
-                <label>
-                  <p class="inputLabel">CVC</p>
-                  <div class="cardInput">{{userInfo.userCard.cvc}}</div>
-                </label>
-              </div>
-            </div>
-          </div>
-          <button class="payButton" {{action "pay"}}>DONE</button>
-        </div>
+        <DisplayUserCard @userInfo={{userInfo}}></DisplayUserCard>
+        <button class="paymentPayButton" {{action "payWithCard"}}>DONE</button>
       {{else}}
         <div class="noCardNotification">
           <p>You have no saved cards!</p>
@@ -106,41 +61,7 @@
         </div>
       {{/if}}
     {{else}}
-      <div class="enterCard">
-        <form>
-          <div class="group">
-            <div class="cardFormRowOne">
-              <div class="cardName">
-                <p class="inputLabel">Name on card</p>
-                <Input @value={{cardName}} @class="nameOnCard" @type="text" placeholder="e.g. Adam Smith"></Input>
-              </div>
-              <label class="cardNumber">
-                <p class="inputLabel">Card number</p>
-                <div id="card-number-element" class="cardInput"></div>
-                <span class="brand"><i class="pf pf-credit-card" id="brand-icon"></i></span>
-              </label>
-            </div>
-            <div class="cardFormRowTwo">
-              <div class="expirationDate">
-                <label>
-                  <p class="inputLabel">Expiration Date</p>
-                  <div id="card-expiry-element" class="cardInput"></div>
-                </label>
-              </div>
-              <div class="cvc">
-                <label>
-                  <p class="inputLabel">CVC</p>
-                  <div id="card-cvc-element" class="cardInput"></div>
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="outcome">
-            <div class="error"></div> 
-          </div>
-          <button type="submit" class="payButton">DONE</button>
-        </form>
-      </div>
+      {{card-form cardName=cardName click=(action "payWithToken")}}
     {{/if}}
   </div>
 </div>

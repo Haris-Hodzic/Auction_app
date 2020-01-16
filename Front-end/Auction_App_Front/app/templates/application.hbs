@@ -37,7 +37,8 @@
       {{#if isAccountActive}}
         <ul class="accountList">
           <li class="firstInList {{profileActiveClass}}" role="button" {{action "setProfileView"}}>Profile</li>
-          <li class={{sellerActiveClass}} role="button" {{action "setSellerView"}}>Become Seller</li>
+          <li class={{sellerActiveClass}} role="button" {{action "setSellerView"}}>My Products</li>
+          <li class={{becomeSellerActiveClass}} role="button" {{action "becomeSeller"}}>Become Seller</li>
           <li class={{bidsActiveClass}} role="button" {{action "setBidsView"}}>Your Bids</li>
           <li class={{wishlistActiveClass}} role="button" {{action "setWishlistView"}}>Wishlist</li>
         </ul>

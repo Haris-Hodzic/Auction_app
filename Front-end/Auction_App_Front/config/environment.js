@@ -80,7 +80,7 @@ if (environment === 'development') {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.APP.SERVER_URL = 'http://localhost:8080'
     ENV.stripe = {
-      publishableKey: 'key',
+      publishableKey: 'pk_test',
       lazyLoad: true
     };
   }

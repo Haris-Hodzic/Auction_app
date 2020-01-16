@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -25,7 +26,7 @@ abstract public class BaseController<T> {
 
     @PostMapping
     @ResponseBody
-    public boolean create(@RequestBody @Valid LinkedHashMap request, BindingResult errors) throws RepositoryException{
+    public boolean create(@RequestBody @Valid LinkedHashMap request, BindingResult errors) throws RepositoryException, IOException {
         return implementedService.create(request);
     }
 

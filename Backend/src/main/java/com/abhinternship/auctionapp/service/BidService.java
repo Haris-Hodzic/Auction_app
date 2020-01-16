@@ -30,46 +30,42 @@ public class BidService implements BaseService<Bid> {
         return null;
     }
 
+    private void setBidAndProductInformation(Bid bid, Product product, Double price, User bidder, User creator) {
+        product.setHighestBid(price);
+        product.setHighestBidder(bidder.getEmail());
+        int numberOfBids = product.getNumberOfBids() + 1;
+        product.setNumberOfBids(numberOfBids);
+        product.setUser(creator);
+        productRepository.save(product);
+        bidRepository.save(bid);
+    }
+
     @Override
     public boolean create(LinkedHashMap request) throws RepositoryException {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             BidRequest req = objectMapper.convertValue(request, new TypeReference<BidRequest>() {
             });
-            String userEmail = req.getUserEmail();
-            User bidder = userRepository.getOneByEmail(userEmail);
             Product product = productRepository.getOne(req.getProductId());
             User creator = userRepository.getOneByEmail(product.getUser().getEmail());
             Double price = req.getPrice();
+            String userEmail = req.getUserEmail();
+            User bidder = userRepository.getOneByEmail(userEmail);
             Date date = req.getDate();
-
             if (bidRepository.existsByProduct(product) && bidRepository.existsByBidder(bidder)) {
                 if (price > product.getHighestBid()) {
                     Bid bid = bidRepository.getBidByBidderAndProduct(bidder, product);
-                    product.setHighestBid(price);
-                    product.setHighestBidder(bidder.getEmail());
-
-                    int numberOfBids = product.getNumberOfBids() + 1;
-                    product.setNumberOfBids(numberOfBids);
-                    product.setUser(creator);
-                    productRepository.save(product);
                     bid.setDate(date);
                     bid.setPrice(price);
-                    bidRepository.save(bid);
+                    this.setBidAndProductInformation(bid, product, price, bidder, creator);
                     return true;
                 } else {
                     return false;
                 }
             } else {
                 if (price > product.getHighestBid()) {
-                    product.setHighestBid(price);
-                    product.setHighestBidder(bidder.getEmail());
-                    int numberOfBids = product.getNumberOfBids() + 1;
-                    product.setNumberOfBids(numberOfBids);
-                    product.setUser(creator);
-                    productRepository.save(product);
                     Bid bid = new Bid(price, date, bidder, product);
-                    bidRepository.save(bid);
+                    this.setBidAndProductInformation(bid, product, price, bidder, creator);
                     return true;
                 } else {
                     return false;

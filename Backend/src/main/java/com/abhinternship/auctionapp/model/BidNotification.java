@@ -1,35 +1,16 @@
 package com.abhinternship.auctionapp.model;
 
-public class BidNotification {
-    private String user;
-    private Long productId;
+public class BidNotification extends Notification {
     private int numberOfBids;
     private Double highestBid;
 
     public BidNotification(String user, Long productId, int numberOfBids, Double highestBid) {
-        this.user = user;
-        this.productId = productId;
+        super(user, productId);
         this.numberOfBids = numberOfBids;
         this.highestBid = highestBid;
     }
 
     public BidNotification() {
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public int getNumberOfBids() {

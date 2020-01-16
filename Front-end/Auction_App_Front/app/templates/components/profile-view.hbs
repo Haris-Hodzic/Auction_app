@@ -93,38 +93,10 @@
       </div>
     </div>
     {{#if isCardEntered}}
-      <div class="enterCard">
-        <div class="group">
-          <div class="cardFormRowOne">
-            <div class="cardName">
-              <p class="inputLabel">Name on card</p>
-              <div class="cardInput">{{userInfo.userCard.cardName}}</div>
-            </div>
-            <label class="cardNumber">
-              <p class="inputLabel">Card number</p>
-              <div class="cardInput">{{userInfo.userCard.cardNumber}}</div>
-              <span class="brand"><i class="pf pf-credit-card" id="brand-icon"></i></span>
-            </label>
-          </div>
-          <div class="cardFormRowTwo">
-            <div class="expirationDate">
-              <label>
-                <p class="inputLabel">Exipartion Date</p>
-                <div class="cardInput">{{userInfo.userCard.expireDate}}</div>
-              </label>
-            </div>
-            <div class="cvc">
-              <label>
-                <p class="inputLabel">CVC</p>
-                <div class="cardInput">{{userInfo.userCard.cvc}}</div>
-              </label>
-            </div>
-          </div>
-        </div>
-        <button class="cardButton" {{action "changeCard"}}>CHANGE CARD</button>
-      </div>
+      <DisplayUserCard @userInfo={{userInfo}}></DisplayUserCard>
+      <button class="changeCardButton" {{action "changeCard"}}>CHANGE CARD</button>
     {{else}}
-      <SaveUserCard></SaveUserCard>
+      {{card-form cardName=cardName buttonAction=(action "create")}}
     {{/if}}
   </div>
   <div class="optional">

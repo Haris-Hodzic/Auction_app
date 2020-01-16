@@ -1,10 +1,10 @@
-import {inject as service} from '@ember/service';
+import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import {getOwner} from '@ember/application';
-import {set} from '@ember/object';
-import {alias} from '@ember/object/computed';
-import {inject} from '@ember/controller';
-import {later} from '@ember/runloop';
+import { getOwner } from '@ember/application';
+import { set } from '@ember/object';
+import { alias } from '@ember/object/computed';
+import { inject } from '@ember/controller';
+import { later } from '@ember/runloop';
 
 export default Controller.extend({
   session: service('session'),
@@ -19,6 +19,8 @@ export default Controller.extend({
   isSellerButtonActive: false,
   isBidsButtonActive: false,
   isWishlistButtonActive: false,
+  isBecomeSellerActive: false,
+  becomeSellerActiveClass: '',
   profileActiveClass: '',
   sellerActiveClass: '',
   bidsActiveClass: '',
@@ -43,9 +45,6 @@ export default Controller.extend({
         var millisecondTillAuctionFinish = endDate - now;
         if (hour === 24) {
           hour = 0;
-        }
-        if (millisecondTillAuctionFinish < 0) {
-          millisecondTillAuctionFinish += 86400000;
         }
         later(function() {
           _this.get('client').sendAuctionMessage(entry.highestBidder, entry.name, entry.id);
@@ -83,6 +82,8 @@ export default Controller.extend({
       this.set('isWishlistButtonActive', false);
       this.set('wishlistActiveClass', '');
       this.set('isAccountActive', false);
+      this.set('isBecomeSellerActive', false);
+      this.set('becomeSellerActiveClass', '');
       this.transitionToRoute('account.show', "profile");
     },
     setSellerView() {
@@ -95,6 +96,8 @@ export default Controller.extend({
       this.set('isWishlistButtonActive', false);
       this.set('wishlistActiveClass', '');
       this.set('isAccountActive', false);
+      this.set('isBecomeSellerActive', false);
+      this.set('becomeSellerActiveClass', '');
       this.transitionToRoute('account.show', "seller");
     },
     setBidsView() {
@@ -107,6 +110,8 @@ export default Controller.extend({
       this.set('isWishlistButtonActive', false);
       this.set('wishlistActiveClass', '');
       this.set('isAccountActive', false);
+      this.set('isBecomeSellerActive', false);
+      this.set('becomeSellerActiveClass', '');
       this.transitionToRoute('account.show', "bids");
     },
     setWishlistView() {
@@ -119,7 +124,23 @@ export default Controller.extend({
       this.set('isWishlistButtonActive', true);
       this.set('wishlistActiveClass', 'active');
       this.set('isAccountActive', false);
+      this.set('isBecomeSellerActive', false);
+      this.set('becomeSellerActiveClass', '');
       this.transitionToRoute('account.show', "wishlist");
+    },
+    becomeSeller() {
+      this.set('isProfileButtonActive', false);
+      this.set('profileActiveClass', '');
+      this.set('isSellerButtonActive', false);
+      this.set('sellerActiveClass', '');
+      this.set('isBidsButtonActive', false);
+      this.set('bidsActiveClass', '');
+      this.set('isWishlistButtonActive', false);
+      this.set('wishlistActiveClass', '');
+      this.set('isAccountActive', false);
+      this.set('isBecomeSellerActive', true);
+      this.set('becomeSellerActiveClass', 'active');
+      this.transitionToRoute('product.sell');
     }
   }
 });

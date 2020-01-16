@@ -1,0 +1,49 @@
+<div class="enterCard">
+  <div class="group">
+    {{#stripe-elements as |elements|}}
+      <div class="cardFormRowOne">
+        <div class="cardName">
+          <p class="inputLabel">Name on card</p>
+          <Input @value={{cardName}} @class="nameOnCard" @type="text" placeholder="e.g. Adam Smith"></Input>
+        </div>
+        <label class="cardNumber">
+          <p class="inputLabel">Card number</p>
+          <div class="cardInput">
+            {{#elements.cardNumber as |stripeElement  stripeError|}}
+              {{#if stripeError}}
+                <p class="error">{{stripeError.message}}</p>
+              {{/if}}
+            {{/elements.cardNumber}}
+          </div>
+        </label>
+      </div>
+      <div class="cardFormRowTwo">
+        <div class="expirationDate">
+          <label>
+            <p class="inputLabel">Exipartion Date</p>
+            <div class="cardInput">
+              {{#elements.cardExpiry as |stripeElement stripeError|}}
+                {{#if stripeError}}
+                  <p class="error">{{stripeError.message}}</p>
+                {{/if}}
+              {{/elements.cardExpiry}}
+            </div>
+          </label>
+        </div>
+        <div class="cvc">
+          <label>
+            <p class="inputLabel">CVC</p>
+            <div class="cardInput">
+              {{#elements.cardCvc as |stripeElement stripeError|}}
+                {{#if stripeError}}
+                  <p class="error">{{stripeError.message}}</p>
+                {{/if}}
+                <button class="payButton" type="submit" {{action "payWithToken" stripeElement}}>DONE</button>
+              {{/elements.cardCvc}}
+            </div>
+          </label>
+        </div>
+      </div>
+    {{/stripe-elements}}
+  </div>
+</div>

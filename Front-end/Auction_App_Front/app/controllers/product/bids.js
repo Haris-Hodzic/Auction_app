@@ -10,5 +10,5 @@ export default Controller.extend({
     this.get('userHttp').getUserInfo(this.get('session.data.email')).then((result) => {
       this.set('userInfo', result);
     });
-  },
+  }
 });

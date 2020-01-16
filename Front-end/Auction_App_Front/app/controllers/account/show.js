@@ -25,8 +25,8 @@ export default Controller.extend({
   bidsButtonList: null,
   init() {
     this._super(...arguments);
-    this.set('wishlistButtonsList',[]);
-    this.set('bidsButtonsList',[]);
+    this.set('wishlistButtonsList', []);
+    this.set('bidsButtonsList', []);
     const today = new Date().toJSON().slice(0, 10);
     this.set('activeProductList', []);
     this.set('soldProductList', []);
@@ -66,8 +66,10 @@ export default Controller.extend({
       this.get('bidHttp').getBidsByUserId(this.get('userInfo.id'), 0).then((result) => {
         this.set('userBids', result.content);
         this.set('totalNumberOfBids', result.totalElements);
-        for (var i = 0; i < result.totalElements/5; i++) {
-          this.get('bidsButtonsList').pushObject({page: i+1});
+        for (var i = 0; i < result.totalElements / 5; i++) {
+          this.get('bidsButtonsList').pushObject({
+            page: i + 1
+          });
         }
         const self = this;
         result.content.forEach(function(entry, index) {
@@ -89,8 +91,10 @@ export default Controller.extend({
       this.get('wishlistHttp').getWishlistByUserId(this.get('userInfo.id'), 0).then((result) => {
         this.set('userWishlist', result.content);
         this.set('totalNumberOfWishlist', );
-        for (var i = 0; i < result.totalElements/5; i++) {
-          this.get('wishlistButtonsList').pushObject({page: i+1});
+        for (var i = 0; i < result.totalElements / 5; i++) {
+          this.get('wishlistButtonsList').pushObject({
+            page: i + 1
+          });
         }
         const self = this;
         result.content.forEach(function(entry, index) {
